@@ -52,7 +52,7 @@ subject to
   
   bind_instance_active_with_instance_hours1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] >= InstanceActive[t,i,idx];
-  bind_instance_active_with_isntance_hours2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
+  bind_instance_active_with_instance_hours2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] <= workflow_deadline*InstanceActive[t,i,idx];
 
   keep_layer_deadline {l in LAYER, t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
