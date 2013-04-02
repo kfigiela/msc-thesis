@@ -44,7 +44,7 @@ var InstanceTasks  {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines
 var LayerDeadline  {l in LAYER}                                                           integer >= 1 <= workflow_deadline;
 
 minimize TotalCost: 
-  sum { t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1) } instance_price[i] * InstanceHours[t,i,idx];
+  sum { t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1) } (instance_price[i] * InstanceHours[t,i,idx] + (request_price + transfer_cost[t,i,storage])*InstanceTasks[t,i,idx]);
 
 subject to
   keep_layer_deadlines_sum_under_workflow_deadline: 
