@@ -50,25 +50,25 @@ subject to
   keep_layer_deadlines_sum_under_workflow_deadline: 
     sum { l in LAYER} LayerDeadline[l] <= workflow_deadline;
   
-  bind_instance_active_with_instance_hours1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
+  bind_instance_active_with_instance_hours_1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] >= InstanceActive[t,i,idx];
-  bind_instance_active_with_instance_hours2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
+  bind_instance_active_with_instance_hours_2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] <= workflow_deadline*InstanceActive[t,i,idx];
 
   keep_layer_deadline {l in LAYER, t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] <= LayerDeadline[l];
  
-  enough_power1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
+  is_there_enough_processing_power_to_do_the_tasks {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] >= InstanceTasks[t,i,idx]*unit_time[t,i,storage];
-  enough_power2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
+  but_not_more {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] <= InstanceTasks[t,i,idx]*unit_time[t,i,storage] + 1;
 
   enough_power {t in TASK}:
     sum {i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} InstanceTasks[t,i,idx] = task_count[t];
    
-  symm {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
+  discard_symmetric_solutions_1 {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] <= InstanceHours[t,i,idx-1]; 
-  symm2 {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
+  discard_symmetric_solutions_2 {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
     InstanceActive[t,i,idx] <= InstanceActive[t,i,idx-1];
 
   force_provider_instance_limit {l in LAYER, p in PROVIDER}: 
