@@ -64,7 +64,7 @@ subject to
     InstanceHours[t,i,idx] <= InstanceTasks[t,i,idx]*unit_time[t,i,storage] + 1;
 
   enough_power {t in TASK}:
-    sum {i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} InstanceTasks[t,i,idx] >= task_count[t];
+    sum {i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} InstanceTasks[t,i,idx] = task_count[t];
    
   symm {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] <= InstanceHours[t,i,idx-1]; 
