@@ -5,4 +5,6 @@
 
 module load ampl
 
+fsync -d 30 $SGE_STDOUT_PATH &
+
 ampl model.ampl
