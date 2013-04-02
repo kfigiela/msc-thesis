@@ -35,7 +35,7 @@ param storage symbolic;                                    # which storage is us
 # precalculated parameters
 param transfer_time {t in TASK, i in INSTANCE, s in STORAGE} := (data_size_in[t]+data_size_out[t])/(transfer_rate[i,s] * 3600);
 param unit_time {t in TASK, i in INSTANCE, s in STORAGE} :=  max(exec_time[t] / ccu[i], transfer_time[t,i,storage]); # time required for task to compute on instance i
-param transfer_cost {t in TASK, i in INSTANCE, s in STORAGE} := (data_size_out[t] * (instance_transfer_price_out[i]+storage_transfer_price_in[s]) + data_size_in[t] * (storage_transfer_price_out[s]+instance_transfer_price_in[i])) * local[i,j];
+param transfer_cost {t in TASK, i in INSTANCE, s in STORAGE} := (data_size_out[t] * (instance_transfer_price_out[i]+storage_transfer_price_in[s]) + data_size_in[t] * (storage_transfer_price_out[s]+instance_transfer_price_in[i])) * local[i,s];
 
 
 var InstanceActive {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} binary;
