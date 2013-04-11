@@ -1,17 +1,32 @@
 # vim: syntax=ampl sw=2
 
 option solver cplex;
-option log_file ‘run.log’;
+option log_file run.log;
 
-option cplex_options "display=2 prestats=1 time=3600";
+option cplex_options "display=1 time=1800";
 
 model model.mod;
-data data.dat;
+
+data;
+include infrastructure.dat;
+include workflow.dat;
+
+let storage            := $storage;
+let workflow_deadline  := num($deadline) ;
+
+
+# calculate needed sets
+let {p in PROVIDER, i in PROVIDER_INSTANCES[p]} instance_max_machines[i] := provider_max_machines[p];
+let {p in PROVIDER, i in PROVIDER_INSTANCES[p], s in STORAGE} local[i,s] := if p in STORAGE_LOCAL[s] then 0 else 1;
+
 
 solve;
 
 var Runtime;
+var RealRuntime;
+
 let Runtime := sum {l in LAYER} LayerDeadline[l];
+let RealRuntime := sum {l in LAYER} max {t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} unit_time(t,i,storage);
  
 for {l in LAYER} {
   for {t in LAYER_TASK[l]} {
@@ -32,7 +47,8 @@ for {l in LAYER} {
 
 printf "--- YAML ---\n";
 printf "cost: %.3f\n", TotalCost;
-printf "runtime: %d\n", sum {l in LAYER} LayerDeadline[l];
+printf "runtime: %d\n", Runtime;
+printf "real_runtime: %d\n", RealRuntime;
 printf "layers:\n";
 for {l in LAYER} {
   printf " - name: %s\n", l;
@@ -50,17 +66,6 @@ for {l in LAYER} {
 }
 
 printf "--- /YAML ---\n";
-
-# display InstanceActive;
-# display InstanceLayerHours;
 display LayerDeadline;
-# 
-display solve_message;
 
-# printf "--- solution ---\n";
-# if match (solve_message, "optimal") == 0 then {
-#   printf "status: infeasible\n";
-#   printf "--- end ---\n";
-#   
-#   quit;
-# }
+

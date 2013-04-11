@@ -17,8 +17,8 @@ set PROVIDER_INSTANCES[gogrid]        := gg-8gb gg-4gb gg-2gb gg-1gb;
 set PROVIDER_INSTANCES[elastichosts]  := eh-8gb-20gh eh-4gb-8gh eh-2gb-4gh eh-1gb-2gh; 
 set PROVIDER_INSTANCES[private]       := private; 
 
-set STORAGE_LOCAL[S3]     := amazon;
-set STORAGE_LOCAL[CloudFiles] := rackspace;
+set STORAGE_LOCAL[S3]                 := amazon;
+set STORAGE_LOCAL[CloudFiles]         := rackspace;
 
 param:          provider_max_machines :=
   amazon        20
@@ -92,39 +92,5 @@ param transfer_rate:  S3  CloudFiles :=
   private           15    20
 ;
 
-set TASK = mProject mDiffFit mConcatFit mBgModel mBackground mImgtbl mAdd mShrink mJPEG;
-set LAYER = lmProject lmDiffFit lmConcatFit lmBgModel lmBackground lmImgtbl lmAdd lmShrink lmJPEG;
+param request_price      := 0.00001 ; # price per request (per task)
 
-set LAYER_TASK[lmProject]    = mProject;
-set LAYER_TASK[lmDiffFit]     = mDiffFit;
-set LAYER_TASK[lmConcatFit]  = mConcatFit;
-set LAYER_TASK[lmBgModel]    = mBgModel;
-set LAYER_TASK[lmBackground] = mBackground;
-set LAYER_TASK[lmImgtbl]     = mImgtbl;
-set LAYER_TASK[lmAdd]        = mAdd;
-set LAYER_TASK[lmShrink]     = mShrink;
-set LAYER_TASK[lmJPEG]       = mJPEG;
-
-param: 
-            task_count exec_time data_size_in data_size_out :=
-  mProject          45     13.59         4.03          7.94
-  mDiffFit         107     10.59        15.88          0.54
-  mConcatFit         1     13.60         0.03          0.02
-  mBgModel           1     10.88         0.03          0.00
-  mBackground       45     10.74         7.95          7.94
-  mImgtbl            1     10.69       357.27          0.01
-  mAdd               1     30.34       357.28        330.86
-  mShrink            1     12.26       165.43          6.62
-  mJPEG              1     10.96         6.62          0.32
-;
-
-param storage := S3;
-
-param request_price   := 0.00001 ; # price per request (per task)
-
-param workflow_deadline        := 24 ;
-
-# calculate needed sets
-
-let {p in PROVIDER, i in PROVIDER_INSTANCES[p]} instance_max_machines[i] := provider_max_machines[p];
-let {p in PROVIDER, i in PROVIDER_INSTANCES[p], s in STORAGE} local[i,s] := if p in STORAGE_LOCAL[s] then 0 else 1;
