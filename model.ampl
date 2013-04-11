@@ -26,7 +26,7 @@ var Runtime;
 var RealRuntime;
 
 let Runtime := sum {l in LAYER} LayerDeadline[l];
-let RealRuntime := sum {l in LAYER} max {t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} unit_time(t,i,storage);
+let RealRuntime := sum {l in LAYER} max {t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} InstanceTasks[t,i,idx]*unit_time[t,i,storage];
  
 for {l in LAYER} {
   for {t in LAYER_TASK[l]} {
