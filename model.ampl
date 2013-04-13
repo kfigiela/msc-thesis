@@ -63,6 +63,7 @@ for {l in LAYER} {
         printf "     - type: %s\n", i;
         printf "       hours: %d\n", InstanceHours[t,i,idx];
         printf "       tasks: %d\n", InstanceTasks[t,i,idx];
+        printf "       cost: %5.2f\n", (instance_price[i] * InstanceHours[t,i,idx] + (request_price + transfer_cost[t,i,storage])*InstanceTasks[t,i,idx]);
       }    
     }
   }
