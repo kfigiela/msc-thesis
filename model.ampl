@@ -45,11 +45,13 @@ for {l in LAYER} {
   }
 }
 
+display solve_message;
 printf "--- YAML ---\n";
 printf "cost: %.3f\n", TotalCost;
 printf "deadline: %d\n", deadline;
 printf "runtime: %d\n", Runtime;
 printf "real_runtime: %5.2f\n", RealRuntime;
+printf "storage: %s\n", storage;
 printf "layers:\n";
 for {l in LAYER} {
   printf " - name: %s\n", l;
