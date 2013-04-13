@@ -47,8 +47,9 @@ for {l in LAYER} {
 
 printf "--- YAML ---\n";
 printf "cost: %.3f\n", TotalCost;
+printf "deadline: %d\n", deadline;
 printf "runtime: %d\n", Runtime;
-printf "real_runtime: %d\n", RealRuntime;
+printf "real_runtime: %5.2f\n", RealRuntime;
 printf "layers:\n";
 for {l in LAYER} {
   printf " - name: %s\n", l;
