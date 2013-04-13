@@ -75,6 +75,8 @@ subject to
     InstanceHours[t,i,idx] <= InstanceHours[t,i,idx-1]; 
   discard_symmetric_solutions_2 {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
     InstanceActive[t,i,idx] <= InstanceActive[t,i,idx-1];
+  discard_symmetric_solutions_3 {t in TASK, i in INSTANCE, idx in 1 .. (instance_max_machines[i] - 1)}:
+    InstanceTasks[t,i,idx] <= InstanceTasks[t,i,idx-1];
 
   force_provider_instance_limit {l in LAYER, p in PROVIDER}: 
     sum {i in PROVIDER_INSTANCES[p], t in LAYER_TASK[l], idx in 0 .. (instance_max_machines[i] - 1)} InstanceActive[t,i,idx] <= provider_max_machines[p];
