@@ -15,11 +15,11 @@ param:
                            task_count exec_time data_size_in data_size_out :=
     T_GenomefastqSplit_chr            7     60.36      369.118       369.118
     T_GenomefilterContams_chr          245      1.40       10.546        10.546
-    T_Genomesolsanger_chr          245      0.37        5.270         5.270
-    T_Genomefastqbfq_chr          245      0.68        4.294         4.294
-         T_Genomemap_chr          245   6068.53     1963.247      1963.247
-    T_GenomemapMerge_chr            7     18.98       38.969        38.969
-    T_GenomemapMerge_chr            1    136.76      257.340       257.340
-    T_Genomemaqindex_chr            1      0.18      242.773       242.773
-      T_Genomepileup_chr            1   1845.77     1966.120      1966.120
+    T_Genomesolsanger_chr          245      0.37        5.270         4.294
+    T_Genomefastqbfq_chr          245      0.68        4.294         1.024
+         T_Genomemap_chr          245   6068.53     1963.247         1.113
+    T_GenomemapMerge_chr            7     18.98       38.969        36.763
+    T_GenomemapMerge_chr            1    136.76      257.340       251.435
+    T_Genomemaqindex_chr            1      0.18      242.773         3.897
+      T_Genomepileup_chr            1   1845.77     1966.120        21.267
 ;

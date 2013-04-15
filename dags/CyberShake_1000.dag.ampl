@@ -1,6 +1,3 @@
-[0m[[0minfo[0m] [0mLoading global plugins from /Users/kamilfigiela/.sbt/plugins[0m
-[0m[[0minfo[0m] [0mSet current project to default-6072cc (in build file:/Users/kamilfigiela/mgr/ampl/)[0m
-[0m[[0minfo[0m] [0mRunning Main dags/CyberShake_1000.dag[0m
 set TASK = T_CyberShakeExtractSGT T_CyberShakeSeismogramSynthesis T_CyberShakePeakValCalcOkaya T_CyberShakeZipSeis T_CyberShakeZipPSA;
 set LAYER = L_CyberShakeExtractSGT L_CyberShakeSeismogramSynthesis L_CyberShakePeakValCalcOkaya_CyberShakeZipSeis L_CyberShakeZipPSA;
 
@@ -11,10 +8,9 @@ set LAYER_TASK[L_CyberShakeZipPSA] = T_CyberShakeZipPSA;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-    T_CyberShakeExtractSGT            4    126.12    38148.328     38148.328
-    T_CyberShakeSeismogramSynthesis          497     43.65      551.616       551.616
-    T_CyberShakePeakValCalcOkaya          497      1.08        0.023         0.023
-     T_CyberShakeZipSeis            1      9.38        0.000         0.000
-      T_CyberShakeZipPSA            1      3.81        0.000         0.000
+    T_CyberShakeExtractSGT            4    126.12    38148.328       548.683
+    T_CyberShakeSeismogramSynthesis          497     43.65      551.616         0.023
+    T_CyberShakePeakValCalcOkaya          497      1.08        0.023         0.000
+     T_CyberShakeZipSeis            1      9.38        0.000         2.040
+      T_CyberShakeZipPSA            1      3.81        0.000         0.010
 ;
-[0m[[32msuccess[0m] [0mTotal time: 1 s, completed 2013-04-11 12:55:50[0m
