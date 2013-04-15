@@ -20,7 +20,7 @@ class Layer(val tasks: List[Task], dag: DAG) {
     tasks.groupBy(_.transformation).map( _ match {
       case (transformation, group) => {
         val inputs = group.map(_.inputs.map(dag.getFileSize(_)).sum).sum/group.size/(1024*1024)
-        val outputs = group.map(_.inputs.map(dag.getFileSize(_)).sum).sum/group.size/(1024*1024)
+        val outputs = group.map(_.outputs.map(dag.getFileSize(_)).sum).sum/group.size/(1024*1024)
         val size = group.map(_.size).sum/group.size
         new TaskGroup(transformation, group.size, inputs, outputs, size )
       }
