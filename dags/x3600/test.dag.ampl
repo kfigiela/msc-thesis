@@ -7,7 +7,7 @@ set LAYER_TASK[L_postprocess] = T_postprocess;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-            T_preprocess            1     0.002778     0.000191     0.000019
-               T_process            2     0.002778     0.000000     0.000000
-           T_postprocess            1     0.000278     0.000000     0.000000
+            T_preprocess            1     10.00        0.000         0.000
+               T_process            2     10.00        0.000         0.000
+           T_postprocess            1      1.00        0.000         0.000
 ;

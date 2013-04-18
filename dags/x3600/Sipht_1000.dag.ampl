@@ -9,17 +9,17 @@ set LAYER_TASK[L_SIPHTSRNA_annotate] = T_SIPHTSRNA_annotate;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-         T_SIPHTFindterm           32     0.337664     3.182997    36.490140
-           T_SIPHTPatser          584     0.000355     2.781505     0.087402
-            T_SIPHTBlast           32     0.696844   246.449714     6.806832
-         T_SIPHTRNAMotif           32     0.009442     2.635286     1.060897
-        T_SIPHTTransterm           32     0.015730     2.980739     0.430827
-    T_SIPHTPatser_concate           32     0.000021     1.595092     1.563325
-             T_SIPHTSRNA           32     0.098847    61.270826     6.367654
-       T_SIPHTBlast_QRNA           32     0.396908   246.471406     3.177163
-    T_SIPHTBlast_candidate           32     0.001405     1.368875     0.014770
-        T_SIPHTFFN_Parse           32     0.000450     4.497570     0.679171
-    T_SIPHTBlast_paralogues           32     0.001424     1.204431     0.706861
-    T_SIPHTBlast_synteny           32     0.009167     3.237271     1.040374
-    T_SIPHTSRNA_annotate           32     0.000444     4.070496     1.428345
+         T_SIPHTFindterm           32   1215.59        3.183        36.490
+           T_SIPHTPatser          584      1.28        2.782         0.087
+            T_SIPHTBlast           32   2508.64      246.450         6.807
+         T_SIPHTRNAMotif           32     33.99        2.635         1.061
+        T_SIPHTTransterm           32     56.63        2.981         0.431
+    T_SIPHTPatser_concate           32      0.08        1.595         1.563
+             T_SIPHTSRNA           32    355.85       61.271         6.368
+       T_SIPHTBlast_QRNA           32   1428.87      246.471         3.177
+    T_SIPHTBlast_candidate           32      5.06        1.369         0.015
+        T_SIPHTFFN_Parse           32      1.62        4.498         0.679
+    T_SIPHTBlast_paralogues           32      5.12        1.204         0.707
+    T_SIPHTBlast_synteny           32     33.00        3.237         1.040
+    T_SIPHTSRNA_annotate           32      1.60        4.070         1.428
 ;

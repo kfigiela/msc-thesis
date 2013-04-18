@@ -13,13 +13,13 @@ set LAYER_TASK[L_MontagemJPEG] = T_MontagemJPEG;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-     T_MontagemProjectPP            5     0.003776     4.026779     7.948205
-       T_MontagemDiffFit            9     0.002944    15.012199     0.389744
-     T_MontagemConcatFit            1     0.000200     0.389977     0.001801
-       T_MontagemBgModel            1     0.000394     0.002600     0.000253
-    T_MontagemBackground            5     0.002975     7.948458     7.948205
-        T_MontagemImgTbl            1     0.000386    39.741824     0.001525
-           T_MontagemAdd            1     0.000842     0.001815    88.710049
-        T_MontagemShrink            1     0.001072    88.710049     1.774911
-          T_MontagemJPEG            1     0.000125     1.774911     0.195366
+     T_MontagemProjectPP            5     13.59        4.027         7.948
+       T_MontagemDiffFit            9     10.60       15.012         0.390
+     T_MontagemConcatFit            1      0.72        0.390         0.002
+       T_MontagemBgModel            1      1.42        0.003         0.000
+    T_MontagemBackground            5     10.71        7.948         7.948
+        T_MontagemImgTbl            1      1.39       39.742         0.002
+           T_MontagemAdd            1      3.03        0.002        88.710
+        T_MontagemShrink            1      3.86       88.710         1.775
+          T_MontagemJPEG            1      0.45        1.775         0.195
 ;

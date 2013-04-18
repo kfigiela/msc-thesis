@@ -8,9 +8,9 @@ set LAYER_TASK[L_CyberShakeZipPSA] = T_CyberShakeZipPSA;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-    T_CyberShakeExtractSGT            2     0.035418 38263.470313   527.265172
-    T_CyberShakeSeismogramSynthesis           13     0.010491   505.324937     0.022888
-    T_CyberShakePeakValCalcOkaya           13     0.000305     0.022888     0.000206
-     T_CyberShakeZipSeis            1     0.000053     0.000000     0.041636
-      T_CyberShakeZipPSA            1     0.000019     0.000000     0.000193
+    T_CyberShakeExtractSGT            4    126.12    38148.328       548.683
+    T_CyberShakeSeismogramSynthesis          497     43.65      551.616         0.023
+    T_CyberShakePeakValCalcOkaya          497      1.08        0.023         0.000
+     T_CyberShakeZipSeis            1      9.38        0.000         2.040
+      T_CyberShakeZipPSA            1      3.81        0.000         0.010
 ;

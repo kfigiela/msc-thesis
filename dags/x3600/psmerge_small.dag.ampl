@@ -6,9 +6,9 @@ set LAYER_TASK[L_psmergeMergeDB] = T_psmergeMergeDB;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-    T_psmergeUpdateProductionDB            1     1.000000 34057748.479996     0.000000
-    T_psmergeColdDBLoadDBPreprocess           16     0.083333   200.000000 43887.500000
-    T_psmergeValidateMerge           16     0.016667 920387584.000000 2128609.280000
-        T_psmergeMergeDB         7021     3.000000 2097252.000000 2097152.000000
-        T_psmergeMergeDB            1     3.000000 2097252.000000 2097152.000000
+    T_psmergeUpdateProductionDB            1   3600.00  2128609.280         0.000
+    T_psmergeColdDBLoadDBPreprocess            1    300.00      200.000      9300.000
+    T_psmergeValidateMerge            1     60.00 195035136.000   2128609.280
+        T_psmergeMergeDB           92  10800.00  2097252.000   2097152.000
+        T_psmergeMergeDB            1  10800.00  2097252.000   2097152.000
 ;

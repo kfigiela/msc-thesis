@@ -13,13 +13,13 @@ set LAYER_TASK[L_Genomepileup_chr] = T_Genomepileup_chr;
 
 param: 
                            task_count exec_time data_size_in data_size_out :=
-    T_GenomefastqSplit_chr            7     0.016768   369.117845   369.117845
-    T_GenomefilterContams_chr          245     0.000388    10.546224    10.546224
-    T_Genomesolsanger_chr          245     0.000103     5.270425     4.293691
-    T_Genomefastqbfq_chr          245     0.000189     4.293691     1.024317
-         T_Genomemap_chr          245     1.685704  1963.247477     1.113388
-    T_GenomemapMerge_chr            7     0.005273    38.968574    36.762805
-    T_GenomemapMerge_chr            1     0.037989   257.339634   251.434745
-    T_Genomemaqindex_chr            1     0.000050   242.773239     3.896994
-      T_Genomepileup_chr            1     0.512714  1966.120153    21.266828
+    T_GenomefastqSplit_chr            7     60.36      369.118       369.118
+    T_GenomefilterContams_chr          245      1.40       10.546        10.546
+    T_Genomesolsanger_chr          245      0.37        5.270         4.294
+    T_Genomefastqbfq_chr          245      0.68        4.294         1.024
+         T_Genomemap_chr          245   6068.53     1963.247         1.113
+    T_GenomemapMerge_chr            7     18.98       38.969        36.763
+    T_GenomemapMerge_chr            1    136.76      257.340       251.435
+    T_Genomemaqindex_chr            1      0.18      242.773         3.897
+      T_Genomepileup_chr            1   1845.77     1966.120        21.267
 ;
