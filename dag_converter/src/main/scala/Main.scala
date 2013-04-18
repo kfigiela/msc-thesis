@@ -66,7 +66,7 @@ object Main {
 
     println("param: \n                           task_count exec_time data_size_in data_size_out :=")
     layers.foreach(_.taskGroups.foreach((task) =>
-      println("    %20s   %10d %9.2f %12.3f %13.3f".format(task, task.count, task.size, task.input, task.output))
+      println("    %20s   %10d %12.6f %12.6f %12.6f".format(task, task.count, task.size/3600.0, task.input, task.output))
     ))
     println(";")
 
