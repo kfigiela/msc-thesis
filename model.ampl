@@ -3,7 +3,7 @@
 option solver cplex;
 option log_file run.log;
 
-option cplex_options "display=1 time=1800";
+option cplex_options "display=1 time=900 threads=8";
 
 model model.mod;
 
@@ -71,5 +71,6 @@ for {l in LAYER} {
 
 printf "--- /YAML ---\n";
 display LayerDeadline;
+display LayerTime;
 
 
