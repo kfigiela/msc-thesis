@@ -49,9 +49,12 @@ minimize TotalCost:
 
 subject to
   keep_layer_deadlines_sum_under_workflow_deadline: 
-    sum { l in LAYER} LayerDeadline[l] <= workflow_deadline;
+    sum { l in LAYER} LayerTime[l] <= workflow_deadline;
   keep_layer_time {l in LAYER}:
     LayerTime[l] <= LayerDeadline[l];
+
+  keep_layer_time_2 {l in LAYER}:
+    LayerDeadline[l] <= LayerTime[l] + 1;
   
   bind_instance_active_with_instance_hours_1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] >= InstanceActive[t,i,idx];
