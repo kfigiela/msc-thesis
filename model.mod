@@ -42,6 +42,7 @@ var InstanceActive {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines
 var InstanceHours  {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} integer >= 0 <= workflow_deadline;
 var InstanceTasks  {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)} integer >= 0 <= task_count[t];
 var LayerDeadline  {l in LAYER}                                                           integer >= 1 <= workflow_deadline;
+var LayerTime      {l in LAYER}                                                                   >= 0 <= workflow_deadline;
 
 minimize TotalCost: 
   sum { t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1) } (instance_price[i] * InstanceHours[t,i,idx] + (request_price + transfer_cost[t,i,storage])*InstanceTasks[t,i,idx]);
@@ -49,6 +50,8 @@ minimize TotalCost:
 subject to
   keep_layer_deadlines_sum_under_workflow_deadline: 
     sum { l in LAYER} LayerDeadline[l] <= workflow_deadline;
+  keep_layer_time {l in LAYER}:
+    LayerTime[l] <= LayerDeadline[l];
   
   bind_instance_active_with_instance_hours_1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceHours[t,i,idx] >= InstanceActive[t,i,idx];
@@ -58,10 +61,13 @@ subject to
   bind_instance_active_with_instance_tasks_1 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
     InstanceTasks[t,i,idx] >= InstanceActive[t,i,idx];
   bind_instance_active_with_instance_tasks_2 {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}: 
-    InstanceTasks[t,i,idx] <= task_count[t]*InstanceActive[t,i,idx];
+    InstanceTasks[t,i,idx] <= task_count[t] * InstanceActive[t,i,idx];
 
   keep_layer_deadline {l in LAYER, t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] <= LayerDeadline[l];
+
+  keep_layer_deadline_2 {l in LAYER, t in LAYER_TASK[l], i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
+    InstanceTasks[t,i,idx]*unit_time[t,i,storage] <= LayerTime[l];
  
   is_there_enough_processing_power_to_do_the_tasks {t in TASK, i in INSTANCE, idx in 0 .. (instance_max_machines[i] - 1)}:
     InstanceHours[t,i,idx] >= InstanceTasks[t,i,idx]*unit_time[t,i,storage];
