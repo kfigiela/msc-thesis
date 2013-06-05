@@ -5,13 +5,47 @@
 
 \section{Mathematical Programming}
 
-\emph{TODO: ogolnie ze dzial matematyki, ze jest to metoda formalnego definiowania problemow}
+The term \emph{programming} was in use by 1940 to describe planning and scheduling of activities. \emph{Programmers} found that they could represent the amount of each activity using variable that value was to be determined. Then by using equalities and inequalities they were able to mathematically describe restrictions inherent in the planning or scheduling problem. The solution satysfying all these constraints would be considered as acceptable plan or schedule. Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
+
+It showed up soon that it was more complex that it initially appeared. It was more than merely specyfying constraints. If there were too few constraints, the space of possible solutions was too big. On the other hand, too many constraints could rule desirable solutions out. In the worst case there were no solutions at all. The success of programming relied on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
+
+In addition to the constraints, one could define the objective – function of the variables that made it possible to compare solutions and select the best one. Then it didn't matter how many solutions satisfied the constraints -- we were interested in the one that minimized or maximized the objective.
+
+In development of mathematical programming one kind of problem stands out: that in which all the costs, requirements and quantities are proportional to the variables. In other words, constraints and objectives are linear combinations of the variables. Such a program is called \emph{linear program} and the process of modelling and solving is called \emph{linear programming}. This class of optimization problems is particurarly important becasue a lot of real world optimization problems may be represented in such way. Additionally, there exists a lot of theory and algorithms to solve such problems in fast, deterministic way even if they have thousands of variables. The ideas of linear programming are also important for analyzing and solving problems that are non-linear.
+
+All useful methods of mathematical programming involve using computers. It appeared very quickly in 1940s that computers may be used for scientific computing. The first computional method of solving optimization problems, the simplex algorithm, was introduced at that time and was subject to several improvements over the decades.
 
 \subsection{Problem classification}
 
-\emph{TODO: O typach problemow LP, NLP, MIP, MINLP, etc.}
+In spite of the broad applications of linear programming, the linearity assumption is too unrealistic to be applied to many of real problems. If instead smooth non-linear functions of the variables are used in constraints and objectives we call the program as \emph{non-linear program}. Solving such problems is much harder, but not impossible.
 
-\section{Introduction to AMPL}
+There is also another class of problems called \emph{integer programming} that assumes that variables are integer and in general it is much harder than previous. Fortuanetly, computational power of computers is still increasing and there are efficient algorithms to deal with them.
+
+The optimization problems may be categorized in the following groups:
+\begin{description}
+  \item[LP: linear programming] TODO
+  \item[NLP: non-linear programming] TODO
+  \item[MIP: mixed-integer programming] TODO
+  \item[MINLP: mixed-integer non-linear programming] TODO
+  \item[CP: constraint programming] TODO
+\end{description}
+
+\section{AMPL: A Mathematical Programming Language}
+
+To successfully solve optimization problem one needs to do a sequence of multiple tasks such as:
+
+\begin{itemize}
+  \item Formulate an abstract model: define variables, constraints and objective.
+  \item Collect the data for a specific problem instance.
+  \item Generate instance-specific variables, constraints and objective.
+  \item Solve the problem by running a program called solver that implements algorithm that finds optimal solution.
+  \item Analyze the results.
+  \item Refine the model and the data as necessary, and repeat.
+\end{itemize}
+
+Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrixes as input. We need to transform \emph{modeller's form} to \emph{algorithm's form} and doing it manually is time consuming and erron-prone task.
+
+To solve that problem several modelling tools were created \footnote{i.e. AMPL, Gams, PuLP, OscaR}. 
 
 \emph{TODO: wprowadzenie do tego czym jest a czym nie jest}
 

@@ -1,0 +1,438 @@
+\chapter{Bag of tasks optimization}
+\label{chap:formulation-bag-of-tasks} 
+\lhead{Chapter 4. \emph{Bag of tasks optimization}}
+
+  This chapter is organized as follows: after defining application model in Section \ref{sec:bot:appmodel}, we formulate the problem using AMPL by specifying the variables, parameters, constraints and optimization goals in \ref{sec:bot:problem}. Section~\ref{sec:bot:results} presents the results we obtained by applying the model to the scenarios involving multiple public and private clouds, overlapping computation and data transfers, and identifying special cases. In section~\ref{sec:bot:sensitivity} we provide a sensitivity analysis of our model and show how such analysis can be useful for potential users or computing service resellers. In section~\ref{sec:dynamic} we estimate how our model behaves if the task sizes are not uniform and change dynamically.
+
+\section{Application model}
+\label{sec:bot:appmodel}
+
+  In this chapter we discuss optimization of scientific applications that may be represented as bag of uniform tasks tasks. The goal this model is to minimize the cost of processing a given number of tasks on a hybrid cloud platform, as illustrated in Fig.~\ref{fig:arch}. I assumed that tasks are independent from each other, but they have identical computational cost and require a constant amount of data transfer. 
+
+  The assumption of homegeneous tasks can be justified by the reason that there are many examples of scientific applications (e.g. scientific workflows or large parameter sweeps) that include a stage of a high number of parallel nearly identical tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
+Moreover, if the tasks are not ideally homogeneous, it is possible to approximate them using a uniform set of tasks with the mean computational cost and data sizes of the application tasks. Of course, in real execution the actual task performance may vary, so the solution obtained using our optimization method becomes only approximate of the best allocation, and the actual cost may be higher and deadline may be exceeded. In order to estimate the quality of this approximation, we evaluate the impact of dynamic task runtime and and non-uniform tasks in section~\ref{sec:dynamic}. 
+
+  Model assumes that for each task a certain amount of input data needs to be downloaded, and after it finishes, the output results need to be stored. In the case of data-intensive tasks, the transfers may contribute a significant amount of total task run time.
+
+\section{Problem formulation}
+\label{sec:bot:problem}
+
+  To perform optimization of the total cost, Mixed Integer Non-Linear Problem (MINLP) is formulated and implemented in A Mathematical Programming Language (AMPL)~\cite{Fourer2002}.  AMPL requires to specify input data sets and variables to define the search space, as well as constraints and objective function to be optimized.
+
+\subsection{Input data}
+ 
+  The formulation requires the following input sets, which represent the cloud infrastructure model:
+  \begin{itemize}
+      \item $\STORAGE = \{s3, cloudfiles\}$ -- defines available cloud storage
+      sites,
+      \item $\PROVIDER = \{amazon, rackspace, \dotsc\}$ -- defines
+      possible computing cloud providers,
+      \item $\INSTANCE = \{m1.small, \dots, gg.1gb, \dotsc\}$ -- defines
+      instance types,
+      \item $\PROVIDERINSTANCES_{p} \subset \INSTANCE$ -- instances that
+      belong to provider $\PROVIDER_p$,
+      \item $\LOCALSTORAGE_{s} \subset \PROVIDER$ -- compute cloud providers
+      that are local to storage platform $\STORAGE_s$.
+  \end{itemize}        
+    
+  Each instance type $\INSTANCE_i$ is described by the following parameters:
+  \begin{itemize}
+      \item $\instancePrice_i$ -- fee in \$ for running instance $\INSTANCE_i$
+      for one hour,
+      \item $\ccu_i$ -- performance of instance in CloudHarmony Compute Units
+      (CCU),
+      \item $\instanceTransferPriceOut_i$ and $\instanceTransferPriceIn_i$ --
+      price for non-local data transfer to and from the instance, in \$ per
+      MiB.
+  \end{itemize}
+
+  Storage sites are characterized by:
+  \begin{itemize}
+      \item $\storageTransferPriceOut_s$ and $\storageTransferPriceIn_s$
+      characterize price in \$ per MiB for non local data transfer.
+  \end{itemize}
+
+  Additionally we need to provide data transfer rates in MiB per second between storage and instances by defining function $\transferRate_{i,s} > 0$ .
+
+  We assume that the computation time of a task is known and constant, this also applies to input and output data size. We also assume that tasks are atomic (non divisible). Computation is characterized by the following parameters:
+  \begin{itemize}
+      \item $\totalTasks$ -- count of tasks,
+      \item $\execTime$ -- execution time in hours of one task on 1 CCU
+      machine,
+      \item $\dataSizeIn$ and $\dataSizeOut$ -- data size for input and
+      output of one task in MiB,
+      \item $\requestPrice$ -- price per request for queuing service,
+      \item $\deadline$ -- total time for completing all tasks in hours (deadline).
+  \end{itemize} 
+
+\subsection{Auxiliary parameters}
+
+  The formulation of the problem requires a set of precomputed parameters which are derived from the main input parameters of the model. The relevant  parameters include:
+  \begin{align}
+      \transferTime_{i,s} &= \frac{\dataSizeIn+\dataSizeOut}{\transferRate_{i,s} \cdot 3600}  \\
+      \label{unitTime}\unitTime_{i,s} &= \frac{\execTime}{\ccu_i} + \transferTime_{i,s}  \\
+      \begin{split}
+          \transferCost_{i,s} &= (\dataSizeOut \cdot
+          (\instanceTransferPriceOut_i + \storageTransferPriceIn_s) \\ & +
+          \dataSizeIn \cdot (\storageTransferPriceOut_s+\instanceTransferPriceIn_i)) \end{split} \\
+      \label{tasksPerDeadline}\tasksPerDeadline_{i,s} &= \lfloor\frac{\deadline}{\unitTime_{i,s}}\rfloor \\
+      \timeQuantum_{i,s} &= \lceil \unitTime_{i,s} \rceil \\
+      \tasksPerTimeQuantum_{i,s} &= \lfloor\frac{\timeQuantum_{i,s}}{\unitTime_{i,s}}\rfloor \\
+      \label{instanceDeadline}\instanceDeadline_{i,s} &= \lceil\lfloor\frac{\deadline}{\unitTime_{i,s}} \rfloor \cdot \unitTime_{i,s} \rceil
+  \end{align}
+  \begin{itemize}
+      \item $\transferTime_{i,s}$ -- {\em transfer time}: time for data transfer between
+      $\INSTANCE_i$ and $\STORAGE_s$,
+      \item $\unitTime_{i,s}$ -- {\em unit time}: time for processing a task
+      on instance $\INSTANCE_i$ using storage $\STORAGE_s$ that includes computing and
+      data transfer time (in hours),
+      \item $\transferCost_{i,s}$ -- cost of data transfer between instance
+      $\INSTANCE_i$ and storage $\STORAGE_s$,
+      \item $\tasksPerDeadline_{i,s}$ -- number of tasks that can be done on
+      one instance $\INSTANCE_i$ when using storage $\STORAGE_s$ running for $\deadline$ hours,
+      \item $\timeQuantum_{i,s}$ -- {\em time quantum}: minimal increase of
+      instance running time that is sufficient to increase the number of
+      processed tasks, rounded up to full hour,
+      \item $\tasksPerTimeQuantum_{i,s}$ -- number of tasks that can be done
+      in $\timeQuantum_{i,s}$ hours,
+      \item $\instanceDeadline_{i,s}$ -- {\em instance deadline}: number of
+      hours that can be effectively used for computation.
+  \end{itemize}
+
+\subsection{Variables}
+\label{sec:varialbes}
+  Variables that will be optimized and define the solution space are listed below:
+  \begin{itemize}
+      \item $\NumberInstances_i$ -- number of instances of type $\INSTANCE_i$
+      to be deployed,
+      \item $\TaskAssignment_i$ -- number of tasks to be processed on
+      instances of type $\INSTANCE_i$,
+      \item $\DataAssignment_s$ -- $1$ iif $\STORAGE_s$ is used, otherwise $0$; only one storage may be used,
+      \item $\TailTaskHours_i$ -- number of remainder (tail) hours for
+      instance $\INSTANCE_i$,
+      \item $\HasTail_i$ -- $1$ iif $\TailTaskHours_i \neq 0$, otherwise $0$.
+  \end{itemize}
+
+
+  Fig.~\ref{fig:policy} illustrates how the tasks are assigned to multiple running instances. The tasks are atomic and there is no checkpointing or preemption. Even though all the tasks have the same computational cost, their total processing time depends on performance of the VM type and data transfer rate. Moreover, the users are charged for the runtime of each VM rounded up to full hours. In our model the tasks are assigned to the instances in the following way. First, in the process of optimization $\TaskAssignment_i$ tasks are assigned to the instance $\INSTANCE_i$. This gives $\NumberInstances_i$  instances of type $\INSTANCE_i$ running for $\instanceDeadline_{i,s}$ hours. Remaining tasks are assigned to an additional instance running for $\TailTaskHours_i$ hours. We will refer to them as tail hours.
+
+  \begin{figure}[tb] 
+     \centering
+     \includegraphics[width=\columnwidth]{BagOfTasks/scheduling_policy.pdf}
+     \caption{\label{fig:policy}Task scheduling policy}
+  \end{figure}
+    
+
+  In order to enforce provider's instance limit, $\HasTail_i$ is introduced which indicates if $\INSTANCE_i$ has any tail hours. E.g. in Fig.~\ref{fig:policy} instances of type 1 have 3 tail hours, and instances of type 2 have no tail hours.
+
+
+\subsection{Formulation of constraints and objectives}
+
+  Cost of running a single task which includes the cost of VM instance time required for data transfer and task computing time, together with data transfer costs and request cost, can be described as: 
+
+  \begin{align*}
+      \left(\transferTime + \unitTime\right) \cdot \instancePrice + \\
+      \dataSizeIn \cdot \left(\storageTransferPriceOut + \instanceTransferPriceIn\right) + \\
+      \dataSizeOut \cdot \left(\instanceTransferPriceOut + \storageTransferPriceIn\right) + \\
+      \requestPrice.
+  \end{align*}
+
+  The objective function represents the total cost of running multiple tasks of the application on the cloud infrastructure and it is defined as:
+
+  \begin{align}    
+  \begin{split}
+      \underset{\text{total cost}}{\text{minimize}} \sum \limits_{i \in \INSTANCE}  ( & 
+                   (\sum\limits_{s \in \STORAGE} \DataAssignment_s\cdot\instanceDeadline_{i,s}\cdot\NumberInstances_i + \TailTaskHours_i) \cdot \instancePrice_i \\ 
+                   & + \TaskAssignment_i\cdot(\requestPrice + \sum\limits_{s \in \STORAGE} \DataAssignment_s \cdot \transferCost_{i,s})
+                 )
+  \end{split}
+  \end{align}
+  
+  subject to the constraints:
+  \nopagebreak 
+  \begin{align}
+     \label{cSolutionConstraintsBegin}\mathop\forall\limits_{i \in \INSTANCE} & \TaskAssignment_i \in \mathbb{Z} \land 0 \leq \TaskAssignment_i \leq \totalTasks  \\
+     \mathop\forall\limits_{s \in \STORAGE}  & \DataAssignment_s \in \{0, 1\} \\ 
+     \mathop\forall\limits_{i \in \INSTANCE} & \NumberInstances_i \in \mathbb{Z} \land 0 \leq \NumberInstances_i \leq \instanceMaxMachines_i \\
+     \mathop\forall\limits_{i \in \INSTANCE} & \TailTaskHours_i \in \mathbb{Z} \land 0 \leq \TailTaskHours_i \leq \deadline - 1 \\
+     \label{cSolutionConstraintsEnd}\mathop\forall\limits_{i \in \INSTANCE} & \HasTail_i \in \{0, 1\} \\
+     \label{cTaskAssignmentBounds}\mathop\forall\limits_{i \in \INSTANCE}
+          & \TaskAssignment_i \geq \sum_{s \in \STORAGE} (\NumberInstances_i \cdot
+          \tasksPerDeadline_{i,s}) \cdot \DataAssignment_s
+          \\
+      \label{cTaskAssignmentBounds2}\mathop\forall\limits_{i \in \INSTANCE}
+          & \TaskAssignment_i \leq  \sum_{s \in \STORAGE} (\NumberInstances_i \cdot
+          \tasksPerDeadline_{i,s} + \max(\tasksPerDeadline_{i,s} - 1, 0)) \cdot
+          \DataAssignment_s\\
+     \label{cTailTasksHoursBounds}\mathop\forall\limits_{i \in \INSTANCE}
+          & \TailTaskHours_i \geq \sum_{s \in \STORAGE} (\TaskAssignment_i - \NumberInstances_i \cdot
+          \tasksPerDeadline_{i,s}) \cdot \unitTime_{i,s} \cdot \DataAssignment_s
+          \\ 
+     \label{cTailTasksHoursBounds2}\mathop\forall\limits_{i \in \INSTANCE}
+          & \TailTaskHours_i  \leq \sum_{s \in \STORAGE} (\TaskAssignment_i -
+          \NumberInstances_i \cdot \tasksPerDeadline_{i,s} +
+          \tasksPerTimeQuantum_{i,s}) \cdot \unitTime_{i,s} \cdot
+          \DataAssignment_s\\ 
+     \label{cSumTasks}& \sum\limits_{i \in \INSTANCE} \TaskAssignment_i = \totalTasks \\
+     \label{cData}& \sum\limits_{s \in \STORAGE} \DataAssignment_s = 1 \\ 
+     \label{cSetHasTailBounds}\mathop\forall\limits_{i \in \INSTANCE} &
+     \HasTail_i \leq \TailTaskHours_i \leq \max(\deadline-1,0)\cdot\HasTail_i
+     \\ \label{cMaxMachines}\mathop\forall\limits_{p \in \PROVIDER} & \sum_{i \in \PROVIDERINSTANCES_p} (\HasTail_i + \NumberInstances_i) \leq \providerMaxMachines_p
+  \end{align}
+
+  Interpretation of the constraints is the following:
+  \begin{itemize}
+      \item(\ref{cSolutionConstraintsBegin}) to
+      (\ref{cSolutionConstraintsEnd}) define weak constraints for a solution, i.e. they are to ensure that the required variables have the appropriate integer or binary values,
+      \item(\ref{cTaskAssignmentBounds}) and (\ref{cTaskAssignmentBounds2}) ensure that number of instances is adequate to number of assigned tasks; for chosen storage $\DataAssignment_s$
+      \begin{align*}
+          \NumberInstances_i \cdot \tasksPerDeadline_{i,s} \leq \TaskAssignment_i \leq \NumberInstances_i \cdot \tasksPerDeadline_{i,s} + \max\left(\tasksPerDeadline_{i,s} - 1, 0\right)
+      \end{align*} where the lower bound is given by full allocation of $\NumberInstances_i$ machines and the upper bound includes a fully allocated tail machine,
+      \item(\ref{cTailTasksHoursBounds}) and (\ref{cTailTasksHoursBounds2})
+      ensure that number of tail hours is adequate to number of remaining
+      tasks, implement implement $\TailTaskHours_i = \ceil*{\left(\TaskAssignment_i - \NumberInstances_i \cdot \tasksPerDeadline_{i,s}\right) \cdot \unitTime_{i_s}}$,
+      \item(\ref{cSumTasks}) ensures that all tasks are processed,
+      \item(\ref{cData}) ensures that only one storage site is selected,
+      \item(\ref{cSetHasTailBounds}) ensures that $\TailTaskHours_i$ has proper value,
+      implements $\HasTail_i = \left\{\begin{array}{cc} 1 & \TailTaskHours_i\; >\; 0 \\ 0 & \TailTaskHours_i\; =\; 0 \end{array}\right.$. %TODO
+      \item(\ref{cMaxMachines}) enforces providers' instance limits. 
+  \end{itemize}
+
+  Defining the problem in AMPL enables to choose among a wide range of solvers that can be used as backend. The problem itself is MINLP, but can be reduced to Integer Linear Programming (ILP) problem. The nonlinear part of problem comes from storage choice, so by fixing storage provider and running optmization procedure for each storage separately the optimal solution is found.
+
+  Initially {Bonmin}~\cite{Bonami2008} solver was used, but after the model was fully implemented and subject to more tests, it appeared that CBC~\cite{cbc-solver} solver performs better with default options. This results from the fact that {Bonmin} is a solver designed to solve MINLP problems and uses various heuristics, while CBC uses a branch and bound algorithm tuned for ILP. As the problem is linear and convex, CBC finds global optimum. The model was optimized so that it should give acceptable results in $\sim$0.10 seconds \footnote{As measured on quad-core Intel i5 machine.}.
+
+\subsection{Search space size complexity}
+
+  \emph{TODO: Tu bym napisał od czego zależy rozmiar uniwersum rozwiązań}
+  \emph{TODO: Trzeba napisać dlaczego zostało to zamodelowane tak, a nie inaczej i jakie triki zostały zrobione}
+
+\section{Experiments and results}
+\label{sec:bot:results}
+    
+  To evaluate our model, we first run the optimization process for two scenarios with a private cloud and (1) infinite public clouds (Section~\ref{sec:private-infinite}) and (2) finite public clouds (Section~\ref{sec:private-finite}). We also evaluated the effect of possible overlapping of computations and data transfers (Section~\ref{sec:overlapping}). When testing the model under various input parameters, we identified interesting special cases, which are described in Section~\ref{sec:special}. Finally, we performed a sensitivity analysis and discussed its implications and potential usage in Section~\ref{sec:sensitivity}.
+    
+  We evaluated the model for two types of tasks -- data intensive tasks thatrequire relatively large amount of data for short computing time (we assumed 512 MiB of input and 512 MiB of output) and compute intensive tasks that require relatively small amount of data (we assumed 0.25 MiB of input and 0.25 MiB of output). Each case consists of 20,000 tasks, each of them requires 0.1 hour of computing time on a VM with performance of 1 CCU. Two scenarios with infinite and finite public clouds were considered, where as the costs and performance of public clouds we used the data from CloudHarmony benchmarks. This dataset gives the data of 4 compute cloud providers (Amazon EC2, Rackspace, ElasticHosts and GoGrid) and 2 storage providers (Amazon S3 and Rackspace Cloud Files), giving the instance prices between \$0.06 and \$2.40 per hour and performance between 0.92 and 27.4 CCU. We assumed that the private cloud instances have the performance of 1 CCU and \$0 cost.  For each scenario we varied the deadline parameter between 5and 100 hours.  Since we considered only two storage providers (S3 and Cloud Files), we run the solver separately for these two parameters.
+    
+\subsection{Private + infinite public clouds}
+\label{sec:bot:private-infinite} 
+  In this scenario we assumed that the private cloud can run a maximum of 10 instances, while the public clouds have unlimited capacity. The results for tasks that require small amount of data are shown in Fig.~\ref{fig:small-infinite}. As the deadline is extended, the total cost linearly drops as expected. As many tasks as possible are run on the private cloud, and for all the remaining tasks the instance type with best price to performance ratio is selected.
+    
+  This situation changes as data size grows (Fig.~\ref{fig:large-infinite}) -- for data intensive tasks the total cost is nearly constant as all the work is done on a public cloud. This results from the fact that data transfer cost to and from the private cloud is higher than the cost of running instances on public cloud. In our case it turns out that the lowest cost can be achieved when using Cloud Files storage from Rackspace, since in our dataset the best instance type in terms of price to performance was available at Rackspace. 
+        
+  \begin{figure}[tb] 
+     \centering
+     \includegraphics[width=\columnwidth]{results/infinite/small/graph-small-infinite.pdf}
+     \caption{Small data processed on infinite public cloud\label{fig:small-infinite}}
+     
+  \end{figure}
+
+  \begin{figure}[tb] 
+     \centering
+     \includegraphics[width=\columnwidth]{results/infinite/large/graph-large-infinite.pdf}
+     \caption{Large data processed on infinite public cloud\label{fig:large-infinite}}
+  \end{figure}        
+    
+\subsection{Private + finite public clouds}
+\label{sec:bot:private-finite}
+    
+  If assumption that public clouds are limited is made, situation is not so straightforward (See Fig.~\ref{fig:small-finite} and~\ref{fig:large-finite}). For relatively long deadlines, a single cloud platform for both VMs and storage can be used, which means that the data transfer is free. As the deadline shortens we first observe a linear cost increase. At the point when the selected cloud platform reaches its VM limit, additional clouds need to be used, so we need to begin paying for the data transfer. Therefore the cost begins to increase more rapidly.
+  
+  \begin{figure}[tb]
+     \centering
+     \includegraphics[width=\columnwidth]{results/finite/small/graph-small-finite.pdf}
+     \caption{Small data processed on finite public
+     cloud\label{fig:small-finite}}
+  \end{figure}
+
+    
+  This effect is very significant in the case of data intensive tasks (Fig.~\ref{fig:large-finite}) as the cost growth may become very steep. For example, in our tests the task processing cost in 28 hours was \$157.39, in 30 hours it was \$131.14 and in 34 hours it was only \$30.26. For longer deadlines there was no further decrease. We can also observe that for longer deadlines the Cloud Files storage provider is less expensive for the same reason as it was in Fig.~\ref{fig:large-infinite}. Shorter deadlines, however, require to run more powerful instances from other clouds (Amazon EC2), thus it becomes more economical to use its local S3 storage.
+    
+  \begin{figure}[tb]
+     \centering
+     \includegraphics[width=\columnwidth]{results/finite/large/graph-large-finite.pdf}
+     \caption{Large data processed on finite public
+     cloud\label{fig:large-finite}}
+  \end{figure}  
+  
+\subsection{Overlapping computation and data transfers}
+\label{sec:overlapping}
+  
+  In our model we assume that computation and data transfers are not overlapping. To achieve parallelism of these two processes, the model needs to be modified in the following way. We assumed that the total task computation time is maximum of task execution and data transfer time. Additionally, input for the first task and output of the last task must be transferred sequentially. Equations \ref{unitTime}, \ref{tasksPerDeadline} and \ref{instanceDeadline} are updated for this case as follows:
+  
+  \begin{align}
+      \unitTime_{i,s} &= \max(\frac{\execTime}{\ccu_i}, \transferTime_{i,s})  \\    
+      \tasksPerDeadline_{i,s} &= \lfloor\frac{(\deadline - \transferTime_{i,s})}{\unitTime_{i,s}}\rfloor \\         
+      \instanceDeadline_{i,s} &= \lceil\lfloor\frac{(\deadline - \transferTime_{i,s})}{\unitTime_{i,s}} \rfloor \cdot \unitTime_{i,s} \rceil            
+  \end{align}
+  
+  Fig.~\ref{fig:large-finite-overlap} shows results for the same experiment as in Section~\ref{sec:private-finite} and Fig.~\ref{fig:large-finite}, but with computing and transfers overlapping. Overlapping reduces total cost as time required for task processing is significantly lower.  This is especially true for shorter deadlines when multiple  clouds are used, as transfer rates are lower between different clouds comparing to one provider infrastructure.
+  
+  \begin{figure}[tb]
+     \centering
+     \includegraphics[width=\columnwidth]{BagOfTasks/overlap.pdf}
+     \caption{Large data processed on finite public cloud with overlapping computation and data transfer\label{fig:large-finite-overlap}}
+  \end{figure}  
+
+\subsection{Identifying special cases}
+\label{sec:special}
+  
+  Running a test case with very large tasks which cannot be completed within one hour on largest available instance revealed an interesting model behaviour. Results are shown on Fig.~\ref{fig:special-case-results}. Local minima may occur for certain deadlines thus cost does not increase monotonically with decrease of deadline. This is a consequence of our task scheduling policy, as explained in Section~\ref{sec:varialbes}. In the case of large tasks, the schedule for deadline of 9 hours  as seen in Fig.~\ref{fig:special-case-009-cf} costs less than for deadline of 10 hours as in Fig.~\ref{fig:special-case-010-cf}. In the first case the total number of VM-hours of the gg-8mb instance is equal to 56, but in the case of deadline = 10 hours the total number is 58, which results in higher cost. This is the result of the policy, which tries to keep VMs running time as close to the deadline as possible. Such policy is based on general observation, that for a given budget it is usually more economical to start less VMs for longer time than to start more VMs for shorter time. However, there are rare cases when such policy may lead to non-optimal solutions. It should be noted, that the solution of the model returned by the solver in this case is optimal, but it is the model itself that does not allow to find the minimum cost.
+  
+  Moreover, for longer deadlines the cost is a step function -- e.g. the cost for deadline = 18 hours is the same as for 14 hours. These two observations suggest that the model could be modified in such a way that the deadline is also a variable with upper bound constraint. Similar result can be achieved in a simple way by solving the current model for multiple deadlines in the neigborhood of the desired deadline and by selecting the best solution.  
+  
+  \begin{figure}[tb]
+     \centering \includegraphics[width=\columnwidth]{BagOfTasks/special-case-results.pdf}
+     \caption{Special case with local minimum for deadline 9
+     \label{fig:special-case-results}}
+  \end{figure}
+
+  \begin{figure}[tb]
+     \centering 
+   \subfloat[Deadline = 9 hours \label{fig:special-case-009-cf}]{
+     \includegraphics[width=\columnwidth]{BagOfTasks/special-case-009-cf.pdf}
+     }\\
+     \subfloat[Deadline = 10 hours \label{fig:special-case-010-cf}]{
+     \includegraphics[width=\columnwidth]{BagOfTasks/special-case-010-cf.pdf}
+     }
+     \caption{Task schedule for the identified special case}
+  \end{figure}
+    
+\section{Sensitivity analysis}
+\label{sec:bot:sensitivity}
+    
+  \begin{figure*}[tb]
+     \centering \includegraphics[width=0.7\textwidth]{BagOfTasks/sensitivity-surface}
+     \caption{Optimal cost for a wide range of deadline constraints and data
+     sizes.\label{fig:sensitivity-surface}}
+  \end{figure*} 
+  
+  In order to better assess how our model behaves in response to the changing
+  constraints and for varying input parameters, we performed a sensitivity
+  analysis by sampling a large parameter space.
+  Fig.\ref{fig:sensitivity-surface} shows the solutions obtained for deadlines
+  ranging from 2 to 40 hours and for input and output data sizes ranging from
+  0 to 256 MiB. As it can be seen in the plot, for all data sizes the cost
+  increases monotonically with the decrease of the deadline, which confirms
+  that no anomalies are observed. The same data can be also observed as
+  animated plot available as on-line supplement\footnote{See also
+  \url{http://youtu.be/FWjgMwLdZW4}}.
+  
+  \begin{figure}[tb]
+     \centering \includegraphics[width=\columnwidth]{BagOfTasks/cost_vs_data_size}
+     \caption{Cost as a function of data size for different
+     deadlines.\label{fig:cost_vs_data_size}}
+  \end{figure} 
+  
+  Fig.~\ref{fig:cost_vs_data_size} presents these results from a perspective
+  where each curve shows how the cost depends on data size for varying
+  deadlines.
+  
+  \begin{figure}[tb]
+     \centering \subfloat[Cost as a function of deadline]{
+     \includegraphics[width=\columnwidth]{BagOfTasks/deadline-cost-150}
+     }\\
+     \subfloat[Elasticity of cost versus deadline]{
+     \includegraphics[width=\columnwidth]{BagOfTasks/deadline-elasticity-150} }
+     \caption{Sensitivity of costs in response to changes in deadline}
+     \label{fig:elasticity}
+  \end{figure} 
+  
+  One of the questions that our model can help answer is how the changes in
+  cost are sensitive to the changes of deadline. Fig.\ref{fig:elasticity} shows
+  the cost function as well as corresponding elasticity, which is computed as:
+  $E f(x) = \frac{x}{f(x)} f'(x)$, where in this case $f$ is cost and $x$ is
+  deadline. Elasticity gives the information on what is the percentage change
+  of cost in response to the percentage change of deadline. The function has
+  negative values, since the cost decreases with the increase of deadline. It
+  is interesting to see in which ranges the elasticity has larger absolute
+  value, which corresponds to more steep cost function. Here we can see that
+  the elasticity grows for short deadlines and close to the deadline of 25
+  hours, which is the point where the solution cannot use only the VM instances
+  from most cost-effective clouds and requires more expensive ones to meet the
+  deadline.
+  
+  Identifying such ranges with high absolute value of elasticity is important
+  for potential users of the cloud system, including researchers (end users) or
+  resellers (brokers). The end user can for example observe that changing the
+  deadline from 40 to 30 hours or even from 20 to 10 hours will not incur much
+  additional cost. However, changing the deadline from 30 to 20 hours is very
+  costly, so it should be avoided. On the other hand, the situation looks
+  different from the perspective of a reseller, who buys cloud resources from
+  providers and offers them to end-users in order to make profit. The reseller
+  can for example offer to compute the given set of tasks in 20 hours for \$150
+  with minimal profit, but it can also offer to complete the same set of tasks
+  in 30 hours for \$50. Such price can seem attractive to the end user who pays
+  1/3 of the price for increasing the deadline by 50\%, but it is in fact very
+  beneficial for the reseller, whose profit reaches 100\%. Such cost analysis
+  is an important aspect of planning large computing experiments on cloud
+  infrastructures.
+
+\section{Impact of dynamic environment}
+\label{sec:bot:dynamic}
+    
+  As stated in section~\ref{sec:bot:model}, we assume that execution time,
+  transfer rate and data access time for all the tasks are constant. However,
+  in real environments the actual runtime of tasks will vary. The goal of the
+  following simulation experiment was to estimate the impact of this runtime
+  variation on the quality of results obtained using our optimization model.
+  
+  For all the task assignment solutions presented in Fig.~\ref{fig:sensitivity-surface} 
+  we add runtime variations to the task runtimes in the following way. For each task
+  we generate a random error in the range from $-v$ to $v$ using uniform distribution,
+  where $v$ is the runtime variation range. We tested values of $v=10\%, 20\%, 30\%, 40\%, 50\%$. 
+  Such modified task runtimes are then used to calculate the actual runtime and cost of 
+  VM. Due to variation of task runtimes, it is possible that some computations may not 
+  finish before the deadline (time overrun) and that the cost of additional VM-hours
+  may need to be paid (cost overrun).
+
+  We assume that task size variations include also
+  variations of data transfer time. We don't take into account variations of
+  data transfer costs, since the transfer costs for each task depend linearly
+  on data size, so the aggregated impact of positive and negative variations
+  cancels to nearly $0$.
+  
+  \begin{figure}[tb]
+     \centering
+     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-10-2-cost-relative}  
+     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-50-2-cost-relative}  
+ 	   \caption{Impact of runtime variation on cost overrun as a function of deadline. 
+ 	   Results obtained for random variation of task runtime in the range from $-10\%$ to $+10\%$ (top)
+ 	   and from $-50\%$ to $+50\%$ (bottom). }
+ 	   \label{fig:dynamic-cost}
+  \end{figure} 
+  
+  Fig.\ref{fig:dynamic-cost} shows the cost overrun with 10\% and 50\%  of runtime
+  variation range.  The boxplots for each deadline represent averaged
+  results for the data sizes from 0 to 256 MiB as in
+  Fig.~\ref{fig:sensitivity-surface}, with box boundaries at quartiles
+  and whiskers at maximum and minimum values. We observe that the highest
+  overruns are for the shortest deadlines, which results from the fact that
+  when each VM instance runs only for a few hours, then the additional hour
+  will incur relatively high additional cost. On the other hand, for longer
+  deadlines the cost of additional VM-hour becomes less significant. We also
+  observe that the aggregated impact of positive and negative variations in
+  task execution time may cancel to nearly $0$ and in some cases the cost
+  overrun may be negative.
+
+  \begin{figure}[tb]
+     \centering
+     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-10-2-overrun-relative}  
+     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-50-2-overrun-relative}  
+ 	   \caption{Impact of runtime variation on deadline overrun as a function of deadline. 
+ 	   Results obtained for random variation of task runtime in the range from $ -10\%$ to $10\%$ (top)
+ 	   and from $-50\%$ to $+50\%$ (bottom). }
+ 	   \label{fig:dynamic-time}
+  \end{figure} 
+
+  In a similar way Fig.~\ref{fig:dynamic-time} shows the deadline overrun in
+  the presence of runtime variations. We can observe that the deadline overrun
+  is much smaller than cost overrun. This means that the actual finish time of
+  all tasks is not significantly affected by the runtime variation, due to the
+  cancellation effect. We observe that even for high variations in the range
+  from $-50\%$ to $50\%$ the actual runtime rarely exceeds the deadline by
+  more than 10\%. This overrun can be thus easily compensated by solving the
+  optimization problem with a respectively shorter deadline giving a safety
+  margin in the case of expected high variations of actual task runtimes. Similar
+  estimation is also possible in the case when the application consists of many
+  tasks of similar size which distribution in known in advance. 

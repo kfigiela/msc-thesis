@@ -28,12 +28,13 @@
 \documentclass[11pt, a4paper, oneside]{Thesis} % Paper size, default font size and one-sided paper
 
 \graphicspath{{./Pictures/}} % Specifies the directory where pictures are stored
-
+\usepackage{mathtools}
 \usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
 \hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
 \title{\ttitle} % Defines the thesis title - don't touch this
 
 \begin{document}
+  
 
 \frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
@@ -54,6 +55,51 @@
 \hypersetup{pdfauthor=\authornames}
 \hypersetup{pdfkeywords=\keywordnames}
 
+
+%----------------------------------------------------------------------------------------
+% MACROS
+%----------------------------------------------------------------------------------------
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\newcommand{\footlink}[2]{\href{#1}{#2}\footnote{#1}}
+
+
+
+\newcommand{\INSTANCE}{I}
+\newcommand{\STORAGE}{S}
+\newcommand{\PROVIDER}{P}
+\newcommand{\PROVIDERINSTANCES}{PI}
+\newcommand{\LOCALSTORAGE}{LS}
+
+\newcommand{\instancePrice}{p^I}
+\newcommand{\ccu}{ccu}
+\newcommand{\instanceTransferPriceIn}{p^{Iin}}
+\newcommand{\instanceTransferPriceOut}{p^{Iout}}
+\newcommand{\storageTransferPriceOut}{p^{Sout}}
+\newcommand{\storageTransferPriceIn}{p^{Sin}}
+\newcommand{\transferRate}{r}
+\newcommand{\totalTasks}{A^{tot}}
+\newcommand{\transferTime}{t^{net}}
+\newcommand{\execTime}{t^x}
+\newcommand{\dataSizeIn}{d^{in}}
+\newcommand{\dataSizeOut}{d^{out}}
+\newcommand{\requestPrice}{p^{R}}
+\newcommand{\deadline}{t^D}
+\newcommand{\instanceDeadline}{t^d}
+\newcommand{\unitTime}{t^u}
+\newcommand{\transferCost}{c^t}
+\newcommand{\tasksPerDeadline}{a^d}
+\newcommand{\timeQuantum}{t^q}
+\newcommand{\tasksPerTimeQuantum}{a^q}
+\newcommand{\providerMaxMachines}{n^{Pmax}}
+\newcommand{\instanceMaxMachines}{n^{Imax}}
+
+\newcommand{\NumberInstances}{N}
+\newcommand{\TaskAssignment}{A}
+\newcommand{\DataAssignment}{D}
+\newcommand{\TailTaskHours}{R}
+\newcommand{\HasTail}{H}
+
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -62,7 +108,7 @@
 \begin{center}
 
 \textsc{\LARGE \univname}\\[1.5cm] % University name
-\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+\textsc{\Large Master Thesis}\\[0.5cm] % Thesis type
 
 \HRule \\[0.4cm] % Horizontal line
 {\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
@@ -255,7 +301,9 @@
 \input{./Chapters/Introduction}
 \input{./Chapters/StateOfArt} 
 \input{./Chapters/AMPL} 
-\input{./Chapters/Formulation}
+\input{./Chapters/BagOfTasks}
+\input{./Chapters/Workflows}
+\input{./Chapters/Conclusions}
 % \input{./Chapters/Chapter4} 
 % \input{./Chapters/Chapter5} 
 % \input{./Chapters/Chapter6} 

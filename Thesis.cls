@@ -137,6 +137,7 @@
 \usepackage{rotating}
 \usepackage{listings}
 \usepackage{lstpatch}
+\usepackage[utf8]{inputenc}
 \lstset{captionpos=b,
         frame=tb,
         basicstyle=\scriptsize\ttfamily,
@@ -179,15 +180,16 @@
 %	defined as \examname above so you cite it as \examname
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title - this is used in the title and abstract
+\thesistitle{Optimization of resource allocation on the cloud} % Your thesis title - this is used in the title and abstract
+% Optymalizacja alokacji zasobów w chmurze obliczeniowej
 %-------------------------------------------------  
-\supervisor{Dr. James \textsc{Smith}} % You supervisor's name - this is used in the title page
+\supervisor{dr inż. Maciej \textsc{Malawski}} % You supervisor's name - this is used in the title page
 %-------------------------------------------------   
 \examiner{} % Your examiner's name - this is not currently used anywhere in the template, cite it with \examname if you want it
 %-------------------------------------------------   
 \degree{Doctor of Philosophy} % Your degree name - this is currently used in the title page and abstract
 %-------------------------------------------------   
-\authors{John \textsc{Smith}} % Your name - this is used in the title page and abstract
+\authors{Kamil \textsc{Figiela}} % Your name - this is used in the title page and abstract
 %-------------------------------------------------   
 \addresses{} % Your address - this is not currently used anywhere in the template, cite it with \addressnames if you want it
 %-------------------------------------------------   
