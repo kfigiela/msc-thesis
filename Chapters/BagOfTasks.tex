@@ -1,3 +1,40 @@
+{ % Command scope
+
+\newcommand{\INSTANCE}{I}
+\newcommand{\STORAGE}{S}
+\newcommand{\PROVIDER}{P}
+\newcommand{\PROVIDERINSTANCES}{PI}
+\newcommand{\LOCALSTORAGE}{LS}
+
+\newcommand{\instancePrice}{p^I}
+\newcommand{\ccu}{ccu}
+\newcommand{\instanceTransferPriceIn}{p^{Iin}}
+\newcommand{\instanceTransferPriceOut}{p^{Iout}}
+\newcommand{\storageTransferPriceOut}{p^{Sout}}
+\newcommand{\storageTransferPriceIn}{p^{Sin}}
+\newcommand{\transferRate}{r}
+\newcommand{\totalTasks}{A^{tot}}
+\newcommand{\transferTime}{t^{net}}
+\newcommand{\execTime}{t^x}
+\newcommand{\dataSizeIn}{d^{in}}
+\newcommand{\dataSizeOut}{d^{out}}
+\newcommand{\requestPrice}{p^{R}}
+\newcommand{\deadline}{t^D}
+\newcommand{\instanceDeadline}{t^d}
+\newcommand{\unitTime}{t^u}
+\newcommand{\transferCost}{c^t}
+\newcommand{\tasksPerDeadline}{a^d}
+\newcommand{\timeQuantum}{t^q}
+\newcommand{\tasksPerTimeQuantum}{a^q}
+\newcommand{\providerMaxMachines}{n^{Pmax}}
+\newcommand{\instanceMaxMachines}{n^{Imax}}
+
+\newcommand{\NumberInstances}{N}
+\newcommand{\TaskAssignment}{A}
+\newcommand{\DataAssignment}{D}
+\newcommand{\TailTaskHours}{R}
+\newcommand{\HasTail}{H}
+
 \chapter{Bag of tasks optimization}
 \label{chap:formulation-bag-of-tasks} 
 \lhead{Chapter 4. \emph{Bag of tasks optimization}}
@@ -10,7 +47,7 @@
   In this chapter we discuss optimization of scientific applications that may be represented as bag of uniform tasks tasks. The goal this model is to minimize the cost of processing a given number of tasks on a hybrid cloud platform, as illustrated in Fig.~\ref{fig:arch}. I assumed that tasks are independent from each other, but they have identical computational cost and require a constant amount of data transfer. 
 
   The assumption of homegeneous tasks can be justified by the reason that there are many examples of scientific applications (e.g. scientific workflows or large parameter sweeps) that include a stage of a high number of parallel nearly identical tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
-Moreover, if the tasks are not ideally homogeneous, it is possible to approximate them using a uniform set of tasks with the mean computational cost and data sizes of the application tasks. Of course, in real execution the actual task performance may vary, so the solution obtained using our optimization method becomes only approximate of the best allocation, and the actual cost may be higher and deadline may be exceeded. In order to estimate the quality of this approximation, we evaluate the impact of dynamic task runtime and and non-uniform tasks in section~\ref{sec:dynamic}. 
+Moreover, if the tasks are not ideally homogeneous, it is possible to approximate them using a uniform set of tasks with the mean computational cost and data sizes of the application tasks. Of course, in real execution the actual task performance may vary, so the solution obtained using our optimization method becomes only approximate of the best allocation, and the actual cost may be higher and deadline may be exceeded. In order to estimate the quality of this approximation, we evaluate the impact of dynamic task runtime and and non-uniform tasks in section~\ref{sec:bot:dynamic}. 
 
   Model assumes that for each task a certain amount of input data needs to be downloaded, and after it finishes, the output results need to be stored. In the case of data-intensive tasks, the transfers may contribute a significant amount of total task run time.
 
@@ -114,7 +151,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   \end{itemize}
 
 
-  Fig.~\ref{fig:policy} illustrates how the tasks are assigned to multiple running instances. The tasks are atomic and there is no checkpointing or preemption. Even though all the tasks have the same computational cost, their total processing time depends on performance of the VM type and data transfer rate. Moreover, the users are charged for the runtime of each VM rounded up to full hours. In our model the tasks are assigned to the instances in the following way. First, in the process of optimization $\TaskAssignment_i$ tasks are assigned to the instance $\INSTANCE_i$. This gives $\NumberInstances_i$  instances of type $\INSTANCE_i$ running for $\instanceDeadline_{i,s}$ hours. Remaining tasks are assigned to an additional instance running for $\TailTaskHours_i$ hours. We will refer to them as tail hours.
+  Fig.~\ref{fig:bot:policy} illustrates how the tasks are assigned to multiple running instances. The tasks are atomic and there is no checkpointing or preemption. Even though all the tasks have the same computational cost, their total processing time depends on performance of the VM type and data transfer rate. Moreover, the users are charged for the runtime of each VM rounded up to full hours. In our model the tasks are assigned to the instances in the following way. First, in the process of optimization $\TaskAssignment_i$ tasks are assigned to the instance $\INSTANCE_i$. This gives $\NumberInstances_i$  instances of type $\INSTANCE_i$ running for $\instanceDeadline_{i,s}$ hours. Remaining tasks are assigned to an additional instance running for $\TailTaskHours_i$ hours. We will refer to them as tail hours.
 
   \begin{figure}[tb] 
      \centering
@@ -123,7 +160,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   \end{figure}
     
 
-  In order to enforce provider's instance limit, $\HasTail_i$ is introduced which indicates if $\INSTANCE_i$ has any tail hours. E.g. in Fig.~\ref{fig:policy} instances of type 1 have 3 tail hours, and instances of type 2 have no tail hours.
+  In order to enforce provider's instance limit, $\HasTail_i$ is introduced which indicates if $\INSTANCE_i$ has any tail hours. E.g. in Fig.~\ref{fig:bot:policy} instances of type 1 have 3 tail hours, and instances of type 2 have no tail hours.
 
 
 \subsection{Formulation of constraints and objectives}
@@ -204,8 +241,8 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
 
 \subsection{Search space size complexity}
 
-  \emph{TODO: Tu bym napisał od czego zależy rozmiar uniwersum rozwiązań}
-  \emph{TODO: Trzeba napisać dlaczego zostało to zamodelowane tak, a nie inaczej i jakie triki zostały zrobione}
+  \emph{TODO: Tu bym napisal od czego zalezy rozmiar uniwersum rozwiaza'n}
+  \emph{TODO: Trzeba napisa'c dlaczego zostalo to zamodelowane tak, a nie inaczej i jakie triki zostaly zrobione}
 
 \section{Experiments and results}
 \label{sec:bot:results}
@@ -222,14 +259,14 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
         
   \begin{figure}[tb] 
      \centering
-     \includegraphics[width=\columnwidth]{results/infinite/small/graph-small-infinite.pdf}
+     \includegraphics[width=\columnwidth]{BagOfTasks/graph-small-infinite.pdf}
      \caption{Small data processed on infinite public cloud\label{fig:small-infinite}}
      
   \end{figure}
 
   \begin{figure}[tb] 
      \centering
-     \includegraphics[width=\columnwidth]{results/infinite/large/graph-large-infinite.pdf}
+     \includegraphics[width=\columnwidth]{BagOfTasks/graph-large-infinite.pdf}
      \caption{Large data processed on infinite public cloud\label{fig:large-infinite}}
   \end{figure}        
     
@@ -240,7 +277,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{results/finite/small/graph-small-finite.pdf}
+     \includegraphics[width=\columnwidth]{BagOfTasks/graph-small-finite.pdf}
      \caption{Small data processed on finite public
      cloud\label{fig:small-finite}}
   \end{figure}
@@ -250,7 +287,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
     
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{results/finite/large/graph-large-finite.pdf}
+     \includegraphics[width=\columnwidth]{BagOfTasks/graph-large-finite.pdf}
      \caption{Large data processed on finite public
      cloud\label{fig:large-finite}}
   \end{figure}  
@@ -289,11 +326,11 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
 
   \begin{figure}[tb]
      \centering 
-   \subfloat[Deadline = 9 hours \label{fig:special-case-009-cf}]{
-     \includegraphics[width=\columnwidth]{BagOfTasks/special-case-009-cf.pdf}
-     }\\
-     \subfloat[Deadline = 10 hours \label{fig:special-case-010-cf}]{
-     \includegraphics[width=\columnwidth]{BagOfTasks/special-case-010-cf.pdf}
+     \subfigure[Deadline = 9 hours \label{fig:special-case-009-cf}]{
+       \includegraphics[width=\columnwidth]{BagOfTasks/special-case-009-cf.pdf}
+     } \\
+     \subfigure[Deadline = 10 hours \label{fig:special-case-010-cf}]{
+       \includegraphics[width=\columnwidth]{BagOfTasks/special-case-010-cf.pdf}
      }
      \caption{Task schedule for the identified special case}
   \end{figure}
@@ -329,10 +366,10 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   deadlines.
   
   \begin{figure}[tb]
-     \centering \subfloat[Cost as a function of deadline]{
+     \centering \subfigure[Cost as a function of deadline]{
      \includegraphics[width=\columnwidth]{BagOfTasks/deadline-cost-150}
      }\\
-     \subfloat[Elasticity of cost versus deadline]{
+     \subfigure[Elasticity of cost versus deadline]{
      \includegraphics[width=\columnwidth]{BagOfTasks/deadline-elasticity-150} }
      \caption{Sensitivity of costs in response to changes in deadline}
      \label{fig:elasticity}
@@ -436,3 +473,6 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   margin in the case of expected high variations of actual task runtimes. Similar
   estimation is also possible in the case when the application consists of many
   tasks of similar size which distribution in known in advance. 
+	
+	
+} % Command scope

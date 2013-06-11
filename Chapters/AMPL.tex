@@ -16,6 +16,7 @@ In development of mathematical programming one kind of problem stands out: that 
 All useful methods of mathematical programming involve using computers. It appeared very quickly in 1940s that computers may be used for scientific computing. The first computional method of solving optimization problems, the simplex algorithm, was introduced at that time and was subject to several improvements over the decades.
 
 \subsection{Problem classification}
+\label{ampl:classification}
 
 In spite of the broad applications of linear programming, the linearity assumption is too unrealistic to be applied to many of real problems. If instead smooth non-linear functions of the variables are used in constraints and objectives we call the program as \emph{non-linear program}. Solving such problems is much harder, but not impossible.
 
@@ -45,11 +46,21 @@ To successfully solve optimization problem one needs to do a sequence of multipl
 
 Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrixes as input. We need to transform \emph{modeller's form} to \emph{algorithm's form} and doing it manually is time consuming and erron-prone task.
 
-To solve that problem several modelling tools were created \footnote{i.e. AMPL, Gams, PuLP, OscaR}. 
+To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages were created \footnote{i.e. AMPL, Gams, PuLP, OscaR} over the decades. 
 
-\emph{TODO: wprowadzenie do tego czym jest a czym nie jest}
+By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change.
+
+AMPL is an algebraic mathematical modelling lanuage that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer. Algebraic modelling languages allow to express a wide range of optimization problems linear, nonlinear and integer.
+
+\subsection{Available solvers}
+
+As soon as model is formulated and matrices generated, we may proceed with solving the specific instance of our problem. To do that we will need solver -- a program that implements one of solving algorithms. There is wide range of existing solvers available, both open-source and commercial ones that differ with the problem classes they target \footnote{http://www.ampl.com/solvers.html}. 
+
+\emph{TODO: tutaj nalezaloby zrobic male zestawienie solverow}
+
+\emph{TODO: napisac o tym, ze solvery sie dostraja}
 
 \subsection{Example 1: ??}
 \subsection{Example 2: ??}
 
-\emph{TODO: Tutaj dwa przykłady, jeden najlepiej liniowy, a drugi integerowy – znajdzie się coś klasycznego w AMPL booku}
+\emph{TODO: Tutaj dwa przyklady, jeden najlepiej liniowy, a drugi integerowy – znajdzie sie cos klasycznego w AMPL booku}
