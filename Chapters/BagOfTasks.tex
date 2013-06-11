@@ -155,7 +155,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
 
   \begin{figure}[tb] 
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/scheduling_policy.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/scheduling_policy.pdf}
      \caption{\label{fig:policy}Task scheduling policy}
   \end{figure}
     
@@ -259,14 +259,14 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
         
   \begin{figure}[tb] 
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/graph-small-infinite.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/graph-small-infinite.pdf}
      \caption{Small data processed on infinite public cloud\label{fig:small-infinite}}
      
   \end{figure}
 
   \begin{figure}[tb] 
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/graph-large-infinite.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/graph-large-infinite.pdf}
      \caption{Large data processed on infinite public cloud\label{fig:large-infinite}}
   \end{figure}        
     
@@ -277,7 +277,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/graph-small-finite.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/graph-small-finite.pdf}
      \caption{Small data processed on finite public
      cloud\label{fig:small-finite}}
   \end{figure}
@@ -287,7 +287,7 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
     
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/graph-large-finite.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/graph-large-finite.pdf}
      \caption{Large data processed on finite public
      cloud\label{fig:large-finite}}
   \end{figure}  
@@ -325,13 +325,19 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   \end{figure}
 
   \begin{figure}[tb]
-     \centering 
-     \subfigure[Deadline = 9 hours \label{fig:special-case-009-cf}]{
-       \includegraphics[width=\columnwidth]{BagOfTasks/special-case-009-cf.pdf}
-     } \\
-     \subfigure[Deadline = 10 hours \label{fig:special-case-010-cf}]{
-       \includegraphics[width=\columnwidth]{BagOfTasks/special-case-010-cf.pdf}
-     }
+     \centering  
+     \begin{subfigure}[b]{0.49\textwidth}
+       \centering       
+       \includegraphics[width=\textwidth]{BagOfTasks/special-case-009-cf.pdf}
+       \caption{Deadline = 9 hours}
+       \label{fig:special-case-009-cf}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.49\textwidth}
+       \centering       
+       \includegraphics[width=\textwidth]{BagOfTasks/special-case-010-cf.pdf}
+       \caption{Deadline = 10 hours}
+       \label{fig:special-case-010-cf}
+     \end{subfigure}
      \caption{Task schedule for the identified special case}
   \end{figure}
     
@@ -366,15 +372,21 @@ Moreover, if the tasks are not ideally homogeneous, it is possible to approximat
   deadlines.
   
   \begin{figure}[tb]
-     \centering \subfigure[Cost as a function of deadline]{
-     \includegraphics[width=\columnwidth]{BagOfTasks/deadline-cost-150}
-     }\\
-     \subfigure[Elasticity of cost versus deadline]{
-     \includegraphics[width=\columnwidth]{BagOfTasks/deadline-elasticity-150} }
+     \centering 
+     \begin{subfigure}[b]{0.49\textwidth}
+       \centering       
+       \includegraphics[width=\textwidth]{BagOfTasks/deadline-cost-150}
+       \caption{Cost as a function of deadline}
+     \end{subfigure}     
+     \begin{subfigure}[b]{0.49\textwidth}
+       \centering       
+       \includegraphics[width=\textwidth]{BagOfTasks/deadline-elasticity-150}
+       \caption{Elasticity of cost versus deadline}
+     \end{subfigure}     
      \caption{Sensitivity of costs in response to changes in deadline}
      \label{fig:elasticity}
   \end{figure} 
-  
+  % 
   One of the questions that our model can help answer is how the changes in
   cost are sensitive to the changes of deadline. Fig.\ref{fig:elasticity} shows
   the cost function as well as corresponding elasticity, which is computed as:

@@ -24,11 +24,12 @@ There is also another class of problems called \emph{integer programming} that a
 
 The optimization problems may be categorized in the following groups:
 \begin{description}
-  \item[LP: linear programming] TODO
-  \item[NLP: non-linear programming] TODO
-  \item[MIP: mixed-integer programming] TODO
-  \item[MINLP: mixed-integer non-linear programming] TODO
-  \item[CP: constraint programming] TODO
+  \item[Linear programming (LP)] Objective and constraints in this class are linear functions. Problems in this groups are usually solved by using \emph{simplex}, \emph{interior} or \emph{barrier} method.
+  \item[Quadratic programming (QP)] Convex or concave objective and linear constraints. Solved by simplex-type or interior-type method.
+  \item[Non-linear programming (NLP)] Continuous, but not all-linear objective and constraints. May be solved by several methods including gradient, quasi-newton, augmented lagrangian and interior-point. Unless special conditions are met, solution found is possibly optimal over only some local neighbourhood. If objective is convex (if minimized) or concave (if maximized) and constraints define a convex region it is guaranteed that optimum found is optimal over the entire feasible region.
+  \item[Mixed-integer programming (MIP)] Linear objective and constraints, some or all of variables are integer-valued. Solved by branch-and-bound approach that uses a linear solver to solve subproblems.
+  \item[Mixed-integer non-linear programming (MINLP)] Non-linear objective and constraints, some or all of variables are integer-valued. Solved by branch-and-bound approach that uses a non-linear solver to solve subproblems.
+  \item[Constraint programming (CP)] \emph{TODO: pisac o tym w ogole?}
 \end{description}
 
 \section{AMPL: A Mathematical Programming Language}
@@ -54,11 +55,9 @@ AMPL is an algebraic mathematical modelling lanuage that resembles traditional m
 
 \subsection{Available solvers}
 
-As soon as model is formulated and matrices generated, we may proceed with solving the specific instance of our problem. To do that we will need solver -- a program that implements one of solving algorithms. There is wide range of existing solvers available, both open-source and commercial ones that differ with the problem classes they target \footnote{http://www.ampl.com/solvers.html}. 
+As soon as model is formulated and matrices generated, we may proceed with solving the specific instance of our problem. To do that we will need solver -- a program that implements one of solving algorithms. There is wide range of existing solvers available, both open-source (i.e. Cbc\footnote{https://projects.coin-or.org/Cbc}) and commercial (i.e. CPLEX\footnote{http://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/}) ones that differ with the problem classes they target. Full list of available solvers is published at AMPL website\footnote{http://www.ampl.com/solvers.html}.
 
-\emph{TODO: tutaj nalezaloby zrobic male zestawienie solverow}
-
-\emph{TODO: napisac o tym, ze solvery sie dostraja}
+Usually solvers provide multiple options that let us tune them for the specific application. One may enable or disable certain features of the solver, i.e. for \emph{Bonim} solver we may choose branching algorithm or configure it to use heuristics.
 
 \subsection{Example 1: ??}
 \subsection{Example 2: ??}
