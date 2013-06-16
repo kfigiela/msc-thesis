@@ -1,22 +1,24 @@
 \chapter{Mathematical programming using AMPL}
 \label{chap:ampl} 
-\lhead{Chapter 3. \emph{Mathematical programming using AMPL}}
+\lhead{Chapter \ref{chap:ampl}. \emph{Mathematical programming using AMPL}}
 
+Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate simple model using AMPL.
 
 \section{Mathematical Programming}
+\label{sec:ampl:mathprog}
 
 The term \emph{programming} was in use by 1940 to describe planning and scheduling of activities. \emph{Programmers} found that they could represent the amount of each activity using variable that value was to be determined. Then by using equalities and inequalities they were able to mathematically describe restrictions inherent in the planning or scheduling problem. The solution satysfying all these constraints would be considered as acceptable plan or schedule. Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
 
 It showed up soon that it was more complex that it initially appeared. It was more than merely specyfying constraints. If there were too few constraints, the space of possible solutions was too big. On the other hand, too many constraints could rule desirable solutions out. In the worst case there were no solutions at all. The success of programming relied on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
 
-In addition to the constraints, one could define the objective – function of the variables that made it possible to compare solutions and select the best one. Then it didn't matter how many solutions satisfied the constraints -- we were interested in the one that minimized or maximized the objective.
+In addition to the constraints, one could define the objective --- function of the variables that made it possible to compare solutions and select the best one. Then it didn't matter how many solutions satisfied the constraints --- we were interested in the one that minimized or maximized the objective.
 
 In development of mathematical programming one kind of problem stands out: that in which all the costs, requirements and quantities are proportional to the variables. In other words, constraints and objectives are linear combinations of the variables. Such a program is called \emph{linear program} and the process of modelling and solving is called \emph{linear programming}. This class of optimization problems is particurarly important becasue a lot of real world optimization problems may be represented in such way. Additionally, there exists a lot of theory and algorithms to solve such problems in fast, deterministic way even if they have thousands of variables. The ideas of linear programming are also important for analyzing and solving problems that are non-linear.
 
 All useful methods of mathematical programming involve using computers. It appeared very quickly in 1940s that computers may be used for scientific computing. The first computional method of solving optimization problems, the simplex algorithm, was introduced at that time and was subject to several improvements over the decades.
 
-\subsection{Problem classification}
-\label{ampl:classification}
+\section{Problem classification}
+\label{sec:ampl:classification}
 
 In spite of the broad applications of linear programming, the linearity assumption is too unrealistic to be applied to many of real problems. If instead smooth non-linear functions of the variables are used in constraints and objectives we call the program as \emph{non-linear program}. Solving such problems is much harder, but not impossible.
 
@@ -33,25 +35,26 @@ The optimization problems may be categorized in the following groups:
 \end{description}
 
 \section{AMPL: A Mathematical Programming Language}
+\label{sec:ampl:ampl}
 
-To successfully solve optimization problem one needs to do a sequence of multiple tasks such as:
+To successfully solve optimization problem one needs to do a sequence of multiple tasks as follows:
 
-\begin{itemize}
+\begin{enumerate}
   \item Formulate an abstract model: define variables, constraints and objective.
   \item Collect the data for a specific problem instance.
   \item Generate instance-specific variables, constraints and objective.
   \item Solve the problem by running a program called solver that implements algorithm that finds optimal solution.
   \item Analyze the results.
   \item Refine the model and the data as necessary, and repeat.
-\end{itemize}
+\end{enumerate}
 
-Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrixes as input. We need to transform \emph{modeller's form} to \emph{algorithm's form} and doing it manually is time consuming and erron-prone task.
+Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrices as input. We need to transform \emph{modeller's form} to \emph{algorithm's form}. Doing it manually is time consuming and erron-prone task.
 
-To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages were created \footnote{i.e. AMPL, Gams, PuLP, OscaR} over the decades. 
+To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages\footnote{i.e. AMPL, Gams, PuLP, OscaR}  were created over the decades. 
 
 By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change.
 
-AMPL is an algebraic mathematical modelling lanuage that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer. Algebraic modelling languages allow to express a wide range of optimization problems linear, nonlinear and integer.
+AMPL is an algebraic mathematical modelling lanuage that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer (in present meaning). Algebraic modelling languages allow to express a wide range of optimization problems: linear, nonlinear and integer.
 
 \subsection{Available solvers}
 
@@ -59,7 +62,270 @@ As soon as model is formulated and matrices generated, we may proceed with solvi
 
 Usually solvers provide multiple options that let us tune them for the specific application. One may enable or disable certain features of the solver, i.e. for \emph{Bonim} solver we may choose branching algorithm or configure it to use heuristics.
 
-\subsection{Example 1: ??}
-\subsection{Example 2: ??}
+\section{Example -- Whiskas Cat Food Problem}
+\label{sec:ampl:whiskas}
+% zaczerpniete mocno z http://twiki.esc.auckland.ac.nz/twiki/bin/view/OpsRes/WhiskasCatFoodProblem
 
-\emph{TODO: Tutaj dwa przyklady, jeden najlepiej liniowy, a drugi integerowy – znajdzie sie cos klasycznego w AMPL booku}
+Let's get some practise with modelling. One of typical programming problems is Whiskas Cat Food problem. Company producing it wants to produce their cat food products as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
+
+Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and gel. The prices for the ingredients are presented in Table \ref{ampl:whiskas:prices}, while ingredient contribution to the total weight of protein, fat, fibre and salt in the final product are give in Table \ref{ampl:whiskas:contribution} and nutritional requirements are presented in Table \ref{ampl:whiskas:analysis}. Given that data we may proceed with model formulation.
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r |}
+    \hline
+    \textbf{Ingredient} & \textbf{Price per gram} \\ \hline
+    Chicken & \$ 0.013 \\ \hline
+    Beef & \$ 0.008 \\ \hline
+    Mutton & \$ 0.010 \\ \hline
+    Rice & \$ 0.002 \\ \hline
+    Wheat & \$ 0.005 \\ \hline
+    Gel & \$ 0.001 \\ \hline
+  \end{tabular}
+  \caption{Cat food ingredient's pricing.}
+  \label{ampl:whiskas:prices}  
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r | r | r | r |}
+    \hline
+    & \textbf{Protein} & \textbf{Fat} & \textbf{Fibre} & \textbf{Salt} \\ \hline
+    \textbf{Chicken} & 0.100 & 0.080 & 0.001 & 0.002 \\ \hline
+    \textbf{Beef} & 0.200 & 0.100 & 0.005 & 0.005 \\ \hline
+    \textbf{Mutton} & 0.150 & 0.110 & 0.003 & 0.007 \\ \hline
+    \textbf{Rice} & 0.000 & 0.010 & 0.100 & 0.002 \\ \hline
+    \textbf{Wheat bran} & 0.040 & 0.010 & 0.150 & 0.008 \\ \hline
+    \textbf{Gel} & -- & -- & -- & -- \\ \hline
+  \end{tabular}
+  \caption{Ingredient contribution to the final product in grams per gram of ingredient.}
+  \label{ampl:whiskas:contribution}  
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r |}
+    \hline
+    Minimum \% Crude Protein & 8.0 \\ \hline
+    Minimum \% Crude Fat & 6.0 \\ \hline
+    Maximum \% Crude Fibre & 2.0 \\ \hline
+    Maximum \% Salt & 0.4 \\ \hline
+  \end{tabular}
+  \caption{Cat food nutritional analysis.}
+  \label{ampl:whiskas:analysis}  
+\end{table}
+
+
+  
+\subsubsection{Problem formulation}
+
+In this particular problem data defines the following data sets:
+
+\begin{itemize}
+  \item $I = \left\{\text{chicken}, \text{beef}, \text{mutton}, \text{rice}, \text{wheat}, \text{gel}\right\}$ -- defines possible ingredients,
+  \item $C = \left\{\text{protein}, \text{fat}, \text{fibre}, \text{salt}\right\}$ -- defines components of nutrition.
+\end{itemize}
+
+We have also some numbers that describe members of sets;
+\begin{itemize}
+  \item $p_i$ -- price of given ingredient $i$ in \$ per gram
+  \item $c_i,c$ -- contribution of ingredient $i$ to component of nutrition $c$ in grams per gram of ingredient.
+\end{itemize}
+
+\paragraph{Identify the decision variables}
+
+First of all we need to identify decision variables. For the Whishas Cat Food Problem the descisions are the amounts of each ingredient we put in the can. Formally we could write this as:
+\begin{align} 
+  x_i &= \text{ amount (g) of ingredient $i$  in a can of cat food}
+\end{align} 
+
+\paragraph{Formulate the Objective Function}
+
+The objective for this problem is to minimize the total cost of ingredients per fan of cat food. We know the cost per gram of each ingredient and the amount is to be found.
+
+\begin{align}
+   \min \mathop\sum\limits_{i \in I} p_i x_i
+\end{align}
+
+\paragraph{Formulate the constraints}
+
+The constraints for the Whiskas Cat Food are:
+
+\begin{enumerate}
+  \item The sum of the amounts must make up the whole can (i.e. 100 g).
+  \item The stated nutritional analysis requirements are met.
+\end{enumerate}
+
+First of the constraints can is: 
+
+\begin{align}
+   \mathop\sum\limits_{i \in I} x_i = 100
+\end{align}
+
+The latter can be written as follows
+
+\begin{align}
+   \mathop\sum\limits_{i \in I} c_{i,protein} x_i \geq 8.0 \\
+   \mathop\sum\limits_{i \in I} c_{i,fat} x_i \geq 6.0 \\
+   \mathop\sum\limits_{i \in I} c_{i,fibre} x_i \leq 2.0 \\
+   \mathop\sum\limits_{i \in I} c_{i,salt} x_i \leq 0.4 \\
+\end{align}
+
+or in more general way, we may define lower and upper bounds for each component of nutrition as $L_c$ and $U_c$, the values are presented in Table \ref{ampl:whiskas:bounds}. Constraint will be written as
+
+\begin{align}
+   \mathop\forall\limits_{c \in C} L_c \leq \mathop\sum\limits_{i \in I} c_{i,c} x_i \leq U_c \\
+\end{align}
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r | r |}
+    \hline
+    \textbf{Component of nutrition} & \textbf{Lower bound} & \textbf{Upper bound} \\ \hline
+    Protein & 8.0 & -- \\ \hline
+    Fat & 6.0 & -- \\ \hline
+    Fibre & 2.0 & -- \\ \hline
+    Salt & -- & 0.4 \\ \hline
+  \end{tabular}
+  \caption{Bounds for contribution of component of nutrition in percent.}
+  \label{ampl:whiskas:bounds}  
+\end{table}
+
+
+
+We have formulated general problem using mathematical notation. Now we will proceed with model problem formulation using AMPL.
+
+\subsubsection{Problem formulation using AMPL}
+
+AMPL enables us to separate model definition and instance specific data. Usually we create three files: model, data and calling script. In the model file we define the data we need to have: sets and parameters, objective and constraints. Then in data file we populate the sets and parameters with the numbers for the particular instance of the problem. Both model and data files are loaded from calling script that may do some pre or post processing.
+
+\paragraph{Model formulation}
+
+First of all, we should define the sets for the ingredients and components of nutrition. Let's create file called \texttt{whiskas.mod}.
+
+\begin{lstlisting}
+set INGREDIENTS;
+set COMPONENTS;
+\end{lstlisting}
+
+Using sets we can define the decision variables
+\begin{lstlisting}
+var Amount {INGREDIENTS} >= 0;
+\end{lstlisting}
+
+and parameters for the costs, components of nutrition contribution, restrictions and can size.
+
+\begin{lstlisting}
+param Cost {INGREDIENTS} >= 0;
+param Contribution {INGREDIENTS, COMPONENTS} >= 0;
+
+param Lower {COMPONENTS} default -Infinity;
+param Upper {c in COMPONENTS} >= Lower[c], default Infinity;
+
+param CanSize >= 0;
+
+\end{lstlisting}
+
+and the objective function
+
+\begin{lstlisting}
+minimize TotalCost : sum {i in INGREDIENTS} Cost[i] * Amount[i];
+\end{lstlisting}
+
+Note that, for the bounds that are not set, we assume \emph{±Infinity}. Additionally, we define that \emph{Cost} and \emph{Contribution} parameters should be non negative -- AMPL provides also verification of parameter data.
+
+
+Finally, we may define constraints
+
+\begin{lstlisting}
+subject to MeetRequirements {c in COMPONENTS}:
+  Lower[c] <= sum {i in INGREDIENTS} Contribution[i, c] * Amount[i] <= Upper[c];
+  
+subject to FullCan: 
+  sum {i in INGREDIENTS} Amount[i] = CanSize;
+\end{lstlisting}
+
+\paragraph{Providing data}
+
+Now we can provide the model with the data, let's call the file \texttt{whiskas.dat}.
+
+First of all we need to provide sets we defined in previous paragraph.
+\begin{lstlisting}
+set INGREDIENTS := CHICKEN BEEF MUTTON RICE WHEAT GEL;
+set COMPONENTS  := PROTEIN FAT FIBRE SALT;
+\end{lstlisting}
+
+Then we populate parameters with the data.
+\begin{lstlisting}
+param     Cost :=
+  CHICKEN 0.013
+  BEEF    0.008
+  MUTTON  0.010
+  RICE    0.002
+  WHEAT   0.005
+  GEL     0.001
+;
+
+param     Lower :=
+  PROTEIN 8.0
+  FAT     6.0
+;
+
+param     Upper :=
+  FIBRE   2.0
+  SALT    0.4
+;
+
+param CanSize := 100;
+
+param Contribution :
+          PROTEIN   FAT FIBRE  SALT :=
+  CHICKEN   0.100 0.080 0.001 0.002 
+  BEEF      0.200 0.100 0.005 0.005 
+  MUTTON    0.150 0.110 0.003 0.007 
+  RICE      0.000 0.010 0.100 0.002 
+  WHEAT     0.040 0.010 0.150 0.008 
+  GEL       0.0   0.0   0.0   0.0   
+;
+\end{lstlisting} 
+
+\paragraph{Running AMPL}
+
+Now we are ready to solve the model we formulated with AMPL. For that, let's create file called \texttt{whiskas.run}.
+
+First of all we should reset AMPL environment in case that specific AMPL instance was solving other model before. We can do it with command \texttt{reset}. Then we load model using command \texttt{model} that takes model file name as an argument. Next, we load data file using command \texttt{data}. We also need to tell AMPL which solver we would like to be used. In our case we will use CPLEX (\texttt{option solver cplex}). Finally, we call solver and present results. The full file will look like as follows.
+
+\begin{lstlisting}
+reset;
+
+model whiskas.mod;
+
+data whiskas.dat;
+
+option solver cplex;
+solve;
+
+display Amount;
+\end{lstlisting}
+
+Let's run AMPL and see what is the optimal solution.
+
+\begin{lstlisting}
+% ampl whiskas.run
+CPLEX 12.4.0.1: optimal solution; objective 0.52
+2 dual simplex iterations (0 in phase I)
+Amount [*] :=
+   BEEF  60
+CHICKEN   0
+    GEL  40
+ MUTTON   0
+   RICE   0
+  WHEAT   0
+;
+\end{lstlisting}
+
+In that case, it appears that it is cheapest to use beef and fill the rest of the can with gel.
+
+\section{Conclusions}
+
+This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example problem and corresponding model using AMPL.
