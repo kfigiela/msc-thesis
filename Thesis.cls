@@ -132,14 +132,14 @@
 \setcounter{dbltopnumber}{9}
 \usepackage{graphicx}
 \usepackage{epstopdf}
-\usepackage[scriptsize]{subfigure}
+\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{rotating}
 \usepackage{listings}
 \usepackage{lstpatch}
 % \usepackage{caption}
 % \usepackage{subcaption}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \lstset{captionpos=b,
         frame=tb,
         basicstyle=\scriptsize\ttfamily,
@@ -318,7 +318,7 @@
   \cleardoublepage
 }
 \addtocounter{secnumdepth}{1}
-\setcounter{tocdepth}{6}
+\setcounter{tocdepth}{3}
 \newcounter{dummy}
 \newcommand\addtotoc[1]{
 \refstepcounter{dummy}

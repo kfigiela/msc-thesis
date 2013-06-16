@@ -51,11 +51,27 @@
 
 \chapter{Workflow optimization}
 \label{chap:formulation-workflows} 
-\lhead{Chapter 4. \emph{Workflow optimization}}
+\lhead{Chapter \ref{chap:formulation-workflows}. \emph{Workflow optimization}}
 
+    \emph{TODO: In this chapter…}
+  
+    \section{Application model}
+    \label{sec:workflow:appmodel}
+    
+    In this chapter we discuess optimization of scientific applications that may be represented as workflows. A scientific workflow describes the dependencies between tasks and in most cases may be represented as directed acyclic graph (DAG), where nodes represent tasks and edges represent task dependencies.
+    
+    \begin{figure}[tb]
+        \centering \includegraphics[width=0.5\columnwidth]{Workflow/workflow}
+        \caption{Example application structure}
+        \label{fig:workflow:appmodel}
+    \end{figure}
+    
+
+    
+    \emph{TODO: Application model}
+    
     \section{Problem formulation using AMPL}
-    \label{sec:problem}
-
+    \label{sec:workflow:problem}
   
     To perform optimization of the total cost, Mixed Integer Problem (MIP)
     is formulated and implemented in A Mathematical Programming
@@ -64,6 +80,7 @@
     objective function to be optimized.
     
     \subsection{Input data}
+    \label{sec:workflow:problem:input}
      
     The formulation requires the following input sets, which represent the
     infrastructure model, in a similar way as we approached the problem in~\cite{Malawski-FGCS-13}:
@@ -117,6 +134,7 @@
     \end{itemize} 
     
     \subsection{Auxiliary parameters}
+    \label{sec:workflow:problem:auxiliary}
     
     A set of precomputed parameters which are derived from the main input parameters of the model includes:
 %      \begin{align}
@@ -140,8 +158,8 @@
         \item $\instanceSet_i$ -- set of possible instance $\INSTANCE_i$ indexes (from $0$ to $\instanceMaxMachines_i - 1$).
     \end{itemize}
    
-   \subsection{Variables}
-   \label{sec:varialbes}
+    \subsection{Variables}
+    \label{sec:workflow:problem:variables}
     Variables that will be optimized and define the solution space are:
     \begin{itemize}
         \item $\InstanceActive_{t,i,x}$ -- binary, $1$ iif (if and only if) instance $\INSTANCE_i$ with index $x$ is launched to process task group $\TASK_t$, otherwise $0$;
@@ -152,6 +170,7 @@
     \end{itemize}
     
     \subsection{Formulation of objectives}
+    \label{sec:workflow:problem:objective}
     
     Cost of running one task including instance and transfer cost is:
 
@@ -239,7 +258,7 @@
     
     
     \section{Evaluation}
-    \label{sec:evaluation}
+    \label{sec:workflow:evaluation}
 
     To evaluate our model on realistic data, we use CloudHarmony~\cite{CloudHarmony}
     benchmarks to parameterize the infrastructure model, and we use the Workflow
