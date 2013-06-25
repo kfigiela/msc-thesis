@@ -5,11 +5,91 @@
 
 \section{Introduction to Cloud Computing}
 
+Cloud computing is a jargon term without a commonly accepted non-ambiguous scientific or technical definition. The term is frequently used for marketing of hosted services or applications running in client-server model. 
 
+As defined by US National Institute of Standards and Technology\cite{NISTCloudDef}, cloud computing is "a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction".
+
+\subsection{Service models}
+
+We may categorize cloud services in terms of service model that differ in how much control end-user has:
+
+\begin{description}
+  \item[Software as a Service (SaaS).] The capability provided to the user is to use applications deployed by provider running on a cloud infrastructure. The applications are usually available by web-browser based interface or program interface. The consumer does not manage underlying cloud infrastructure including network, servers, operating system and even application. Popular SaaS applications include Gmail, Evernote and Salesforce CRM.
+  \item[Platform as a Service (PaaS).] The capability provided to the user is to deploy his own appliactions created using programming languages, libraries, services and tools provied by the provider. The consumer does not manage underlying cloud infrastructure including network, servers, operating systems, runtime environment, but has control over the deployed application and configuration settings for cloud enviromnent. Example platforms include Heroku, Google App Engine and Nodejitsu.
+  \item[Infrastructure as a Service (IaaS).] The capability provided to the user is to provision processing, storage, networks and other fundamental computing resources where the consumer is able to deploy and run arbitrary software. The consumer does not manage the underlying hardware infrastructure, but has control over operating system, storage, deployed appliations and has possibly limited control over networking (i.e. hosts firewall). Example platforms include Amazon EC2 and Rackspace.
+\end{description}
+
+\subsection{Deployment models}
+
+There exist multiple deployment models for cloud computing:
+\begin{description}
+  \item[Private Cloud.] The cloud resources are provisioned for exclusive use by a single organization.
+  \item[Community Cloud.] The cloud resources are provisioned for exclusive use by specific community of consumers from organization that have shared concerns. This is similar to scientific grid systems.
+  \item[Public Cloud.] The cloud resources are provisioned for open use by the general public.
+  \item[Hybrid Cloud.] The cloud infrastructure is composed of two or more distinct cloud providers that remain unique entities, but are bound together by technology that enables data and application portability. This technique is used for cloud bursting and offloading peak load to public cloud while using private resources when off-peak times.
+\end{description}
 
 \subsection{IaaS compute cloud}
 
+This theis illustrates typical problems when making decisions on deployment
+planning of scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
+
+Usually IaaS clouds provide three types of resources that are provisioned with a pay-per-use model: 
+\begin{description}
+  \item[Computing.] Provided as virtual machine (VM) instances. Multiple instance types are available that differ with CPU power, RAM memory and additional hardware (i.e. GPU units). VMs are usually billed for instance running time (wall clock time, not CPU time) usually rouned up to full hours.
+  \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as external service accessible by API (i.e. Amazon's S3). User is usually biled for persisting data per gb per month. Additional charges may also apply (i.e. per IO transaction).
+  \item[Networking.] Provides connectivity between VMs, storages and the Internet. User is billed for the data transfered of the cloud, while incoming data and transfer inside specific cloud usually remains free.
+\end{description}
+
 \subsection{Infrastructure model}
+\label{sec:intro:cloud:model}
+
+Two types of cloud services are required to run scientific application: storage and virtual machines. Amazon S3 and Rackspace Cloud Files are good examples of storage providers, while Amazon EC2, Rackspace, GoGrid and ElasticHosts represent computational services. In addition, the model optimization model proposed in this thesis includes a private cloud running on own hardware. Each cloud provider offers multiple types of virtual machine instances with different performance and price.
+
+For each provider the number of running virtual machines may be limited. This is mainly the case for private clouds that have a limited capacity, but also the public clouds often impose limits on the number of virtual machines. E.g. Amazon EC2 allows maximum of 20 instances and requires to request a special permission to increase that limit. 
+
+Most of cloud providers charge their users for each running virtual machine on an hourly basis. Some providers charge in 5-minute or 1-minute cycles, but it is not widespread practise yet, so it won't be included in the optimization models. Additionally, users are charged for remote data transfer while local transfer inside provider's cloud is usually free. These two aspects of pricing policies may have a significant impact on the cost of completing a computational task.
+
+Cloud services are characterized by their pricing and performance. Instance types are described by price per hour, relative performance and data transfer cost as presented in Table~\ref{table:intro:cloud:pricing}. To assess the relative performance of clouds it is possible to run application-specific benchmarks on all of them, or to use publicly available cloud benchmarking services, such as CloudHarmony\footnote{\url{http://blog.cloudharmony.com/2010/05/what-is-ecu-cpu-benchmarking-in-cloud.html}}. CloudHarmony defines performance of cloud instances in the units named CloudHarmony Compute Units (CCU) as similar to Amazon EC2 Compute Unit (ECU), which are approximately equivalent to CPU capacity of a 1.0-1.2 GHz 2007 Opteron or 2007 Xeon processor. Storage platforms include fees for data transfer.
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r | r |}
+    \hline
+    \textbf{Instance type} & \textbf{Price per hour} & \textbf{Instance performance in CCU} \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Amazon Web Services (AWS) [US East]}}       \\ \hline
+    m2.4xlarge        & \$2.400   & 27.25                                    \\ \hline
+    m2.2xlarge        & \$1.200   & 14.89                                    \\ \hline
+    linux.c1.xlarge   & \$0.680   & 8.78                                     \\ \hline
+    m2.xlarge         & \$0.500   & 7.05                                     \\ \hline
+    m1.xlarge         & \$0.680   & 5.15                                     \\ \hline
+    m1.large          & \$0.340   & 4.08                                     \\ \hline
+    c1.medium         & \$0.170   & 3.43                                     \\ \hline
+    m1.small          & \$0.085   & 0.92                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Rackspace Cloud [Dallas]}}                  \\ \hline
+    rs-16gb           & \$0.960   & 4.95                                     \\ \hline
+    rs-2gb            & \$0.120   & 4.94                                     \\ \hline
+    rs-1gb            & \$0.060   & 4.93                                     \\ \hline
+    rs-4gb            & \$0.240   & 4.90                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{GoGrid [CA, US]}}                           \\ \hline
+    gg-8gb            & \$1.520   & 23.2                                     \\ \hline
+    gg-4gb            & \$0.760   & 9.28                                     \\ \hline
+    gg-2gb            & \$0.380   & 4.87                                     \\ \hline
+    gg-1gb            & \$0.190   & 4.42                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{ElasticHosts [UK]}}                         \\ \hline
+    eh-8gb-20gh       & \$0.654   & 9.98                                     \\ \hline
+    eh-4gb-8gh        & \$0.326   & 5.54                                     \\ \hline
+    eh-2gb-4gh        & \$0.164   & 4.75                                     \\ \hline
+    eh-1gb-2gh        & \$0.082   & 4.30                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Hyphotetical instance of private cloud}}    \\ \hline
+    private           & \$0.000   & 1.00                                     \\ \hline
+  \end{tabular}
+  \caption{Instance types used for evaluation of optimization models.}
+  \label{table:intro:cloud:pricing}  
+\end{table}
+
+
+
 
 \section{Scientific appliations}
 
