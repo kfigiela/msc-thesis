@@ -37,18 +37,18 @@ planning of scientific applications on IaaS clouds and how they can be addressed
 Usually IaaS clouds provide three types of resources that are provisioned with a pay-per-use model: 
 \begin{description}
   \item[Computing.] Provided as virtual machine (VM) instances. Multiple instance types are available that differ with CPU power, RAM memory and additional hardware (i.e. GPU units). VMs are usually billed for instance running time (wall clock time, not CPU time) usually rouned up to full hours.
-  \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as external service accessible by API (i.e. Amazon's S3). User is usually biled for persisting data per gb per month. Additional charges may also apply (i.e. per IO transaction).
+  \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as object store available as external service (i.e. Amazon's S3). User is usually biled for persisting data per GiB\footnote{Gibibyte $= 2^{30}$ bytes} per month. Additional charges may also apply (i.e. per IO transaction).
   \item[Networking.] Provides connectivity between VMs, storages and the Internet. User is billed for the data transfered of the cloud, while incoming data and transfer inside specific cloud usually remains free.
 \end{description}
 
 \subsection{Infrastructure model}
 \label{sec:intro:cloud:model}
 
-Two types of cloud services are required to run scientific application: storage and virtual machines. Amazon S3 and Rackspace Cloud Files are good examples of storage providers, while Amazon EC2, Rackspace, GoGrid and ElasticHosts represent computational services. In addition, the model optimization model proposed in this thesis includes a private cloud running on own hardware. Each cloud provider offers multiple types of virtual machine instances with different performance and price.
+Two types of cloud services are required to run scientific application on the cloud: storage and virtual machines. Amazon S3 and Rackspace Cloud Files are good examples of storage providers, while Amazon EC2, Rackspace, GoGrid and ElasticHosts represent computational services. In addition, the model optimization model proposed in this thesis includes a private cloud running on own hardware. Each cloud provider offers multiple types of virtual machine instances with different performance and price.
 
 For each provider the number of running virtual machines may be limited. This is mainly the case for private clouds that have a limited capacity, but also the public clouds often impose limits on the number of virtual machines. E.g. Amazon EC2 allows maximum of 20 instances and requires to request a special permission to increase that limit. 
 
-Most of cloud providers charge their users for each running virtual machine on an hourly basis. Some providers charge in 5-minute or 1-minute cycles, but it is not widespread practise yet, so it won't be included in the optimization models. Additionally, users are charged for remote data transfer while local transfer inside provider's cloud is usually free. These two aspects of pricing policies may have a significant impact on the cost of completing a computational task.
+Most of cloud providers charge their users for each running virtual machine on an hourly basis. Some providers charge in 5-minute (i.e. CloudSigma) or 1-minute cycles (i.e. Google Compute Enginge), but it is not widespread practise yet, so it won't be included in the optimization models. Additionally, users are charged for remote data transfer while local transfer inside provider's cloud is usually free. These two aspects of pricing policies may have a significant impact on the cost of completing a computational task.
 
 Cloud services are characterized by their pricing and performance. Instance types are described by price per hour, relative performance and data transfer cost as presented in Table~\ref{table:intro:cloud:pricing}. To assess the relative performance of clouds it is possible to run application-specific benchmarks on all of them, or to use publicly available cloud benchmarking services, such as CloudHarmony\footnote{\url{http://blog.cloudharmony.com/2010/05/what-is-ecu-cpu-benchmarking-in-cloud.html}}. CloudHarmony defines performance of cloud instances in the units named CloudHarmony Compute Units (CCU) as similar to Amazon EC2 Compute Unit (ECU), which are approximately equivalent to CPU capacity of a 1.0-1.2 GHz 2007 Opteron or 2007 Xeon processor. Storage platforms include fees for data transfer.
 
@@ -84,14 +84,13 @@ Cloud services are characterized by their pricing and performance. Instance type
     \multicolumn{3}{|c|}{\textbf{Hyphotetical instance of private cloud}}    \\ \hline
     private           & \$0.000   & 1.00                                     \\ \hline
   \end{tabular}
-  \caption{Instance types used for evaluation of optimization models.}
+  \caption{Example pricing and performance of cloud instances.}
   \label{table:intro:cloud:pricing}  
 \end{table}
 
-
-
-
 \section{Scientific appliations}
+
+
 
 \subsection{Bag of tasks}
 
