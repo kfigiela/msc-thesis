@@ -45,7 +45,7 @@
 \newcommand{\instanceSet}{I^{idx}}
 \newcommand{\InstanceTasks}{T}
 \newcommand{\InstanceHours}{H}
-\newcommand{\InstanceActive}{A}           
+\newcommand{\InstanceActive}{A}
 \newcommand{\LayerDeadline}{D}
 \newcommand{\LayerTime}{D^t}
 
@@ -53,21 +53,23 @@
 \label{chap:formulation-workflows} 
 \lhead{Chapter \ref{chap:formulation-workflows}. \emph{Workflow optimization}}
 
-    In this chapter we discuss optimization of scientific applications that may be represented as workflows. In Section \ref{sec:workflow:appmodel} we discuss the details of scietific workflows. Then in Section \ref{sec:workflow:problem} we formulate optimization problem using AMPL by defining the data, variables, constraints and the objective. Finally, in we present the model evaluation in Section \ref{sec:workflow:evaluation}.
+    In this chapter we discuss optimization of scientific applications that may be represented as workflows. In Section \ref{sec:workflow:appmodel} we discuss the details of scietific workflows. Then in Section \ref{sec:workflow:problem} we formulate optimization problem using AMPL by defining the data, variables, constraints and the objective. Finally, in we evaluate in Section \ref{sec:workflow:evaluation} by scheduling example workflows from Workflow Generator Gallery.
   
     \section{Application model}
     \label{sec:workflow:appmodel}
     
-    A scientific workflow describes the dependencies between tasks and in most cases may be represented as directed acyclic graph (DAG), where nodes represent tasks and edges represent task dependencies. In this model we assume that workflow is represented as a DAG. We also assume that a workflow is divided into several levels (layers) that can be executed sequentially and tasks within one level do not depend on each other (see Fig.~\ref{fig:workflow:appmodel}). Each layer represents a bag of tasks that can be partitioned in several groups (e.g. application A, application B, etc.) that share computational cost and input/output size. We assume that only one task group is executed on a specific cloud instance (VM). This forbids instance sharing between multiple layers, which means that each application needs its own specific VM template with a preconfigured environment.
+    As described in Section \ref{intro:workflow}, a scientific workflow describes the dependencies between tasks and in most cases may be represented as directed acyclic graph (DAG), where nodes represent tasks and edges represent task dependencies. 
     
+    There are different approaches to optimize workflow scheduling (see Chapter \ref{chap:state-of-art}). Mathematical programming allows to describe the model mathematically and use a set of available optimization solvers. On the other hand, an attempt to apply this method to the general problem of scheduling large-scale workflows on heterogeneous cloud resources would be impractical due to the problem complexity, therefore simplified models need to be analyzed. Optimization models can be simplified in several ways. We may simplify application model, infrastructure model or make certain assumptions on output schedule.
     
+    In this model we assume that workflow is represented as a DAG. We also assume that a workflow is divided into several levels (layers) that can be executed sequentially and tasks within one level do not depend on each other (see Fig.~\ref{fig:workflow:appmodel}). Each layer represents a bag of tasks that can be partitioned in several groups (e.g. application A, application B, etc.) that share computational cost and input/output size. We assume that only one task group is executed on a specific cloud instance (VM). This forbids instance sharing between multiple layers, which means that each application needs its own specific VM template with a preconfigured environment.
+
     \begin{figure}[tb]
         \centering \includegraphics[width=0.5\columnwidth]{Workflow/workflow}
         \caption{Example application structure}
         \label{fig:workflow:appmodel}
     \end{figure}
-    
-    
+  
     \section{Problem formulation using AMPL}
     \label{sec:workflow:problem}
   
