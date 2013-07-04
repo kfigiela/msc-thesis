@@ -45,18 +45,7 @@
 \LoadClass{\baseclass}
 \newcommand\bhrule{\typeout{------------------------------------------------------------------------------}}
 
-\newcommand\Declaration[1]{
-\btypeout{Declaration of Authorship}
-\addtotoc{Declaration of Authorship}
-\thispagestyle{plain}
-\null\vfil
-%\vskip 60\p@
-\begin{center}{\huge\bf Declaration of Authorship\par}\end{center}
-%\vskip 60\p@
-{\normalsize #1}
-\vfil\vfil\null
-%\cleardoublepage
-}
+
 
 \newcommand\btypeout[1]{\bhrule\typeout{\space #1}\bhrule}
 \def\today{\ifcase\month\or
@@ -140,6 +129,7 @@
 % \usepackage{caption}
 % \usepackage{subcaption}
 \usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
 \lstset{captionpos=b,
         frame=tb,
         basicstyle=\scriptsize\ttfamily,
@@ -174,6 +164,21 @@
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 
+
+
+\newcommand\Declaration[1]{
+\btypeout{Oświadczenie autora pracy}
+% \addtotoc{Declaration of Authorship}
+\thispagestyle{plain}
+\null\vfil
+%\vskip 60\p@
+\begin{center}{\huge\bf Oświadczenie autora pracy\par}\end{center}
+%\vskip 60\p@
+{\normalsize #1}
+\vfil\vfil\null
+%\cleardoublepage
+}
+
 %----------------------------------------------------------------------------------------
 %	DOCUMENT VARIABLES
 %	Fill in the lines below to update the thesis template
@@ -199,35 +204,35 @@
 %-------------------------------------------------   
 \keywords{} % Keywords for your thesis - this is not currently used anywhere in the template, cite it with \keywordnames if you want it
 %-------------------------------------------------   
-\university{\texorpdfstring{\href{http://www.university.com} % Your university's URL
-                {University Name}} % Your university's name - this is currently used in the title page
-                {University Name}}
+\university{\texorpdfstring{\href{http://agh.edu.pl} % Your university's URL
+                {AGH University of Science and Technology in Kraków}} % Your university's name - this is currently used in the title page
+                {AGH University of Science and Technology in Kraków}}
 %-------------------------------------------------   
-\UNIVERSITY{\texorpdfstring{\href{University Web Site URL Here (include http://)} % Your university's URL
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}} % Your university's name in capitals - this is currently used in the abstract page
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}}
+\UNIVERSITY{\texorpdfstring{\href{http://agh.edu.pl} % Your university's URL
+                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN KRAKÓW}} % Your university's name in capitals - this is currently used in the abstract page
+                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN KRAKÓW}}
 %-------------------------------------------------                
-\department{\texorpdfstring{\href{Department or School Web Site URL Here (include http://)} % Your department's URL
-                {Department or School Name}} % Your department's name - used in the title page and abstract
-                {Department or School Name}}
+\department{\texorpdfstring{\href{http://ki.agh.edu.pl} % Your department's URL
+                {Department of Computer Science}} % Your department's name - used in the title page and abstract
+                {Department of Computer Science}}
 %-------------------------------------------------                
-\DEPARTMENT{\texorpdfstring{\href{Department or School Web Site URL Here (include http://)} % Your department's URL
-                {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}} % Your department's name in capitals - this is not currently used anywhere in the template, cite it with \DEPTNAME if you want it
-                {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}}
+\DEPARTMENT{\texorpdfstring{\href{http://ki.agh.edu.pl} % Your department's URL
+                {DEPARTMENT OF COMPUTER SCIENCE}} % Your department's name in capitals - this is not currently used anywhere in the template, cite it with \DEPTNAME if you want it
+                {DEPARTMENT OF COMPUTER SCIENCE}}
 %-------------------------------------------------                
-\group{\texorpdfstring{\href{Research Group Web Site URL Here (include http://)} % Your research group's URL
-                {Research Group Name}} % Your research group's name - this is currently used in the title page 
-                {Research Group Name}}
+\faculty{\texorpdfstring{\href{http://iet.agh.edu.pl} % Your research group's URL
+                {Faculty of Computer Science, Electronics and Telecommunications}} % Your research group's name - this is currently used in the title page 
+                {Faculty of Computer Science, Electronics and Telecommunications}}
 %-------------------------------------------------                
-\GROUP{\texorpdfstring{\href{Research Group Web Site URL Here (include http://)} % Your research group's URL
-                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}} % Your research group's name in capitals - this is not currently used anywhere in the template, cite it with \GROUPNAME if you want it
-                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
+\FACULTY{\texorpdfstring{\href{http://iet.agh.edu.pl} % Your research group's URL
+                {FACULTY OF COMPUTER SCIENCE, ELECTRONICS AND TELECOMMUNICATIONS}} % Your research group's name in capitals - this is not currently used anywhere in the template, cite it with \GROUPNAME if you want it
+                {FACULTY OF COMPUTER SCIENCE, ELECTRONICS AND TELECOMMUNICATIONS}}
 %-------------------------------------------------                
-\faculty{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
+\group{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
                 {Faculty Name}} % Your faculty's name - this is currently used in the abstract page
                 {Faculty Name}}
 %-------------------------------------------------                
-\FACULTY{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
+\GROUP{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
                 {FACULTY NAME (IN BLOCK CAPITALS)}} % Your faculty's name in capitals - this is not currently used anywhere in the template, cite it with \FACNAME if you want it
                 {FACULTY NAME (IN BLOCK CAPITALS)}}
 %----------------------------------------------------------------------------------------    
