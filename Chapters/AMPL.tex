@@ -7,6 +7,9 @@ Section \ref{sec:ampl:mathprog} presents overview on mathematical programming an
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
 
+\todo{te sekcje przepisac wlasnymi slowami, prostszym jezykiem, rezygnujac z literackich ozdobnikow AMPL-booka, bo tu wygladaja troche nienaturalnie. Oczywiscie dodac cytowania.}
+
+\todo{dodac zdanie, ze programming oznacza tu cos innego niz tworzenie kodu.}
 The term \emph{programming} was in use by 1940 to describe planning and scheduling of activities. \emph{Programmers} found that they could represent the amount of each activity using variable that value was to be determined. Then by using equalities and inequalities they were able to mathematically describe restrictions inherent in the planning or scheduling problem. The solution satysfying all these constraints would be considered as acceptable plan or schedule. Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
 
 It showed up soon that it was more complex that it initially appeared. It was more than merely specyfying constraints. If there were too few constraints, the space of possible solutions was too big. On the other hand, too many constraints could rule desirable solutions out. In the worst case there were no solutions at all. The success of programming relied on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
@@ -66,7 +69,7 @@ Usually solvers provide multiple options that let us tune them for the specific 
 \label{sec:ampl:whiskas}
 % zaczerpniete mocno z http://twiki.esc.auckland.ac.nz/twiki/bin/view/OpsRes/WhiskasCatFoodProblem
 
-Let's get some practise with modelling. One of typical programming problems is Whiskas Cat Food problem. Company producing it wants to produce their cat food products as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
+To get some practise with modelling, we will describe a typical linear programming problem on the example of Whiskas Cat Food problem. The company producing it wants to produce their cat food products as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
 
 Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and gel. The prices for the ingredients are presented in Table \ref{ampl:whiskas:prices}, while ingredient contribution to the total weight of protein, fat, fibre and salt in the final product are give in Table \ref{ampl:whiskas:contribution} and nutritional requirements are presented in Table \ref{ampl:whiskas:analysis}. Given that data we may proceed with model formulation.
 
@@ -164,10 +167,11 @@ First of the constraints can is:
 
 The latter can be written as follows
 
+\todo{3.6 powinno byc <, czy raczej w tabelce 3.4 na odwrot?}
 \begin{align}
    \mathop\sum\limits_{i \in I} c_{i,protein} x_i \geq 8.0 \\
    \mathop\sum\limits_{i \in I} c_{i,fat} x_i \geq 6.0 \\
-   \mathop\sum\limits_{i \in I} c_{i,fibre} x_i \leq 2.0 \\
+   \mathop\sum\limits_{i \in I} c_{i,fibre} x_i \leq 2.0 \\ 
    \mathop\sum\limits_{i \in I} c_{i,salt} x_i \leq 0.4 \\
 \end{align}
 
@@ -201,7 +205,7 @@ AMPL enables us to separate model definition and instance specific data. Usually
 
 \paragraph{Model formulation}
 
-First of all, we should define the sets for the ingredients and components of nutrition. Let's create file called \texttt{whiskas.mod}.
+First of all, we should define the sets for the ingredients and components of nutrition. Let's \todo{wyeliminowac let's} create file called \texttt{whiskas.mod}.
 
 \begin{lstlisting}
 set INGREDIENTS;
@@ -325,6 +329,8 @@ CHICKEN   0
 \end{lstlisting}
 
 In that case, it appears that it is cheapest to use beef and fill the rest of the can with gel.
+
+\todo{przyklad ze schedulingiem}
 
 \section{Conclusions}
 
