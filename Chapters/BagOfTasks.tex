@@ -50,6 +50,54 @@
 
   Model assumes that for each task a certain amount of input data needs to be downloaded, and after it finishes, the output results need to be stored. In the case of data-intensive tasks, the transfers may contribute a significant amount of total task run time.
 
+\subsection{Infrastructure model}
+\label{sec:intro:cloud:model}
+
+Three types of cloud services are required to run scientific application on the cloud: virtual machines, storage and networking. Amazon S3 and Rackspace Cloud Files are good examples of storage providers, while Amazon EC2, Rackspace, GoGrid and ElasticHosts represent computational services. In addition, the optimization model proposed in this thesis includes a private cloud running on own hardware. Each cloud provider offers multiple types of virtual machine instances with different performance and price.
+
+For each provider the number of running virtual machines may be limited.  This is mainly the case for private clouds that have a limited capacity, but also the public clouds often impose limits on the number of virtual machines. E.g. Amazon EC2 allows maximum of 20 instances and requires to request a special permission to increase that limit\cite{AmazonEC2FAQ}. 
+
+Most of cloud providers charge their users for each running virtual machine on an hourly basis. Some providers charge in 5-minute (i.e. CloudSigma) or 1-minute cycles (i.e. Google Compute Enginge), but it is not widespread practise yet. Additionally, users are charged for remote data transfer while local transfer inside provider's cloud is usually free. These two aspects of pricing policies may have a significant impact on the cost of completing a scientifc task.
+
+Cloud services are characterized by their pricing and performance. Instance types are described by price per hour, relative performance and data transfer cost as presented in Table~\ref{table:intro:cloud:pricing}. To assess the relative performance of clouds it is possible to run application-specific benchmarks on all of them, or to use publicly available cloud benchmarking services, such as CloudHarmony\cite{CloudHarmony}. CloudHarmony defines performance of cloud instances in the units named CloudHarmony Compute Units (CCU) as similar to Amazon EC2 Compute Unit (ECU), which are approximately equivalent to CPU capacity of a 1.0-1.2 GHz 2007 Opteron or 2007 Xeon processor. Storage platforms include fees for data transfer.
+
+\begin{table}
+  \centering
+  \begin{tabular}{| l | r | r |}
+    \hline
+    \textbf{Instance type} & \textbf{Price per hour} & \textbf{Instance performance in CCU} \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Amazon Web Services (AWS) [US East]}}       \\ \hline
+    m2.4xlarge        & \$2.400   & 27.25                                    \\ \hline
+    m2.2xlarge        & \$1.200   & 14.89                                    \\ \hline
+    linux.c1.xlarge   & \$0.680   & 8.78                                     \\ \hline
+    m2.xlarge         & \$0.500   & 7.05                                     \\ \hline
+    m1.xlarge         & \$0.680   & 5.15                                     \\ \hline
+    m1.large          & \$0.340   & 4.08                                     \\ \hline
+    c1.medium         & \$0.170   & 3.43                                     \\ \hline
+    m1.small          & \$0.085   & 0.92                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Rackspace Cloud [Dallas]}}                  \\ \hline
+    rs-16gb           & \$0.960   & 4.95                                     \\ \hline
+    rs-2gb            & \$0.120   & 4.94                                     \\ \hline  
+    rs-1gb            & \$0.060   & 4.93                                     \\ \hline
+    rs-4gb            & \$0.240   & 4.90                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{GoGrid [CA, US]}}                           \\ \hline
+    gg-8gb            & \$1.520   & 23.2                                     \\ \hline
+    gg-4gb            & \$0.760   & 9.28                                     \\ \hline
+    gg-2gb            & \$0.380   & 4.87                                     \\ \hline
+    gg-1gb            & \$0.190   & 4.42                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{ElasticHosts [UK]}}                         \\ \hline
+    eh-8gb-20gh       & \$0.654   & 9.98                                     \\ \hline
+    eh-4gb-8gh        & \$0.326   & 5.54                                     \\ \hline
+    eh-2gb-4gh        & \$0.164   & 4.75                                     \\ \hline
+    eh-1gb-2gh        & \$0.082   & 4.30                                     \\ \hline
+    \multicolumn{3}{|c|}{\textbf{Hyphotetical instance of private cloud}}    \\ \hline
+    private           & \$0.000   & 1.00                                     \\ \hline
+  \end{tabular}
+  \caption{Example pricing and performance of cloud instances.}
+  \label{table:intro:cloud:pricing}  
+\end{table}
+
+
 \section{Problem formulation}
 \label{sec:bot:problem}
 

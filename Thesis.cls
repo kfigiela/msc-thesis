@@ -187,7 +187,7 @@
 %	defined as \examname above so you cite it as \examname
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Optimization of resource allocation on the cloud} % Your thesis title - this is used in the title and abstract
+\thesistitle{Optimization of resource allocation on~the~cloud} % Your thesis title - this is used in the title and abstract
 % Optymalizacja alokacji zasobów w chmurze obliczeniowej
 %-------------------------------------------------  
 \supervisor{dr inż. Maciej \textsc{Malawski}} % You supervisor's name - this is used in the title page
@@ -205,12 +205,12 @@
 \keywords{} % Keywords for your thesis - this is not currently used anywhere in the template, cite it with \keywordnames if you want it
 %-------------------------------------------------   
 \university{\texorpdfstring{\href{http://agh.edu.pl} % Your university's URL
-                {AGH University of Science and Technology in Kraków}} % Your university's name - this is currently used in the title page
-                {AGH University of Science and Technology in Kraków}}
+                {AGH University of Science and Technology in~Kraków}} % Your university's name - this is currently used in the title page
+                {AGH University of Science and Technology in~Kraków}}
 %-------------------------------------------------   
 \UNIVERSITY{\texorpdfstring{\href{http://agh.edu.pl} % Your university's URL
-                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN KRAKÓW}} % Your university's name in capitals - this is currently used in the abstract page
-                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN KRAKÓW}}
+                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN~KRAKÓW}} % Your university's name in capitals - this is currently used in the abstract page
+                {AGH UNIVERSITY OF SCIENCE AND TECHNOLOGY IN~KRAKÓW}}
 %-------------------------------------------------                
 \department{\texorpdfstring{\href{http://ki.agh.edu.pl} % Your department's URL
                 {Department of Computer Science}} % Your department's name - used in the title page and abstract

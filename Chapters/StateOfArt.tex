@@ -1,6 +1,20 @@
-\chapter{State of Art}
-\label{chap:state-of-art} 
-\lhead{Chapter 2. \emph{State of Art}}
+\chapter{State of Art} \label{chap:state-of-art}  \lhead{Chapter 2. \emph{State of Art}}
+ 
+Cloud computing is widely adopted standard for deploying web applications. Cloud users are charged on \emph{pay as you go} basis that enables for cost and service quality optimization by dynamic application scaling. The problem of resource provisioning in IaaS clouds has been recently addressed in~\cite{Chen2011, Kim2011} and~\cite{SqueezingOut}. They typically consider unpredictable dynamic workloads and optimize the objectives such as cost, runtime or utility function by autoscaling the resource pool at runtime. These approaches, however, do not address the problem of data transfer time and cost, which are an important factor when deploying scientific applications.
+
+Automatic cloud scaling and provisioning is often delivered as a cloud service i.e. Amazon Auto Scaling\footnote{http://aws.amazon.com/autoscaling/}. Policy or rule based services are primarily designed to scale web applications\cite{SqueezingOut} or bag of tasks applications (e.g. \cite{ElasticSite, Kim2011}). They take input from monitoring systems and perform scaling-up or scaling-down depending on data from monitoring system. This approach is reasonable for applications with dynamic, unpredictable load as it allows to keep number of instances low, but high enough to provide certain service quality e.g. ensure acceptable request processing time.
+
+The work presented in this thesis is related to heuristic algorithms for workflow scheduling on IaaS clouds, such as the ones described in~\cite{Abrishami2013158,Mao11,BarrionuevoFP12,BittencourtM11}. Infrastructure model considered differs in that we assume multiple heterogeneous clouds with object storage attached to them, instead of individual machines with peer-to-peer data transfers between them. Instead of scheduling each task individually, this approach proposes a global optimization of placement of workflow tasks and data.
+
+Integer programming approach has been applied to the optimization of service selection for activities of QoS aware grid workflows~\cite{Brandic08}. On the other hand, in model presented in this thesis assumes the IaaS cloud infrastructure, while the objective function takes into account costs and delays of data transfers associated with the tasks.
+
+The cost minimization problem on clouds addressed in~\cite{Pandey2010} uses a different model from ours. We impose a deadline constraint and assume that the number of instances available from providers may be limited. To satisfy these constraints, the planner has to choose resources from multiple providers. Our model also assumes that VM instances are billed per hour of usage.
+
+The model presented in~\cite{Genez2012} also uses AMPL/CPLEX as solving platform and they define model for deadline-constrained workflow cost optimization. However, their approach does not address the problem of data transfer time and cost. Furthermore they do not consider that number of instances on the cloud is usually limited. 
+
+Pipelined workflows consisting of stages are addressed in~\cite{TolosanaCalasanz20121300}, where the processing model is a data flow and multitple instances of the same workflow are executed on the same set of cloud resources. The goal of this work is cost optimization instead of meeting the QoS constraints.
 
 
-% \section{Welcome and Thank You}
+% ///////////////
+
+The deadline-constrained cost optimization of scientific workloads on heterogeneous IaaS described in~\cite{VandenBossche2013973} addresses multiple providers and data transfers between them, where the application is a bag of tasks.
