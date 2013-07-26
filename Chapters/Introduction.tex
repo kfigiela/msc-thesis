@@ -6,7 +6,7 @@ This chapter presents the general idea of this work. Section~\ref{intro:motivati
 
 \section{Motivation}
 \label{intro:motivation}
-
+\todo{Dodac jakies ladne zdanie na poczatek (``juz starozytni Rzymianie\ldots)}
 This thesis illustrates typical problems when making decisions on deployment planning of scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
 
 \todo{dodac podsekcje Motivation gdzie beda challenges}
@@ -47,9 +47,9 @@ In terms of scientific computing we will be rather interested in data flow in wo
 
 \begin{figure}[tb]
    \centering
-   \includegraphics[width=\columnwidth]{MontageWorkflow}  
+   \includegraphics[width=0.7\columnwidth]{MontageWorkflow}  
    \caption{Montage – example workflow\cite{Bharathi08}}
-   \label{fig:intro:workflow}
+   \label{fig:intro:workflow}\todo{Add reference to the figure in the text}
 \end{figure} 
 
 Scientific workflows are usually run on shared infrastructure as clusters, grids or clouds. It requires to carefully plan and schedule computation to efficiently use given infrastructure. As the workflows are getting bigger and more complex it is nearly impossible to do it manually. Specifically, scheduling workflow applications in a distributed system is an NP-complete problem\cite{Garey:1979:CIG:578533}. Numerous workflow algorithms to schedule workflows are presented in Chapter \ref{chap:state-of-art}.

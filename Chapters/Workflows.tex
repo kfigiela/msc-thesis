@@ -303,7 +303,7 @@
       \end{subfigure}
       \caption{\label{fig:other}Optimal cost found by the model for different application.}
     \end{figure}  
-    
+    \todo{add more pics that did not fit into PPAM}
     Figures \ref{fig:workflow:cybershake-500} to \ref{fig:workflow:sipht-5000}  show results obtained for other workflows. These workflows are relatively small and even for short deadlines our model is able to schedule tasks to be executed in a very short time on cheapest instances on a single cloud, this results in flat characteristics.
     
     To investigate how the model behaves for workflows with the same structure, but with much longer run times of tasks, we run the optimization for Montage workflow with tasks $1000 \times$ longer. This corresponds to the scenario where tasks are in the order of hours instead of seconds. The sample results in Fig.~\ref{fig:workflow:montage-500x1000} show how the cost increases much steeply with shorter deadlines, illustrating the trade-off between time and cost. The difference between Figs.~\ref{fig:workflow:montage-500}~and~\ref{fig:workflow:montage-500x1000} illustrates that the model is more useful for workflows when tasks are of granularity that is similar to the granularity of the (hourly) billing cycle of cloud providers.    
