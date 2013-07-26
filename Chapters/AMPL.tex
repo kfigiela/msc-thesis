@@ -2,7 +2,7 @@
 \label{chap:ampl} 
 \lhead{Chapter \ref{chap:ampl}. \emph{Mathematical programming using AMPL}}
 
-Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate linear model for example \emph{Whiskas Cat Food Problem} using AMPL.
+Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate example models: linear \emph{Whiskas Cat Food Problem} and integer \emph{shift work scheduling}.
 
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
@@ -117,7 +117,7 @@ Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and 
 
 
   
-\subsubsection{Problem formulation}
+\subsection{Problem formulation}
 
 In this particular problem data defines the following data sets:
 
@@ -195,7 +195,7 @@ or in more general way, we may define lower and upper bounds for each component 
 
 We have formulated general problem using mathematical notation. Now we will proceed with model problem formulation using AMPL.
 
-\subsubsection{Problem formulation using AMPL}
+\subsection{Problem formulation using AMPL}
 
 AMPL enables us to separate model definition and instance specific data. Usually we create three files: model, data and calling script. In the model file we define the data we need to have: sets and parameters, objective and constraints. Then in data file we populate the sets and parameters with the numbers for the particular instance of the problem. Both model and data files are loaded from calling script that may do some pre or post processing.
 
@@ -326,8 +326,188 @@ CHICKEN   0
 
 In that case, it appears that it is cheapest to use beef and fill the rest of the can with gel.
 
-\todo{przyklad ze schedulingiem}
+\section{Example -- Shift Scheduling}
+\label{sec:ampl:sched}
+
+In this section, we will formulate AMPL model for shift scheduling problem\ref{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift that is different depending; more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible. In the case described we already identified that there are 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints.
+
+\subsection{Problem formulation}
+
+In this particular problem data defines the following data 
+
+\begin{itemize}
+  \item $S$ -- set of shifts,  
+  \item $W$ -- set of acceptable schedules.
+\end{itemize}
+
+We have also some numbers that describe work planning;
+\begin{itemize}
+  \item $p_w$ -- pay rate at schedule $w$,
+  \item $r_s$ -- number of staff required at shift $s$,
+  \item $n_{min}$ -- minimal number of workers on any schedule.
+\end{itemize}
+
+\paragraph{Identify the decision variables}
+
+We need to decide if given schedule will be used and if so, how many workers should follow it. Formally we could write this as:
+\begin{align} 
+  u_w &= \text{binary; schedule $w$ should be used iif 1} \\
+  n_w &= \text{integer; how many workers should use schedule $w$}
+\end{align} 
+
+\paragraph{Formulate the Objective Function}
+
+The objective for this problem is to minimize the total cost of running factory.
+
+\begin{align}
+   \min \mathop\sum\limits_{w \in W} p_w n_w
+\end{align}
+
+\paragraph{Formulate the constraints}
+
+The constraints are:
+
+\begin{enumerate}
+  \item The stated minimal number of workers on each shift is met.
+  \item Each schedule, if used at all, is used by minimal number of workers.
+\end{enumerate}
+
+First of the constraints is: 
+
+\begin{align}
+   \mathop\forall\limits_{s \in S}
+     \mathop\sum\limits_{w \in W: s \in W_w} n_w \geq r_s
+\end{align}
+
+The second can be written as follows
+
+\begin{align}
+   \mathop\forall\limits_{w \in W}
+     n_{min} u_w \leq n_w \\
+   \mathop\forall\limits_{w \in W}
+     n_w \leq \left(\max\limits_{s \in W_w} r_s\right) u_w 
+\end{align}
+
+We have formulated general problem using mathematical notation. Now we will proceed with model problem formulation using AMPL.
+
+\subsection{Problem formulation using AMPL}
+
+AMPL enables us to separate model definition and instance specific data. Usually we create three files: model, data and calling script. In the model file we define the data we need to have: sets and parameters, objective and constraints. Then in data file we populate the sets and parameters with the numbers for the particular instance of the problem. Both model and data files are loaded from calling script that may do some pre or post processing.
+
+\paragraph{Model formulation}
+
+First of all, we should define the sets and parameters in model file.
+
+\begin{lstlisting}
+set SHIFTS;
+param Nsched;
+set SCHEDS = 1..Nsched;
+set SHIFT_LIST {SCHEDS} within SHIFTS;
+
+param rate {SCHEDS} >= 0;
+param required {SHIFTS} >= 0;
+param least_assign >= 0;
+\end{lstlisting}
+
+Using sets we can define the decision variables
+\begin{lstlisting}
+var Work {SCHEDS} >= 0 integer; 
+var Use {SCHEDS} >= 0 binary;
+\end{lstlisting}
+
+and the objective function
+
+\begin{lstlisting}
+minimize Total_Cost: sum {j in SCHEDS} rate[j] * Work[j];
+\end{lstlisting}
+
+Finally, we may define constraints
+
+\begin{lstlisting}
+subject to Shift_Needs {i in SHIFTS}:
+  sum {j in SCHEDS: i in SHIFT_LIST[j]} Work[j] >= required[i];
+subject to Least_Use1 {j in SCHEDS}: 
+  least_assign * Use[j] <= Work[j];
+subject to Least_Use2 {j in SCHEDS}:
+  Work[j] <= (max {i in SHIFT_LIST[j]} required[i]) * Use[j];
+\end{lstlisting}
+
+\paragraph{Providing data}
+
+Now we can provide the model with the data. We provide the data we defined in previous paragraph.
+
+\begin{lstlisting}
+set SHIFTS := Mon1 Tue1 Wed1 Thu1 Fri1 Sat1
+              Mon2 Tue2 Wed2 Thu2 Fri2 Sat2
+              Mon3 Tue3 Wed3 Thu3 Fri3 ;
+
+param rate  default 1 ;
+
+param required :=  Mon1 100  Mon2 78  Mon3 52 
+                   Tue1 100  Tue2 78  Tue3 52
+                   Wed1 100  Wed2 78  Wed3 52
+                   Thu1 100  Thu2 78  Thu3 52
+                   Fri1 100  Fri2 78  Fri3 52
+                   Sat1 100  Sat2 78 ;
+                   
+param least_assign  := 5;
+param Nsched        := 126 ;
+
+set SHIFT_LIST[  1] := Mon1 Tue1 Wed1 Thu1 Fri1 ;
+set SHIFT_LIST[  2] := Mon1 Tue1 Wed1 Thu1 Fri2 ;
+........
+set SHIFT_LIST[126] := Tue2 Wed2 Thu2 Fri2 Sat2 ;
+\end{lstlisting} 
+
+\paragraph{Running AMPL}
+
+\begin{lstlisting}
+reset;
+option omit_zero_rows 1;
+model whiskas.mod;
+
+data whiskas.dat;
+
+option solver cplex;
+solve;
+
+display Work;
+display Total_Cost;
+\end{lstlisting}
+
+Now we are ready to run the model and get the results.
+
+\begin{lstlisting}
+% ampl sched.run
+CPLEX 12.4.0.1: optimal integer solution; objective 266
+136 MIP simplex iterations
+23 branch-and-bound nodes
+Work [*] :=
+  3   7
+  6  28
+ 16   8
+ 18   8
+ 20  12
+ 29   7
+ 37  21
+ 61   5
+ 66   5
+ 78  24
+ 82  28
+ 91  12
+100   8
+102   6
+112  28
+118  24
+122  30
+126   5
+;
+
+Total_Cost = 266
+\end{lstlisting}
+
+Given that data we may assign schedules to the specific workers.
 
 \section{Conclusions}
 
-This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example problem and corresponding model using AMPL.
+This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example problems and corresponding models that may be solved using AMPL.
