@@ -7,7 +7,7 @@ Section \ref{sec:ampl:mathprog} presents overview on mathematical programming an
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
 
-Nowdays, the term programming\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints would be considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
+Nowdays, the term programming~\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints would be considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
 
 Defining the problem is not an easy task. If there are too few constraints, the space of possible solutions is too big. On the other hand, too many constraints can rule desirable solutions out. In the worst case there are no solutions at all. The success of programming relies on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
 
@@ -31,7 +31,7 @@ The optimization problems may be categorized in the following groups:
   \item[Non-linear programming (NLP)] Continuous, but not all-linear objective and constraints. May be solved by several methods including gradient, quasi-newton, augmented lagrangian and interior-point. Unless special conditions are met, solution found is possibly optimal over only some local neighbourhood. If objective is convex (if minimized) or concave (if maximized) and constraints define a convex region it is guaranteed that optimum found is optimal over the entire feasible region.
   \item[Mixed-integer programming (MIP)] Linear objective and constraints, some or all of variables are integer-valued. Solved by branch-and-bound approach that uses a linear solver to solve subproblems.
   \item[Mixed-integer non-linear programming (MINLP)] Non-linear objective and constraints, some or all of variables are integer-valued. Solved by branch-and-bound approach that uses a non-linear solver to solve subproblems.
-  \item[Constraint programming (CP)] \emph{TODO: pisac o tym w ogole?}\todo{tak :)}
+  \item[Constraint programming (CP)] In that case, no assumptions can be made on the constraints or the objective. This class is the hardest to solve, as no heuristics can be used. Example problem of this class is \emph{boolean satisfiability problem (SAT)}. Often the problem is simplified to find the feasible solution without any optimization.
 \end{description}
 
 \section{AMPL: A Mathematical Programming Language}
@@ -50,7 +50,7 @@ To successfully solve optimization problem one needs to do a sequence of multipl
 
 Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrices as input. We need to transform \emph{modeller's form} to \emph{algorithm's form}. Doing it manually is time consuming and erron-prone task.
 
-To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages\footnote{i.e. AMPL\cite{Fourer2002}, Gams\cite{Gams}, PuLP\cite{PuLP}, OscaR\cite{OscaR}} were created over the decades. 
+To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages\footnote{i.e. AMPL~\cite{Fourer2002}, Gams~\cite{Gams}, PuLP~\cite{PuLP}, OscaR~\cite{OscaR}} were created over the decades. 
 
 By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change.
 
@@ -58,15 +58,15 @@ AMPL is an algebraic mathematical modelling lanuage that resembles traditional m
 
 \subsection{Available solvers}
 
-As soon as model is formulated and matrices generated, we may proceed with solving the specific instance of our problem. To do that we will need solver -- a program that implements one of solving algorithms. There is wide range of existing solvers available, both open-source (i.e. Cbc\cite{cbc-solver}) and commercial (i.e. CPLEX\cite{cplex}) ones that differ with the problem classes they target. Full list of available solvers is published at AMPL website\cite{AMPLSolvers}.
+As soon as model is formulated and matrices generated, we may proceed with solving the specific instance of our problem. To do that we will need solver -- a program that implements one of solving algorithms. There is wide range of existing solvers available, both open-source (i.e. Cbc~\cite{cbc-solver}) and commercial (i.e. CPLEX~\cite{cplex}) ones that differ with the problem classes they target. Full list of available solvers is published at AMPL website~\cite{AMPLSolvers}.
 
-Usually solvers provide multiple options that let us tune them for the specific application. One may enable or disable certain features of the solver, i.e. for \emph{Bonmin}\cite{Bonmin} solver we may choose branching algorithm or configure it to use heuristics.
+Usually solvers provide multiple options that let us tune them for the specific application. One may enable or disable certain features of the solver, i.e. for \emph{Bonmin}~\cite{Bonmin} solver we may choose branching algorithm or configure it to use heuristics.
 
 \section{Example -- Whiskas Cat Food Problem}
 \label{sec:ampl:whiskas}
 % zaczerpniete mocno z http://twiki.esc.auckland.ac.nz/twiki/bin/view/OpsRes/WhiskasCatFoodProblem
 
-To get some practise with modelling, we will describe a typical linear programming problem on the example of Whiskas Cat Food problem. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. \todo{Add non-breaking space (tilde) to all citations} The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
+To get some practise with modelling, we will describe a typical linear programming problem on the example of Whiskas Cat Food problem. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
 
 Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and gel. The prices for the ingredients are presented in Table \ref{ampl:whiskas:prices}, while ingredient contribution to the total weight of protein, fat, fibre and salt in the final product are give in Table \ref{ampl:whiskas:contribution} and nutritional requirements are presented in Table \ref{ampl:whiskas:analysis}. Given that data we may proceed with model formulation.
 
@@ -329,7 +329,7 @@ In that case, it appears that it is cheapest to use beef and fill the rest of th
 \section{Example -- Shift Scheduling}
 \label{sec:ampl:sched}
 \todo{say that it is an example of integer problem}
-In this section, we will formulate AMPL model for shift scheduling problem\cite{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible. In the case described we already identified \todo{this was not described earlier} that there are 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints.
+In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints.
 
 \subsection{Problem formulation}
 
