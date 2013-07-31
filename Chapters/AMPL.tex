@@ -329,11 +329,11 @@ In that case, it appears that it is cheapest to use beef and fill the rest of th
 \section{Example -- Shift Scheduling}
 \label{sec:ampl:sched}
 
-In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints.
-
+In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, so workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. 
+ 
 \subsection{Problem formulation}
 
-In this particular problem data defines the following data 
+This particular problem defines the following sets: 
 
 \begin{itemize}
   \item $S$ -- set of shifts,  
@@ -351,8 +351,8 @@ We have also some numbers that describe work planning;
 
 We need to decide if given schedule will be used and if so, how many workers should follow it. Formally we could write this as:
 \begin{align} 
-  u_w &= \text{binary; schedule $w$ should be used iif 1} \\
-  n_w &= \text{integer; how many workers should use schedule $w$}
+  u_w &= \text{binary; 1 iif schedule $w$ should be used, otherwise 0}; \\
+  n_w &= \text{integer; how many workers should use schedule $w$}.
 \end{align} 
 
 \paragraph{Formulate the Objective Function}
