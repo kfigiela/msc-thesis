@@ -6,11 +6,10 @@ This chapter presents the general idea of this work. Section~\ref{intro:motivati
 
 \section{Motivation}
 \label{intro:motivation}
+
 \todo{Dodac jakies ladne zdanie na poczatek ("juz starozytni Rzymianie\ldots")}
+
 This thesis illustrates typical problems when making decisions on deployment planning of scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
-
-\todo{dodac podsekcje Motivation gdzie beda challenges}
-
 
 \section{Scientific applications}
 \label{intro:application}
@@ -31,7 +30,15 @@ In this thesis we will focus on resource allocation for workflows and bag of tas
 \subsection{Workflows}
 \label{intro:workflow}
 
-Scientific workflow is concerned with the automation of scientific processes in which tasks are structured based on their control and data dependencies~\cite{Taylor:2006:WES:1196459}. Workflow application is composed by connecting multiple scientific tasks to their dependencies. Workflow structure indicates the temporal relationship between there tasks. In general, a workflow can be represented as a Directed Acyclic Graph (DAG) or a non-DAG. \emph{Montage} is one of the 
+Scientific workflow is concerned with the automation of scientific processes in which tasks are structured based on their control and data dependencies~\cite{Taylor:2006:WES:1196459}. Workflow application is composed by connecting multiple scientific tasks to their dependencies. Workflow structure indicates the temporal relationship between there tasks. In general, a workflow can be represented as a Directed Acyclic Graph (DAG) or a non-DAG. Figure~\ref{fig:intro:workflow} shows example \emph{Montage} workflow that is used to create mosaics of the sky.
+
+\begin{figure}[tb]
+   \centering
+   \includegraphics[width=0.7\columnwidth]{MontageWorkflow}  
+   \caption{Montage – example workflow~\cite{Bharathi08}}
+   \label{fig:intro:workflow}
+\end{figure} 
+
 
 Workflow is built of four base control structures: \emph{sequence}, \emph{parallelism}, \emph{choice} and \emph{loop} (only for non-DAGs). Sequence represents an ordered series of task with one starting after the previous task has completed. Parallelism represents tasks that are performed concurrently, rather than serially. The choice structure allows to run selected portion of the workflow if certain conditions are met. The iteration structure lets certaint block of tasks to be repeated. Consecutive stages of workflow often represent work of scientist – data gathering, preprocessing, processing and results aggregation. 
 
@@ -45,26 +52,29 @@ In terms of scientific computing we will be rather interested in data flow in wo
 \end{figure} 
 
 
-\begin{figure}[tb]
-   \centering
-   \includegraphics[width=0.7\columnwidth]{MontageWorkflow}  
-   \caption{Montage – example workflow~\cite{Bharathi08}}
-   \label{fig:intro:workflow}
-\end{figure} 
-
 Scientific workflows are usually run on shared infrastructure as clusters, grids or clouds. It requires to carefully plan and schedule computation to efficiently use given infrastructure. As the workflows are getting bigger and more complex it is nearly impossible to do it manually. Specifically, scheduling workflow applications in a distributed system is an NP-complete problem~\cite{Garey:1979:CIG:578533}. Numerous workflow algorithms to schedule workflows are presented in Chapter \ref{chap:state-of-art}.
 
 There exist multiple workflow systems that assist scientists to create and deploy their workflow. Popular ones are Pegasus~\cite{Pegasus} and Taverna~\cite{Taverna}. They provide tools to model workflow either in code or via GUI application. Then one is able to generate workflow execution plan on certain (e.g. grid) architecture. Workflow systems differ in supported workflow types (DAG or non-DAG), workflow scheduling policies and algorithms, fault tolerance, and supported infrastructure. The good overview on workflow systems taxonomy is given in ~\cite{Yu:2005:TSW:1084805.1084814}.
 
 \subsection{Bag of tasks}
 
-Bag of tasks applications represent group of independent tasks that may be processed in parallel or sequentially. A large parameter sweep is good example of such problem. The \emph{map} stage of map-reduce~\cite{Dean:2008:MapReduce} \todo{obrazek} application can be also considered as a bag of tasks. Additionally, many workflows include a stages of a high number parallel tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks~\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
+Bag of tasks applications represent group of independent tasks that may be processed in parallel or sequentially. A large parameter sweep is good example of such problem. The \emph{map} stage of map-reduce (see Figure~\ref{fig:intro:mapreduce}) application can be also considered as a bag of tasks. Additionally, many workflows include a stages of a high number parallel tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks~\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
+
+
+\begin{figure}[tb]
+   \centering
+   \includegraphics[width=0.7\columnwidth]{MapReduce}  
+   \caption{Map-reduce execution overview\cite{Dean:2008:MapReduce}}
+   \label{fig:intro:mapreduce}
+\end{figure} 
 
 
 \section{Introduction to Cloud Computing}
 \label{intro:cloud}
 
-\todo{lepiej zaczac od tego, ze problem jest wazny i ciekawy.}Cloud computing is a jargon term without a commonly accepted non-ambiguous scientific or technical definition. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology~\cite{NISTCloudDef}, cloud computing is "a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction".
+Cloud computing became de facto standard of both delivering computing resources adopted both by commercial and scientific communities.  Nowdays hardly any science can be performed without computational science. Cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model.
+
+There are mutliple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is "a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction".
 
 \subsection{Service models}
 
@@ -99,17 +109,18 @@ Usually IaaS clouds provide three types of resources that are provisioned with a
 \section{Problem statement}
 \label{intro:statement}
 
-\todo{nalezy tu uzyc sformulowania 'resource allocation' zeby byc zgodnym z tytulem pracy} In this thesis we will focus on how planning and scheduling of bag of tasks and workflow applications. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as external constraints. Specifically, we will address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, using mathematical modeling with AMPL and mixed integer programming.
+In this thesis we will focus on optimization of resource allocation of bag of tasks and workflow applications on the cloud. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as external constraints. Specifically, we will address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, using mathematical modeling with AMPL and mixed integer programming.
 
 \section{Goals of the thesis}
 \label{intro:goals}
 
-The major goal of this thesis is the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. In particular we are concerned with the following questions:
+The major goal of this thesis is the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. The goal will be acomplished by:
 
 \begin{itemize}
-  \item 
-  \item Is it possible to perform such optimization by using AMPL?
-  \item If so, is the optimization process fast enough and stable?
+  \item study of existing works on workflow scheduling and resource allocation on the cloud,
+  \item defining application and infrastructure model,
+  \item formulating integer linear problem for bag of tasks applications and workflows,
+  \item implementing optimization model in AMPL,
+  \item evaluating optimization model, its performance and stability,
+  \item answering if ILP is suitable method to solve the problem.
 \end{itemize}
-
-\todo{Dodac sekcje ``Goals of the thesis'' gdzie bedzie wypunktowana lista celow: analiza problemu, opracowania modelu, testy, itp. Pozniej w ostatnim rozdziale powinna byc ta sama lista i przy kazdym punkcie wyjasnione w jaki sposob cele zostaly zrealizowane.}
