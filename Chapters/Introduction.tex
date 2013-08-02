@@ -7,16 +7,16 @@ This chapter presents the general idea of this work. Section~\ref{intro:motivati
 \section{Motivation}
 \label{intro:motivation}
 
-\todo{Dodac jakies ladne zdanie na poczatek ("juz starozytni Rzymianie\ldots")}
+Nowadays, science requires processing of large amounts of data and use of hosted services for compute-intensive tasks~\cite{Deelman-PPL13}. Cloud services are used not only to provide resources, but also for hosting scientific datasets, as in the case of AWS public datasets~\cite{AWS-public-dataset}. Scientific applications that run on these clouds have often the structure of workflows or workflow ensembles that are groups of inter-related workflows~\cite{Malawski-SC12}. Infrastructure as a Service (IaaS) cloud providers offer services where virtual machine instances differ by performance and price~\cite{Bubak-CCGrid13}. Planning scientific experiments requires optimization decisions that take into account both execution time and cost.
 
-This thesis illustrates typical problems when making decisions on deployment planning of scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
+This thesis illustrates typical problems when making decisions on resource allocation for scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
 
 \section{Scientific applications}
 \label{intro:application}
 
-Nowadays, science requires processing of large amounts of data and use of hosted services for compute-intensive tasks~\cite{Foster06052005}. Scientific computing covers a wide range of fields including biology, chemistry, economics, engineering, finance, geophysics, linguistics, mathematics, mechanics and physics. Applications used in this sciences are often distributed, so that application may run a numbers of magnitude faster than sequential one. This is very important in some fields such as weather forecasting or financial modelling to get results as fast as possible. 
+Scientific computing covers a wide range of fields including biology, chemistry, economics, engineering, finance, geophysics, linguistics, mathematics, mechanics and physics. Applications used in this sciences are often distributed, so that application may run a numbers of magnitude faster than sequential one. This is very important in some fields such as weather forecasting or financial modelling to get results as fast as possible. 
 
-Scientific applications often belong to one of the groups: 
+Scientific applications usually may be put to one of the following groups: 
 \begin{itemize}
   \item workflow,
   \item bag of tasks,
@@ -72,9 +72,9 @@ Bag of tasks applications represent group of independent tasks that may be proce
 \section{Introduction to Cloud Computing}
 \label{intro:cloud}
 
-Cloud computing became de facto standard of both delivering computing resources adopted both by commercial and scientific communities.  Nowdays hardly any science can be performed without computational science. Cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model.
+Cloud computing became de facto standard of both delivering computing resources adopted both by commercial and scientific communities.  Nowdays, hardly any science can be performed without computational science. Cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model.
 
-There are mutliple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is "a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction".
+There are mutliple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is “a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction”.
 
 \subsection{Service models}
 
@@ -101,7 +101,7 @@ Depending on who manages cloud infrastructure we may distinguish the following m
 
 Usually IaaS clouds provide three types of resources that are provisioned with a pay-per-use model: 
 \begin{description}
-  \item[Computing.] Provided as virtual machine (VM) instances. Multiple instance types are available that differ with CPU power, RAM memory and additional hardware (i.e. GPU units). VMs are usually billed for instance running time (wall clock time, not CPU time) usually rouned up to full hours.
+  \item[Computing.] Provided as virtual machine (VM) instances. Multiple instance types are available that differ with CPU power, RAM memory and additional hardware (i.e. GPU units). VMs are usually billed for instance running time (wall clock time, not CPU time) usually rounded up to full hours.
   \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as object store available as external service (i.e. Amazon's S3). User is usually biled for persisting data per GiB\footnote{Gibibyte $= 2^{30}$ bytes} per month. Additional charges may also apply (i.e. per IO transaction).
   \item[Networking.] Provides connectivity between VMs, storages and the Internet. User is billed for the data transfered of the cloud, while incoming data and transfer inside specific cloud usually remains free. Networking is provided in bundle with computing and storage, not as a separate service.
 \end{description}
@@ -109,7 +109,7 @@ Usually IaaS clouds provide three types of resources that are provisioned with a
 \section{Problem statement}
 \label{intro:statement}
 
-In this thesis we will focus on optimization of resource allocation of bag of tasks and workflow applications on the cloud. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as external constraints. Specifically, we will address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, using mathematical modeling with AMPL and mixed integer programming.
+In this thesis we will focus on optimization of resource allocation of bag of tasks and workflow applications on the cloud. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as other constraints. Specifically, we will address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, using mathematical modeling with AMPL and mixed integer programming.
 
 \section{Goals of the thesis}
 \label{intro:goals}
@@ -121,10 +121,10 @@ The major goal of this thesis is the theoretical and practical investigation of 
   \item defining application and infrastructure model,
   \item formulating integer linear problem for bag of tasks applications and workflows,
   \item implementing optimization model in AMPL,
-  \item evaluating optimization model, its performance and stability,
+  \item evaluating optimization results, performance and stability,
   \item answering if ILP is suitable method to solve the problem.
 \end{itemize}
 
 \section{Summary}
 
-In this chapter we discussed the motivation an goals of this work. We given a brief overview on scientific applications focusing on bag of tasks applications and workflows. We also got introduced cloud computing. We will go deep into the IaaS cloud characteristics in Section~\ref{sec:bot:cloudmodel}.
+In this chapter we discussed the motivation an goals of this work. We given a brief overview on scientific applications focusing on bag of tasks applications and workflows. We also introduced cloud computing. We will dive deeper into the IaaS cloud characteristics in Section~\ref{sec:bot:cloudmodel}.

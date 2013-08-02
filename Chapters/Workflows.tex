@@ -60,7 +60,7 @@
     
     As described in Section \ref{intro:workflow}, a scientific workflow describes the dependencies between tasks and in most cases may be represented as directed acyclic graph (DAG), where nodes represent tasks and edges represent task dependencies. 
     
-    There are different approaches to optimize workflow scheduling (see Chapter \ref{chap:state-of-art}). Mathematical programming allows to describe the model mathematically and use a set of available optimization solvers. On the other hand, an attempt to apply this method to the general problem of scheduling large-scale workflows on heterogeneous cloud resources would be impractical due to the problem complexity, therefore simplified models need to be analyzed. Optimization models can be simplified in several ways. We may simplify application model, infrastructure model or make certain assumptions on output schedule.
+    There are different approaches to optimize workflow scheduling (see Chapter \ref{chap:state-of-art}). Mathematical programming allows to describe the model mathematically and use a set of available optimization solvers. On the other hand, an attempt to apply this method to the general problem of scheduling large-scale workflows on heterogeneous cloud resources would be impractical due to the problem complexity, therefore simplified models need to be analyzed. Optimization models can be simplified in several ways. We may simplify application model, infrastructure model or make certain assumptions on the schedule.
     
     In this model we assume that workflow is represented as a DAG. We also assume that a workflow is divided into several levels (layers) that can be executed sequentially and tasks within one level do not depend on each other (see Fig.~\ref{fig:workflow:appmodel}). Each layer represents a bag of tasks that can be partitioned in several groups (e.g. application A, application B, etc.) that share computational cost and input/output size. We assume that only one task group is executed on a specific cloud instance (VM). This forbids instance sharing between multiple layers, which means that each application needs its own specific VM template with a preconfigured environment.
 
@@ -337,6 +337,6 @@
     
 \section{Summary}
 
-\todo{In this chapter…}
-    
+    In this chapter, we presented a cost optimization model for scientific workflows executing on multiple heterogeneous clouds. The model, formulated in AMPL, allows us to find the optimal assignment of workflow tasks, grouped into layers, to cloud instances. The model was tested on a set of benchmark workflows and we observed that it gives useful solutions in a reasonable amount of computing time.  By solving the model for multiple deadlines, we can produce trade-off plots, showing how the cost depends on the deadline. Such plots are a step towards a scientific cloud workflow calculator, supporting resource management decisions for both end-users and workflow-as-a-service providers.
+  
 } % Command scope

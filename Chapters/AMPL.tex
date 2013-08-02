@@ -7,7 +7,7 @@ Section \ref{sec:ampl:mathprog} presents overview on mathematical programming an
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
 
-Nowdays, the term programming~\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints would be considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
+Nowdays, the term programming~\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints is considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
 
 Defining the problem is not an easy task. If there are too few constraints, the space of possible solutions is too big. On the other hand, too many constraints can rule desirable solutions out. In the worst case there are no solutions at all. The success of programming relies on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
 
@@ -15,7 +15,7 @@ In addition to the constraints, one can define the objective --- function of the
 
 In development of optimization model it is very important to classify the problem, so we can select the most suitable way of solving it. If constraints and objectives are linear combinations of the variables then the model is called \emph{linear program} and the process of modelling and solving is called \emph{linear programming}. This class of optimization problems is particurarly important becasue a lot of real world optimization problems may be represented in such way. Additionally, there exists a lot of theory and algorithms to solve such problems in fast, deterministic way even if they have thousands of variables. The ideas of linear programming are also important for analyzing and solving problems that are non-linear.
 
-All useful methods of mathematical programming involve using computers. The first computional method of solving optimization problems, the simplex algorithm, was introduced at that time and was subject to several improvements over the decades.
+All useful methods of mathematical programming involve using computers. The first computional method of solving optimization problems, the simplex algorithm~\cite{dantzig}, was introduced by George Dantzig and was subject to several improvements over the decades.
 
 \section{Problem classification}
 \label{sec:ampl:classification}
@@ -50,9 +50,9 @@ To successfully solve optimization problem one needs to do a sequence of multipl
 
 Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrices as input. We need to transform \emph{modeller's form} to \emph{algorithm's form}. Doing it manually is time consuming and erron-prone task.
 
-To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages\footnote{i.e. AMPL~\cite{Fourer2002}, Gams~\cite{Gams}, PuLP~\cite{PuLP}, OscaR~\cite{OscaR}} were created over the decades. 
+To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages (i.e. AMPL~\cite{Fourer2002}, Gams~\cite{Gams}, PuLP~\cite{PuLP}, OscaR~\cite{OscaR}) were created over the decades. 
 
-By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change.
+By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change. Additionally, modelling language translator may introduce optimizations to generated problem instance.
 
 AMPL is an algebraic mathematical modelling lanuage that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer (in present meaning). Algebraic modelling languages allow to express a wide range of optimization problems: linear, nonlinear and integer.
 
@@ -64,7 +64,6 @@ Usually solvers provide multiple options that let us tune them for the specific 
 
 \section{Example -- Whiskas Cat Food Problem}
 \label{sec:ampl:whiskas}
-% zaczerpniete mocno z http://twiki.esc.auckland.ac.nz/twiki/bin/view/OpsRes/WhiskasCatFoodProblem
 
 To get some practise with modelling, we will describe a typical linear programming problem on the example of Whiskas Cat Food problem. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
 
@@ -510,4 +509,4 @@ Given that data we may assign schedules to the specific workers.
 
 \section{Summary}
 
-This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example problems and how they can be solved using AMPL.
+This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example optimization problems and how they can be solved using AMPL.
