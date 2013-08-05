@@ -2,12 +2,12 @@
 \label{chap:ampl} 
 \lhead{Chapter \ref{chap:ampl}. \emph{Mathematical programming using AMPL}}
 
-Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate example models: linear \emph{Whiskas Cat Food Problem} and integer \emph{shift work scheduling}. These problems are not exactly from scientific computing domain, but they present typical modelling challenges.
+Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In Section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate example models: linear \emph{Whiskas Cat Food Problem} and integer \emph{shift work scheduling}. These problems are not exactly from scientific computing domain, but they present typical modelling challenges.
 
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
 
-Nowdays, the term programming~\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints is considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's varialbes, objective and constraints.
+Nowdays, the term programming~\cite{Programming} means writing software, but in 1940s this word was used to describe planning and scheduling activities. It appeared then that restrictions in the planning or scheduling problem may be represented mathematically using equalities and inequalities.  The solution satysfying all these constraints is considered as acceptable plan or schedule.  Mathematical programming enables us to formally define optimization problem: it's variables, objective and constraints.
 
 Defining the problem is not an easy task. If there are too few constraints, the space of possible solutions is too big. On the other hand, too many constraints can rule desirable solutions out. In the worst case there are no solutions at all. The success of programming relies on key insight into the optimized domain and modelling techniques to find a way round the possible difficulty. 
 
@@ -65,7 +65,7 @@ Usually solvers provide multiple options that let us tune them for the specific 
 \section{Example -- Whiskas Cat Food Problem}
 \label{sec:ampl:whiskas}
 
-To get some practise with modelling, we will describe a typical linear programming problem on the example of Whiskas Cat Food problem. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
+To get some practise with modelling, we will describe a typical linear programming problem on the example of \emph{Whiskas Cat Food problem}. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
 
 Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and gel. The prices for the ingredients are presented in Table \ref{ampl:whiskas:prices}, while ingredient contribution to the total weight of protein, fat, fibre and salt in the final product are give in Table \ref{ampl:whiskas:contribution} and nutritional requirements are presented in Table \ref{ampl:whiskas:analysis}. Given that data we may proceed with model formulation.
 
@@ -161,7 +161,7 @@ First of the constraints can is:
    \mathop\sum\limits_{i \in I} x_i = 100
 \end{align}
 
-The latter can be written as follows
+The latter can be written as follows:
 
 \begin{align}
    \mathop\sum\limits_{i \in I} c_{i,protein} x_i \geq 8.0 \\
@@ -170,7 +170,7 @@ The latter can be written as follows
    \mathop\sum\limits_{i \in I} c_{i,salt} x_i \leq 0.4 \\
 \end{align}
 
-or in more general way, we may define lower and upper bounds for each component of nutrition as $L_c$ and $U_c$, the values are presented in Table \ref{ampl:whiskas:bounds}. Constraint will be written as
+or in more general way, we may define lower and upper bounds for each component of nutrition as $L_c$ and $U_c$, the values are presented in Table \ref{ampl:whiskas:bounds}. Then the constraint will be written as
 
 \begin{align}
    \mathop\forall\limits_{c \in C} L_c \leq \mathop\sum\limits_{i \in I} c_{i,c} x_i \leq U_c \\
@@ -192,11 +192,11 @@ or in more general way, we may define lower and upper bounds for each component 
 
 
 
-We have formulated general problem using mathematical notation. Now we will proceed with model problem formulation using AMPL.
+We have formulated general problem using mathematical notation. Now we will proceed with model formulation using AMPL.
 
 \subsection{Problem formulation using AMPL}
 
-AMPL enables us to separate model definition and instance specific data. Usually we create three files: model, data and calling script. In the model file we define the data we need to have: sets and parameters, objective and constraints. Then in data file we populate the sets and parameters with the numbers for the particular instance of the problem. Both model and data files are loaded from calling script that may do some pre or post processing.
+AMPL enables us to separate model definition and instance specific data. Usually we create three files: model, data and calling script. In the model file we define abstract optimization model: sets and parameters, objective and constraints. Then in data file we populate the sets and parameters with the numbers for the particular instance of the problem. Both model and data files are loaded from calling script that may do some pre or post processing.
 
 \paragraph{Model formulation}
 
@@ -231,7 +231,7 @@ and the objective function
 minimize TotalCost : sum {i in INGREDIENTS} Cost[i] * Amount[i];
 \end{lstlisting}
 
-Note that, for the bounds that are not set, we assume \emph{±Infinity}. Additionally, we define that \emph{Cost} and \emph{Contribution} parameters should be non negative -- AMPL provides also verification of parameter data.
+Note that, for the bounds that are not set, we assume \emph{±Infinity}. Additionally, we define that \emph{Cost} and \emph{Contribution} parameters should be non negative -- AMPL provides also validation of parameter data.
 
 
 Finally, we may define constraints
@@ -290,7 +290,7 @@ param Contribution :
 
 \paragraph{Running AMPL}
 
-Now we are ready to solve the model we formulated with AMPL. For that, let's create file called \texttt{whiskas.run}.
+Now we are ready to solve the model we formulated with AMPL. To do that, we create file called \texttt{whiskas.run}.
 
 First of all we should reset AMPL environment in case that specific AMPL instance was solving other model before. We can do it with command \texttt{reset}. Then we load model using command \texttt{model} that takes model file name as an argument. Next, we load data file using command \texttt{data}. We also need to tell AMPL which solver we would like to be used. In our case we will use CPLEX (\texttt{option solver cplex}). Finally, we call solver and present results. The full file will look like as follows.
 
@@ -352,8 +352,8 @@ We have also some numbers that describe work planning;
 
 We need to decide if given schedule will be used and if so, how many workers should follow it. Formally we could write this as:
 \begin{align} 
-  u_w &= \text{binary; 1 iif schedule $w$ should be used, otherwise 0}; \\
-  n_w &= \text{integer; how many workers should use schedule $w$}.
+  u_w &= \text{binary, 1 iif schedule $w$ should be used, otherwise 0}; \\
+  n_w &= \text{integer, how many workers should use schedule $w$}.
 \end{align} 
 
 \paragraph{Formulate the Objective Function}
@@ -380,7 +380,7 @@ First of the constraints is:
      \mathop\sum\limits_{w \in W: s \in W_w} n_w \geq r_s
 \end{align}
 
-The second can be written as follows
+The second can be written as follows:
 
 \begin{align}
    \mathop\forall\limits_{w \in W}
