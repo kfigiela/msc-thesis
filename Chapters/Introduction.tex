@@ -7,6 +7,8 @@ This chapter presents the general idea of this work. Section~\ref{intro:motivati
 \section{Motivation}
 \label{intro:motivation}
 
+\todo{Przemyslec to, tu cos o starozytnych rzymianach}
+
 Nowadays, science requires processing of large amounts of data and use of hosted services for compute-intensive tasks~\cite{Deelman-PPL13}. Cloud services are used not only to provide resources, but also for hosting scientific datasets, as in the case of AWS public datasets~\cite{AWS-public-dataset}. Scientific applications that run on these clouds have often the structure of workflows or workflow ensembles that are groups of inter-related workflows~\cite{Malawski-SC12}. Infrastructure as a Service (IaaS) cloud providers offer services where virtual machine instances differ by performance and price~\cite{Bubak-CCGrid13}. Planning scientific experiments requires optimization decisions that take into account both execution time and cost.
 
 This thesis illustrates typical problems when making decisions on resource allocation for scientific applications on IaaS clouds and how they can be addressed using optimization techniques. In contrast to already well established computing and storage resources (clusters, grids) for the research community, clouds in the form IaaS  platforms (pioneered by Amazon EC2) provide on-demand resource provisioning with a pay-per-use model. These capabilities together with the benefits introduced by virtualization, make clouds attractive to the scientific community~\cite{Deelman09}. As a result, multiple deployment scenarios differing in costs and performance, coupled together with new provisioning models offered by clouds make the problem of resource allocation and capacity planning for scientific applications a challenge.
@@ -125,6 +127,11 @@ The major goal of this thesis is the theoretical and practical investigation of 
   \item answering if ILP is suitable method to solve the problem.
 \end{itemize}
 
+The goals will be addressed in the following chapters. In Chapter~\ref{chap:state-of-art} we will explore existing work  on scientific application scheduling and in Chapter~\ref{chap:ampl} we will have a quick tutorial over mathematical programming. In Chapters~\ref{chap:bag-of-tasks} and \ref{chap:workflows} we will go through defining infrastructure and application models that will be then implemented and evaluated. In Chapter~\ref{chap:conclusions} we will answer if ILP is suitable approach for resource allocation on the cloud.
+ 
 \section{Summary}
 
+\todo{Nie klei się}
+
 In this chapter we discussed the motivation an goals of this work. We given a brief overview on scientific applications focusing on bag of tasks applications and workflows. We also introduced cloud computing. We will dive deeper into the IaaS cloud characteristics in Section~\ref{sec:bot:cloudmodel}.
+

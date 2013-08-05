@@ -348,7 +348,7 @@ Cloud services are characterized by their pricing and performance. Instance type
   
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/overlap.pdf}
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/overlap.pdf}
      \caption{Large data processed on finite public cloud with overlapping computation and data transfer\label{fig:bot:large-finite-overlap}}
   \end{figure}  
 
@@ -360,20 +360,20 @@ Cloud services are characterized by their pricing and performance. Instance type
   Moreover, for longer deadlines the cost is a step function -- e.g. the cost for deadline of 18 hours is the same as for 14 hours. These two observations suggest that the model could be modified in such a way that the deadline is also a variable with upper bound constraint. Similar result can be achieved in a simple way by solving the current model for multiple deadlines in the neigborhood of the desired deadline and by selecting the best solution.  
   
   \begin{figure}[tb]
-     \centering \includegraphics[width=\columnwidth]{BagOfTasks/special-case-results.pdf}
+     \centering \includegraphics[width=0.7\columnwidth]{BagOfTasks/special-case-results.pdf}
      \caption{Special case with local minimum for deadline 9
      \label{fig:bot:special-case-results}}
   \end{figure}
 
   \begin{figure}[tb]
      \centering  
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.7\textwidth}
        \centering       
        \includegraphics[width=\textwidth]{BagOfTasks/special-case-009-cf.pdf}
        \caption{Deadline = 9 hours}
        \label{fig:bot:special-case-009-cf}
      \end{subfigure}
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.7\textwidth}
        \centering       
        \includegraphics[width=\textwidth]{BagOfTasks/special-case-010-cf.pdf}
        \caption{Deadline = 10 hours}
@@ -403,7 +403,7 @@ Cloud services are characterized by their pricing and performance. Instance type
   \url{http://youtu.be/FWjgMwLdZW4}}.
   
   \begin{figure}[tb]
-     \centering \includegraphics[width=\columnwidth]{BagOfTasks/cost_vs_data_size}
+     \centering \includegraphics[width=0.7\columnwidth]{BagOfTasks/cost_vs_data_size}
      \caption{Cost as a function of data size for different
      deadlines.\label{fig:bot:cost_vs_data_size}}
   \end{figure} 
@@ -414,12 +414,12 @@ Cloud services are characterized by their pricing and performance. Instance type
   
   \begin{figure}[tb]
      \centering 
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.7\textwidth}
        \centering       
        \includegraphics[width=\textwidth]{BagOfTasks/deadline-cost-150}
        \caption{Cost as a function of deadline}
      \end{subfigure}     
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.7\textwidth}
        \centering       
        \includegraphics[width=\textwidth]{BagOfTasks/deadline-elasticity-150}
        \caption{Elasticity of cost versus deadline}
@@ -484,8 +484,8 @@ Cloud services are characterized by their pricing and performance. Instance type
   
   \begin{figure}[tb]
      \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-10-2-cost-relative}  
-     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-50-2-cost-relative}  
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/tolerance-extended-10-2-cost-relative}  
+     \includegraphics[width=0.7\columnwidth]{BagOfTasks/tolerance-extended-50-2-cost-relative}  
  	   \caption{Impact of runtime variation on cost overrun as a function of deadline. 
  	   Results obtained for random variation of task runtime in the range from $-10\%$ to $+10\%$ (top)
  	   and from $-50\%$ to $+50\%$ (bottom). }
@@ -506,14 +506,13 @@ Cloud services are characterized by their pricing and performance. Instance type
   overrun may be negative.
 
   \begin{figure}[tb]
-     \centering
-     \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-10-2-overrun-relative}  
-     
-   \includegraphics[width=\columnwidth]{BagOfTasks/tolerance-extended-50-2-overrun-relative}  
- 	   \caption{Impact of runtime variation on deadline overrun as a function of deadline. 
- 	   Results obtained for random variation of task runtime in the range from $ -10\%$ to $10\%$ (top)
- 	   and from $-50\%$ to $+50\%$ (bottom). }
- 	   \label{fig:bot:dynamic-time}
+    \centering
+    \includegraphics[width=0.7\columnwidth]{BagOfTasks/tolerance-extended-10-2-overrun-relative}       
+    \includegraphics[width=0.7\columnwidth]{BagOfTasks/tolerance-extended-50-2-overrun-relative}  
+    \caption{Impact of runtime variation on deadline overrun as a function of deadline. 
+    Results obtained for random variation of task runtime in the range from $ -10\%$ to $10\%$ (top)
+    and from $-50\%$ to $+50\%$ (bottom). }
+    \label{fig:bot:dynamic-time}
   \end{figure} 
 
   In a similar way Fig.~\ref{fig:bot:dynamic-time} shows the deadline overrun in

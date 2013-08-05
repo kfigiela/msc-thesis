@@ -2,7 +2,7 @@
 \label{chap:ampl} 
 \lhead{Chapter \ref{chap:ampl}. \emph{Mathematical programming using AMPL}}
 
-Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate example models: linear \emph{Whiskas Cat Food Problem} and integer \emph{shift work scheduling}.
+Section \ref{sec:ampl:mathprog} presents overview on mathematical programming and problem classification (Section \ref{sec:ampl:classification}). In section \ref{sec:ampl:ampl} AMPL and other tools for mathematical programming are introduced. Then in Section \ref{sec:ampl:whiskas} we formulate example models: linear \emph{Whiskas Cat Food Problem} and integer \emph{shift work scheduling}. These problems are not exactly from scientific computing domain, but they present typical modelling challenges.
 
 \section{Mathematical Programming}
 \label{sec:ampl:mathprog}
@@ -329,6 +329,8 @@ In that case, it appears that it is cheapest to use beef and fill the rest of th
 \label{sec:ampl:sched}
 
 In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, so workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. 
+
+In this solution, we won't schedule individual persons, but groups of them. We will use similar approach in models presented in Chapter~\ref{chap:bot} and Chapter~\ref{chap:formulation-workflows}.
  
 \subsection{Problem formulation}
 
