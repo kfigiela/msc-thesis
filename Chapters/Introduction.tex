@@ -7,7 +7,7 @@ This chapter presents the general idea of this work. Section~\ref{intro:motivati
 \section{Motivation}
 \label{intro:motivation}
 
-Planning and scheduling activities have been present in people's life ever since first civilization was built. It usually was related to travel planning or construction planning. Ancient romans needed to take care on where aqueducts should be build depending on the demand and how much material should be used. Every craftsman needed to optimize how much material will he use to create his product. Later on, this became event more important during Industrial Revolution.
+Planning and scheduling activities have been present in people's life ever since first civilization was built. It usually was related to travel planning or construction planning. Ancient Romans needed to take care on where aqueducts should be build depending on the demand and how much material should be used. Every craftsman needed to optimize how much material will he use to create his product. Later on, this became event more important during Industrial Revolution.
 
 Nowadays, science requires processing of large amounts of data and use of hosted services for compute-intensive tasks~\cite{Deelman-PPL13}. Cloud services are used not only to provide resources, but also for hosting scientific datasets, as in the case of AWS public datasets~\cite{AWS-public-dataset}. Scientific applications that run on these clouds have often the structure of workflows or workflow ensembles that are groups of inter-related workflows~\cite{Malawski-SC12}. Infrastructure as a Service (IaaS) cloud providers offer services where virtual machine instances differ by performance and price~\cite{Bubak-CCGrid13}. Planning scientific experiments requires optimization decisions that take into account both execution time and cost.
 
@@ -60,7 +60,7 @@ There exists multiple workflow systems that assist scientists to create and depl
 
 \subsection{Bag of tasks}
 
-Bag of tasks applications represent group of independent tasks that may be processed sequentially or in parallel. There are no dependencies between tasks. A large parameter sweep is good example of such problem. The \emph{map} stage of map-reduce (see Figure~\ref{fig:intro:mapreduce}) application can be also considered as a bag of tasks. Additionally, many workflows include a stages of a high number parallel tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks~\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
+Bag of tasks applications represent group of independent tasks that may be processed sequentially or in parallel. There are no dependencies between tasks. A large parameter sweep is good example of such problem. The \emph{map} stage of map-reduce (see Figure~\ref{fig:intro:mapreduce}) application can be also considered as a bag of tasks. Additionally, many workflows include stages of a high number parallel tasks. Such examples can be found e.g. in typical scientific workflows executed using Pegasus Workflow Management system, where e.g. CyberShake or LIGO workflows have a parallel stage of nearly homogeneous tasks~\cite{Bharathi08}. Other examples are Wien2K and ASTRO workflows that consist of iteratively executed parallel stages comprising homogeneous tasks~\cite{Duan12}. Due to the high number of parallel branches, these stages accumulate the most significant computing time of the whole application, so optimization of the execution of this stage is crucial.
 
 
 \begin{figure}[tb]
@@ -74,7 +74,7 @@ Bag of tasks applications represent group of independent tasks that may be proce
 \section{Introduction to Cloud Computing}
 \label{intro:cloud}
 
-Cloud computing became de facto standard of delivering computing resources adopted both by commercial and scientific communities. Nowdays, hardly any science can be performed without computational science and cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model.
+Cloud computing became de facto standard of delivering computing resources adopted both by commercial and scientific communities. Nowdays, hardly any science can be performed without computational science and cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model. 
 
 There are mutliple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is “a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction”.
 
@@ -111,7 +111,8 @@ Usually IaaS clouds provide three types of resources that are provisioned with a
 \section{Problem statement}
 \label{intro:statement}
 
-In this thesis we will focus on optimization of resource allocation of bag of tasks and workflow applications on the hybrid cloud platforms. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as other constraints. Specifically, we will address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, using mathematical modeling with AMPL and mixed integer programming.
+In this thesis we will focus on optimization of resource allocation of bag of tasks and workflow applications on the hybrid cloud platforms. Planning scientific experiments requires optimization decisions that take into account both execution time and cost, as well as other constraints. Specifically, we address the cost optimization problem of large-scale applications running on multiple heterogeneous clouds, under deadline constraint and for various limits on numbers of instances imposed by cloud providers. The approach to solve this problems is using mathematical modeling with AMPL and mixed integer programming.
+
 
 \section{Goals of the thesis}
 \label{intro:goals}
@@ -127,7 +128,7 @@ The major goal of this thesis is the theoretical and practical investigation of 
   \item answering if ILP is suitable method to solve the problem.
 \end{itemize}
 
-The goals will be addressed in the following chapters. In Chapter~\ref{chap:state-of-art} we will explore existing work  on scientific application scheduling. In Chapter~\ref{chap:ampl} we will have a quick tutorial on mathematical programming. In Chapters~\ref{chap:bot} and \ref{chap:formulation-workflows} we will go through defining infrastructure and application models that will be then implemented and evaluated. In Chapter~\ref{chap:conclusions} we will answer if ILP is suitable approach for resource allocation on the cloud.
+The goals are addressed in the following chapters. In Chapter~\ref{chap:state-of-art} we will explore existing work  on scientific application scheduling. In Chapter~\ref{chap:ampl} we will have a quick tutorial on mathematical programming. In Chapters~\ref{chap:bot} and \ref{chap:formulation-workflows} we will go through defining infrastructure and application models that will be then implemented and evaluated. In Chapter~\ref{chap:conclusions} we will answer if ILP is suitable approach for resource allocation on the cloud.
  
 \section{Summary}
 

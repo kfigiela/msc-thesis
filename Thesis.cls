@@ -175,12 +175,13 @@
 
 
 \newcommand\Declaration[1]{
-\btypeout{Oświadczenie autora pracy}
+\pagestyle{empty}
+% \btypeout{Oświadczenie autora pracy}
 % \addtotoc{Declaration of Authorship}
 \thispagestyle{plain}
-\null\vfil
-%\vskip 60\p@
-\begin{center}{\huge\bf Oświadczenie autora pracy\par}\end{center}
+\null\null\vfil
+\vskip 360\p@
+% \begin{center}{\huge\bf Oświadczenie autora pracy\par}\end{center}
 %\vskip 60\p@
 {\normalsize #1}
 \vfil\vfil\null
@@ -202,7 +203,7 @@
 %-------------------------------------------------   
 \examiner{} % Your examiner's name - this is not currently used anywhere in the template, cite it with \examname if you want it
 %-------------------------------------------------   
-\degree{Doctor of Philosophy} % Your degree name - this is currently used in the title page and abstract
+\degree{Master of Science} % Your degree name - this is currently used in the title page and abstract
 %-------------------------------------------------   
 \authors{Kamil \textsc{Figiela}} % Your name - this is used in the title page and abstract
 %-------------------------------------------------   
@@ -310,22 +311,26 @@
   \null\vfil
   \begin{center}
     \setlength{\parskip}{0pt}
-    {\normalsize \UNIVNAME \par} % University name in capitals
-    \bigskip
     {\huge{\textit{Abstract}} \par}
-    \bigskip
-    {\normalsize \facname \par} % Faculty name
-    {\normalsize \deptname \par} % Department name
-    \bigskip
-    {\normalsize \degreename\par} % Degree name
-    \bigskip
-    {\normalsize\bf \@title \par} % Thesis title
-    \medskip
-    {\normalsize by \authornames \par} % Author name
     \bigskip
   \end{center}
 }
-%----------------------------------------------------------------------------------------
+{
+  \vfil\vfil\vfil\null
+  \cleardoublepage
+}
+
+\newenvironment{acknowledgements}
+{
+  \btypeout{Acknowledgements}
+  \thispagestyle{empty}
+  \null\vfil
+  \begin{center}
+    \setlength{\parskip}{0pt}
+    {\huge{\textit{Acknowledgements}} \par}
+    \bigskip
+  \end{center}
+}
 {
   \vfil\vfil\vfil\null
   \cleardoublepage
@@ -422,15 +427,16 @@
 \begin{longtable}[c]{#1}#2\end{longtable}\par
     \cleardoublepage
 }
-\newcommand\acknowledgements[1]{
-\btypeout{Acknowledgements}
-\addtotoc{Acknowledgements}
-\thispagestyle{plain}
-\begin{center}{\huge{\textit{Acknowledgements}} \par}\end{center}
-{\normalsize #1}
-\vfil\vfil\null
 
-}
+% \newcommand\acknowledgements[1]{
+% \btypeout{Acknowledgements}
+% \addtotoc{Acknowledgements}
+% \thispagestyle{plain}
+% \begin{center}{\huge{\textit{Acknowledgements}} \par}\end{center}
+% {\normalsize #1}
+% \vfil\vfil\null
+% 
+% }
 \newcommand\dedicatory[1]{
 \btypeout{Dedicatory}
 \thispagestyle{plain}
