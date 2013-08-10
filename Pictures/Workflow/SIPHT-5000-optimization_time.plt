@@ -7,6 +7,7 @@
       # set yrange [0:]
       set xrange [0:15]
       unset grid
+unset key
         set logscale y
       
       set xlabel 'Time limit (hours)'

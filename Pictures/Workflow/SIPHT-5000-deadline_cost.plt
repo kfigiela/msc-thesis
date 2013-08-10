@@ -7,10 +7,11 @@
       set yrange [0:]
       set xrange [0:15]
       unset grid
+unset key
 
       set xlabel 'Time limit (hours)'
       set ylabel 'Cost ($  )'
-      set term pdf monochrome font "Helvetica,20"
+      set term pdf monochrome font "Helvetica,12"
       set out "./SIPHT-5000-deadline_cost.pdf"
       # set title "./SIPHT.n.5000.0.dax.dag - deadline_cost"
 

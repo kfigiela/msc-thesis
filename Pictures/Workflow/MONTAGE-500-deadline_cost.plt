@@ -7,10 +7,11 @@
       set yrange [0:0.6]
       set xrange [0:15]
       unset grid
+unset key
 
       set xlabel 'Time limit (hours)'
       set ylabel 'Cost ($  )'
-      set term pdf monochrome font "Helvetica,20"
+      set term pdf monochrome font "Helvetica,12"
       set out "./MONTAGE-500-deadline_cost.pdf"
 
 plot '-' title 'Amazon S3' ps 1 pt 4, '-' title 'Rackspace Cloud Files' ps 1  pt 6, '-' title 'Optimal' with l  lw 3

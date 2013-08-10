@@ -11,7 +11,7 @@
 
       set xlabel 'Time limit (hours)'
       set ylabel 'Optimization time (s)'
-      set term pdf monochrome font "Helvetica,12"
+      set term pdf monochrome font "Helvetica,6"
       set out "./Genome600-optimization_time.pdf"
       # set title "./Genome600 - optimization_time"
 

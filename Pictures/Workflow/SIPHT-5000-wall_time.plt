@@ -7,11 +7,12 @@
       # set yrange [0:]
       set xrange [0:]
       unset grid
+unset key
 
       set xlabel 'Time limit (hours)'
       set ylabel 'Optimization time (s)'
-      set term pdf monochrome font "Helvetica,20"
-      set out "./SIPHT-5000-wall_time.pdf
+      set term pdf monochrome font "Helvetica,6"
+      set out "./SIPHT-5000-wall_time.pdf"
       # set title "./SIPHT.n.5000.0.dax.dag - wall_time"
 
       set logscale y

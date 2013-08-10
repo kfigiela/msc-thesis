@@ -10,7 +10,7 @@
 
       set xlabel 'Time limit (hours)'
       set ylabel 'Optimization time (s)'
-      set term pdf monochrome font "Helvetica,20"
+      set term pdf monochrome font "Helvetica,12"
       set out "./Genome600-wall_time.pdf"
       set logscale y
       # set title "./Genome600 - wall_time"
