@@ -2,7 +2,7 @@
 \label{chap:introduction} 
 \lhead{Chapter \ref{chap:introduction}. \emph{Introduction}}
 
-This chapter presents the general idea of this work. Section~\ref{intro:motivation} describes the motivation for optimization of resource allocation on the cloud. Section~\ref{intro:application} discusses the model of scientific applications. Section~\ref{intro:cloud} describes cloud business models and services that are used to deploy applications. Section~\ref{intro:statement} states the goals of the thesis. Section~\ref{intro:statement} enumerates challenges to be overcomed. 
+This chapter presents the general idea of this work. Section~\ref{intro:motivation} describes the motivation for optimization of resource allocation on the cloud. Section~\ref{intro:application} discusses the model of scientific applications. Section~\ref{intro:cloud} describes cloud business models and services that are used to deploy applications. Section~\ref{intro:statement} states the goals of the thesis. Section~\ref{intro:statement} enumerates challenges to be overcame. 
 
 \section{Motivation}
 \label{intro:motivation}
@@ -16,7 +16,7 @@ This thesis illustrates typical problems when making decisions on resource alloc
 \section{Scientific applications}
 \label{intro:application}
 
-Scientific computing covers a wide range of fields including biology, chemistry, physics, economics, engineering, finance, geophysics, linguistics, mathematics, and mechanics. Applications used in that sciences are often distributed, so that application may run a numbers of magnitude faster than sequential one. This is crucial in some fields such as weather forecasting or financial modelling to get results as fast as possible. 
+Scientific computing covers a wide range of fields including biology, chemistry, physics, economics, engineering, finance, geophysics, linguistics, mathematics, and mechanics. Applications used in that sciences are often distributed, so that application may run a numbers of magnitude faster than sequential one. This is crucial in some fields such as weather forecasting or financial modeling to get results as fast as possible. 
 
 Scientific applications usually may be put to one of the following groups: 
 \begin{itemize}
@@ -42,9 +42,9 @@ Scientific workflow is concerned with the automation of scientific processes in 
 \end{figure} 
 
 
-Workflow is built of four base control structures: \emph{sequence}, \emph{parallelism}, \emph{choice} and \emph{loop} (only for non-DAGs). Sequence represents an ordered series of task with one starting after the previous task has completed. Parallelism represents tasks that are performed concurrently, rather than serially. The choice structure allows to run selected portion of the workflow if certain conditions are met. The iteration structure lets certaint block of tasks to be repeated. Consecutive stages of workflow often represent work of scientist – data gathering, preprocessing, processing and results aggregation. 
+Workflow is built of four base control structures: \emph{sequence}, \emph{parallelism}, \emph{choice} and \emph{loop} (only for non-DAGs). Sequence represents an ordered series of task with one starting after the previous task has completed. Parallelism represents tasks that are performed concurrently, rather than serially. The choice structure allows to run selected portion of the workflow if certain conditions are met. The iteration structure lets certain block of tasks to be repeated. Consecutive stages of workflow often represent work of scientist – data gathering, preprocessing, processing and results aggregation. 
 
-In terms of scientific computing we will be rather interested in data flow in workflow. It is then composed of the follwing structures (Figure~\ref{fig:intro:workflow:structures}): \emph{process}, \emph{pipeline}, \emph{data distribution}, \emph{data aggregation} and \emph{data redistribution}.
+In terms of scientific computing we will be rather interested in data flow in workflow. It is then composed of the following structures (Figure~\ref{fig:intro:workflow:structures}): \emph{process}, \emph{pipeline}, \emph{data distribution}, \emph{data aggregation} and \emph{data redistribution}.
 
 \begin{figure}[tb]
    \centering
@@ -74,9 +74,9 @@ Bag of tasks applications represent group of independent tasks that may be proce
 \section{Introduction to Cloud Computing}
 \label{intro:cloud}
 
-Cloud computing became de facto standard of delivering computing resources adopted both by commercial and scientific communities. Nowdays, hardly any science can be performed without computational science and cloud systems are regarded by the scientific community as a potentially atractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model. 
+Cloud computing became de facto standard of delivering computing resources adopted both by commercial and scientific communities. Nowadays, hardly any science can be performed without computational science and cloud systems are regarded by the scientific community as a potentially attractive source of low-cost computing resources as they can be provisioned on-demand according to pay-per-use model. 
 
-There are mutliple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is “a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction”.
+There are multiple definitions of the cloud computing. The term is frequently used for marketing of hosted services or applications running in client-server model. As defined by US National Institute of Standards and Technology (NIST)~\cite{NISTCloudDef}, cloud computing is “a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction”.
 
 \subsection{Service models}
 
@@ -84,8 +84,8 @@ We may categorize cloud services in terms of service model that give different l
 
 \begin{description}
   \item[Software as a Service (SaaS).] The capability provided to the user is to use applications deployed by provider running on a cloud infrastructure. The applications are usually available by web-browser based interface or program interface. The underlying cloud infrastructure including network, servers, operating system and application are managed by service provider. Popular SaaS applications include Gmail, Evernote and Salesforce.
-  \item[Platform as a Service (PaaS).] The capability provided to the user is to deploy his own appliactions created using programming languages, libraries, services and tools provied by the provider. The consumer does not manage underlying cloud infrastructure including network, servers, operating systems, runtime environment, but has control over the deployed application and configuration settings for cloud enviromnent. Example platforms include Heroku, Google App Engine and Nodejitsu.
-  \item[Infrastructure as a Service (IaaS).] The capability provided to the user is to provision processing, storage, networks and other fundamental computing resources where the consumer is able to deploy and run arbitrary software. The consumer does not manage the underlying hardware infrastructure, but has control over operating system, storage, deployed appliations and has possibly limited control over networking (i.e. hosts firewall). Example platforms include Amazon EC2 and Rackspace.
+  \item[Platform as a Service (PaaS).] The capability provided to the user is to deploy his own applications created using programming languages, libraries, services and tools provided by the provider. The consumer does not manage underlying cloud infrastructure including network, servers, operating systems, runtime environment, but has control over the deployed application and configuration settings for cloud environment. Example platforms include Heroku, Google App Engine and Nodejitsu.
+  \item[Infrastructure as a Service (IaaS).] The capability provided to the user is to provision processing, storage, networks and other fundamental computing resources where the consumer is able to deploy and run arbitrary software. The consumer does not manage the underlying hardware infrastructure, but has control over operating system, storage, deployed applications and has possibly limited control over networking (i.e. hosts firewall). Example platforms include Amazon EC2 and Rackspace.
 \end{description}
 
 \subsection{Deployment models}
@@ -104,8 +104,8 @@ Depending on who manages cloud infrastructure we may distinguish the following m
 Usually IaaS clouds provide three types of resources that are provisioned with a pay-per-use model: 
 \begin{description}
   \item[Computing.] Provided as virtual machine (VM) instances. Multiple instance types are available that differ with CPU power, RAM memory and additional hardware (i.e. GPU units). VMs are usually billed for instance running time (wall clock time, not CPU time) usually rounded up to full hours.
-  \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as object store available as external service (i.e. Amazon's S3). User is usually biled for persisting data per GiB\footnote{Gibibyte $= 2^{30}$ bytes} per month. Additional charges may also apply (i.e. per IO transaction).
-  \item[Networking.] Provides connectivity between VMs, storages and the Internet. User is billed for the data transfered of the cloud, while incoming data and transfer inside specific cloud usually remains free. Networking is provided in bundle with computing and storage, not as a separate service.
+  \item[Storage.] Provided as virtualized disk drives for virtual machines (i.e. Amazon's EBS) or as object store available as external service (i.e. Amazon's S3). User is usually billed for persisting data per GiB\footnote{Gibibyte $= 2^{30}$ bytes} per month. Additional charges may also apply (i.e. per IO transaction).
+  \item[Networking.] Provides connectivity between VMs, storages and the Internet. User is billed for the data transferred of the cloud, while incoming data and transfer inside specific cloud usually remains free. Networking is provided in bundle with computing and storage, not as a separate service.
 \end{description}
 
 \section{Problem statement}
@@ -117,7 +117,7 @@ In this thesis we will focus on optimization of resource allocation of bag of ta
 \section{Goals of the thesis}
 \label{intro:goals}
 
-The major goal of this thesis is the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. The goal will be acomplished by:
+The major goal of this thesis is the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. The goal will be accomplished by:
 
 \begin{itemize}
   \item study of existing works on workflow scheduling and resource allocation on the cloud,

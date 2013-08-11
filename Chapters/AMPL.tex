@@ -48,13 +48,13 @@ To successfully solve optimization problem one needs to do a sequence of multipl
   \item Refine the model and the data as necessary, and repeat.
 \end{enumerate}
 
-Unfortuanetly, usually people use diffrent form of representing the data than algorithms do. This makes formulation and generation phases complex as modeller would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrices as input. We need to transform \emph{modeller's form} to \emph{algorithm's form}. Doing it manually is time consuming and erron-prone task.
+Unfortunately, usually people use different form of representing the data than algorithms do. This makes formulation and generation phases complex as modeler would like to express constraints in human-readable language e.g. mathematical notation, and solvers require to provide multiple matrices as input. We need to transform \emph{modeler's form} to \emph{algorithm's form}. Doing it manually is time consuming and erron-prone task.
 
-To automate this task matrix generators were created for specific models. Altough they successfully automate matrix generation they are hard to code, debug and maintain. Modeller needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modelling language. Several languages (i.e. AMPL~\cite{Fourer2002}, Gams~\cite{Gams}, PuLP~\cite{PuLP}, OscaR~\cite{OscaR}) were created over the decades. 
+To automate this task matrix generators were created for specific models. Although they successfully automate matrix generation they are hard to code, debug and maintain. Modeler needs to be both mathematician and programmer. The other way to solve that problem is to use mathematical modeling language. Several languages (i.e. AMPL~\cite{Fourer2002}, Gams~\cite{Gams}, PuLP~\cite{PuLP}, OscaR~\cite{OscaR}) were created over the decades. 
 
-By using modelling language, modeller may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modelling languages become particuraly advantageous for models being developed and subject to change. Additionally, modelling language translator may introduce optimizations to generated problem instance.
+By using modeling language, modeler may express in comfortable way also designed to serve as input for the computer. Then matrix generation may be fully automated without intermediate state of computer programming, thus mathematical programming becomes cheaper and more reliable. Benefits of formulating in modeling languages become particularly advantageous for models being developed and subject to change. Additionally, modeling language translator may introduce optimizations to generated problem instance.
 
-AMPL is an algebraic mathematical modelling language that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer (in present meaning). Algebraic modelling languages allow to express a wide range of optimization problems: linear, nonlinear and integer.
+AMPL is an algebraic mathematical modeling language that resembles traditional mathematical notation to describe variables, objectives and constraints. Code in AMPL will be familiar for anybody that studied basic algebra or calculus, so that he or she doesn't need to be programmer (in present meaning). Algebraic modeling languages allow to express a wide range of optimization problems: linear, nonlinear and integer.
 
 \subsection{Available solvers}
 
@@ -65,7 +65,7 @@ Usually solvers provide multiple options that let us tune them for the specific 
 \section{Example -- Whiskas Cat Food Problem}
 \label{sec:ampl:whiskas}
 
-To get some practise with modelling, we will describe a typical linear programming problem on the example of \emph{Whiskas Cat Food problem}. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
+To get some practice with modeling, we will describe a typical linear programming problem on the example of \emph{Whiskas Cat Food problem}. This is typical planning problem that may be found in many textbooks~\cite{dantzig}. The company producing the food wants to produce it as cheaply as possible while ensuring they meet the stated nutritional analysis requirements stated on the cans. 
 
 Main ingredients of the cat food used are chicken, beef, mutton, rice wheat and gel. The prices for the ingredients are presented in Table \ref{ampl:whiskas:prices}, while ingredient contribution to the total weight of protein, fat, fibre and salt in the final product are give in Table \ref{ampl:whiskas:contribution} and nutritional requirements are presented in Table \ref{ampl:whiskas:analysis}. Given that data we may proceed with model formulation.
 
@@ -133,7 +133,7 @@ We have also some numbers that describe members of sets;
 
 \paragraph{Identify the decision variables}
 
-First of all we need to identify decision variables. For the Whishas Cat Food Problem the descisions are the amounts of each ingredient we put in the can. Formally we could write this as:
+First of all we need to identify decision variables. For the Whiskas Cat Food Problem the decisions are the amounts of each ingredient we put in the can. Formally we could write this as:
 \begin{align} 
   x_i &= \text{ amount (g) of ingredient $i$  in a can of cat food}
 \end{align} 
@@ -328,7 +328,7 @@ In that case, it appears that it is cheapest to use beef and fill the rest of th
 \section{Example -- Shift Scheduling}
 \label{sec:ampl:sched}
 
-In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the choosen schedule. We also want to limit number of different schedules used, so workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. 
+In this section, we will formulate AMPL model for shift scheduling problem~\cite{Fourer2002}. The factory is working in three shift work schedule, operating six days a week from Monday to Saturday. On Saturday there's no third shift as it would overlap with Sunday. There's a certain number of workers required for each shift: more workers are required during first shift and less during the others. Due to work time regulations not all shift combinations of 5 day working week are possible -- in fact that there are only 126 shift schedules possible. The crew wages depend on the chosen schedule. We also want to limit number of different schedules used, so workers may work in teams during planned week. The problem is to minimize the cost of running factory while meeting all regulatory constraints. This is the example of \emph{integer linear programming (ILP)} problem, as only the integer solutions are valid. 
 
 In this solution, we won't schedule individual persons, but groups of them. We will use similar approach in models presented in Chapter~\ref{chap:bot} and Chapter~\ref{chap:formulation-workflows}.
  
@@ -511,4 +511,4 @@ Given that data we may assign schedules to the specific workers.
 
 \section{Summary}
 
-This chapter presented basics of mathematical optimization. We discussed briefly history of optimiation, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example optimization problems and how they can be solved using AMPL.
+This chapter presented basics of mathematical optimization. We discussed briefly history of optimization, classification of optimization problems and introduced tools for mathematical optimization using computers. We also shown the example optimization problems and how they can be solved using AMPL.
