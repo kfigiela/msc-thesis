@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gs-papers/!svn/ver/1056/trunk/Cloud-REU-11/testy/model/config
+END
+paper-finite-small.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-finite-small.erb
+END
+paper-infinite.erb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-infinite.erb
+END
+paper-finite-large.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-finite-large.erb
+END
+schodki-loop.erb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/schodki-loop.erb
+END
+schodki-couenne.erb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/schodki-couenne.erb
+END
+test.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/test.erb
+END
+paper-infinite-small.erb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-infinite-small.erb
+END
+paper-finite-large-overlap.erb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gs-papers/!svn/ver/1056/trunk/Cloud-REU-11/testy/model/config/paper-finite-large-overlap.erb
+END
+paper-infinite-large.erb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-infinite-large.erb
+END
+dziwna-charakterystyka.erb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/dziwna-charakterystyka.erb
+END
+paper-finite.erb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/paper-finite.erb
+END
+schodki-bonmin.erb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/schodki-bonmin.erb
+END
+schodki.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gs-papers/!svn/ver/1024/trunk/Cloud-REU-11/testy/model/config/schodki.erb
+END
