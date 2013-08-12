@@ -4,20 +4,20 @@
 
 \section{Conclusions}
 
-The results presented in this thesis illustrate typical problems when making decisions on deployment planning on clouds and how they can be addressed using optimization techniques. The major goal of this thesis was the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. The theoretical part of the goal was accomplished by exploration on the cloud computing, existing workflow scheduling, resource allocation algorithms and mathematical programming that was presented in first three chapters. 
+The results presented in this thesis illustrate typical problems when making decisions on deployment planning on clouds and how they can be addressed using optimization techniques. The major goal of this thesis was the theoretical and practical investigation of optimization of resource allocation on the cloud by using integer linear programming tools and methods. To realize this goal, it required an analysis of cloud computing model, existing workflow scheduling and resource allocation algorithms, as well as mathematical programming -- that were presented in first three chapters. 
 
 To practically evaluate integer linear programming approach to the problem, we defined application model of bag of tasks applications and workflows. We also defined the infrastructure model of multiple heterogenous clouds, including private and public ones. The optimization model takes into account the cost of compute instances and data transfer that proved to have significant contribution to the total. The mixed integer nonlinear optimization models were then implemented in AMPL modeling language and optimized with Cbc and CPLEX solvers. The models were evaluated in terms of results, performance and solution stability by performing a parameter sweep and analyzing the results. 
 
-The integer linear programming proved to be approach for resource allocation for the scientific computing. The AMPL appeared to be friendly tool to perform such optimization.
+We conclude that the integer linear programming proved to be a useful approach for resource allocation for scientific computing. The AMPL appeared to be friendly tool to perform such optimization.
 
 \section{Future work}
 
-As a future work we could perform experiments on real cloud infrastructure by using real applications and data sets. That would allow us to better understand cloud infrastructure deployment issues and see how dynamic environment affects offline resource allocation.
+As a future work we intend to perform experiments on real cloud infrastructure by using real applications and data sets. That would allow us to better understand cloud infrastructure deployment issues and see how dynamic environment affects offline resource allocation.
 
-Furthermore, the infrastructure model should be extended to better reflect cloud infrastructure caveats and new cloud features such as the 5-minute billing cycle introduced by Cloud-Sigma. Additional cloud services should be also considered, as they may be also used by scientific applications
+Furthermore, the infrastructure model should be extended to better reflect cloud infrastructure caveats and new cloud features such as the shorter billing cycle introduced by Cloud-Sigma or Google Compute Engine. Additional cloud services should be also considered, as they may be also used by scientific applications
 
-Additionally, the mathematical programming approach could be applied as a subproblem solving method for heuristic algorithm. For that, we should investigate multi-stage optimization algorithms.
+Additionally, the mathematical programming approach could be applied as a subproblem solving method for other heuristic algorithms, e.g. for on-line scheduling. For that, we should investigate multi-stage optimization algorithms.
 
-Last, but not least, the workflow model performance is subject to be improved by either simplifying application or infrastructure model or by applying other modeling techniques.
+Last, but not least, the performance of workflow optimization model may be subject to improvements by simplifying application or infrastructure model or by applying other modeling techniques.
 
 

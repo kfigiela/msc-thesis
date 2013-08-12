@@ -196,8 +196,8 @@
 %	defined as \examname above so you cite it as \examname
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Optimization of resource allocation on~the~cloud} % Your thesis title - this is used in the title and abstract
-% Optymalizacja alokacji zasobów w chmurze obliczeniowej
+\thesistitle{Optimization of Resource Allocation on~the~Cloud} % Your thesis title - this is used in the title and abstract
+% Optymalizacja alokacji zasobów wchmurze obliczeniowej
 %-------------------------------------------------  
 \supervisor{dr inż. Maciej \textsc{Malawski}} % You supervisor's name - this is used in the title page
 %-------------------------------------------------   
